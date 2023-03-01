@@ -1,0 +1,24 @@
+DCASE2023T2:
+  machine_type:
+    ToyCar:
+      dev:
+        - "00"
+    ToyTrain:
+      dev:
+        - "00"
+    fan:
+      dev:
+        - "00"
+    gearbox:
+      dev:
+        - "00"
+    bearing:
+      dev:
+        - "00"
+    slider:
+      dev:
+        - "00"
+    valve:
+      dev:
+        - "00"
+  section_keyword: section
