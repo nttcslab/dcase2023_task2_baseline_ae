@@ -8,6 +8,8 @@ ADD requirements.txt ./
 RUN pip install -U pip
 RUN pip install -r requirements.txt
 
+RUN apt-get install -y task-spooler
+
 ARG USERNAME 
 ARG GROUPNAME 
 ARG UID

@@ -11,6 +11,7 @@ from datasets.loader_common import get_machine_type_dict
 
 SCORE_COLUMNS = ["h-mean", "a-mean"]
 SCORE_INDEXES = ["AUC (source)", "AUC (target)", "pAUC (source, target)", "AUC", "pAUC", "TOTAL score"]
+MODE_LIST = ["dev", "eval"]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -46,12 +47,16 @@ if __name__ == "__main__":
     use_source_target = False
     for domain in ["source", "target"]:
         is_pick_mean = False
-        for machine_type in machine_type_list:
-            loc_column = f"{machine_type}_dev_arithmetic mean_AUC ({domain})"
-            if loc_column in all_summarize_df.columns.values.tolist():
-                is_pick_mean = True
-                for index in all_summarize_df.index:
-                    extract_df.at[(index, f"AUC ({domain})"), machine_type] = all_summarize_df.loc[index, loc_column]
+        for mode in MODE_LIST:
+            for machine_type in machine_type_list:
+                loc_column = f"{machine_type}_{mode}_arithmetic mean_AUC ({domain})"
+                if loc_column in all_summarize_df.columns.values.tolist():
+                    is_pick_mean = True
+                    for index in all_summarize_df.index:
+                        if mode == "dev":
+                            extract_df.at[(index, f"AUC ({domain})"), machine_type] = all_summarize_df.loc[index, loc_column]
+                        else:
+                            extract_df.at[(index, f"AUC ({domain})"), f"{machine_type} {mode}"] = all_summarize_df.loc[index, loc_column]
         if is_pick_mean:
             use_source_target = True
             for index in all_summarize_df.index:
@@ -62,12 +67,16 @@ if __name__ == "__main__":
     loc_column_list = []
     is_pick_mean = False
     if not use_source_target:
-        for machine_type in machine_type_list:
-            loc_column = f"{machine_type}_dev_arithmetic mean_AUC"
-            if loc_column in all_summarize_df.columns.values.tolist():
-                is_pick_mean = True
-                for index in all_summarize_df.index:
-                    extract_df.at[(index, "AUC"), machine_type] = all_summarize_df.loc[index, loc_column]
+        for mode in MODE_LIST:
+            for machine_type in machine_type_list:
+                loc_column = f"{machine_type}_{mode}_arithmetic mean_AUC"
+                if loc_column in all_summarize_df.columns.values.tolist():
+                    is_pick_mean = True
+                    for index in all_summarize_df.index:
+                        if mode == "dev":
+                            extract_df.at[(index, "AUC"), machine_type] = all_summarize_df.loc[index, loc_column]
+                        else:
+                            extract_df.at[(index, "AUC"), f"{machine_type} {mode}"] = all_summarize_df.loc[index, loc_column]
         if is_pick_mean:
             for index in all_summarize_df.index:
                 extract_df.at[(index, "AUC"), "a-mean"] = all_summarize_df.loc[index, f"ALL_AUC_ave"]
@@ -76,12 +85,16 @@ if __name__ == "__main__":
     # pAUC
     is_pick_mean = False
     extract_column = "pAUC (source, target)" if use_source_target else "pAUC"
-    for machine_type in machine_type_list:
-        loc_column = f"{machine_type}_dev_arithmetic mean_pAUC"
-        if loc_column in all_summarize_df.columns.values.tolist():
-            is_pick_mean = True
-            for index in all_summarize_df.index:
-                extract_df.at[(index, extract_column), machine_type] = all_summarize_df.loc[index, loc_column]
+    for mode in MODE_LIST:
+        for machine_type in machine_type_list:
+            loc_column = f"{machine_type}_{mode}_arithmetic mean_pAUC"
+            if loc_column in all_summarize_df.columns.values.tolist():
+                is_pick_mean = True
+                for index in all_summarize_df.index:
+                    if mode == "dev":
+                        extract_df.at[(index, extract_column), machine_type] = all_summarize_df.loc[index, loc_column]
+                    else:
+                        extract_df.at[(index, extract_column), f"{machine_type} {mode}"] = all_summarize_df.loc[index, loc_column]
     if is_pick_mean:
         for index in all_summarize_df.index:
             extract_df.at[(index, extract_column), "a-mean"] = all_summarize_df.loc[index, f"ALL_pAUC_ave"]

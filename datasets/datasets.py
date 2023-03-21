@@ -12,7 +12,6 @@ class DCASE202XT2(object):
         self.height  = args.n_mels
         self.channel = 1
         self.input_dim = self.width*self.height*self.channel
-        self.mode = args.dev
         shuffle = args.shuffle
         batch_sampler = None
         batch_size = args.batch_size
@@ -98,6 +97,8 @@ class DCASE202XT2(object):
                     batch_size=_test_loader.n_vectors_ea_file, shuffle=False
                 )
            )
+           self.mode = args.dev or _test_loader.mode
+
 
 
 class Datasets:

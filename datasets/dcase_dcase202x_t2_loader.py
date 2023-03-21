@@ -3,10 +3,11 @@ import pickle
 import torch
 from tqdm import tqdm
 import numpy as np
+from pathlib import Path
 
 from datasets import loader_common as com
 
-DOWNLOAD_PATH_YAML = "datasets/download_path_legacy.yaml"
+DOWNLOAD_PATH_YAML = "datasets/legacy/download_path_legacy.yaml"
 
 class DCASE202XT2Loader(torch.utils.data.Dataset):
     def __init__(self,
@@ -35,9 +36,19 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
         self.use_id = use_id
         self.section_ids = section_ids
 
-        mode = data_type == "dev"
+        self.mode = data_type == "dev"
         target_dir = os.getcwd()+"/"+root+"raw/"+machine_type
-        dir_name = "train" if train else "test"
+
+        if dataset_name == "DCASE2023T2":
+            dir_name = "train" if train else "test"
+        else:
+            if train:
+                dir_name = "train"
+            elif os.path.exists("{target_dir}/{dir_name}".format(target_dir=target_dir,dir_name="test_rename")):
+                dir_name = "test_rename"
+                self.mode = True
+            else:
+                dir_name = "test"
 
         self.pickle_dir = os.path.abspath(
             "{dir}/processed/{machine_type}/{dir_name}".format(
@@ -50,7 +61,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             fmin_max = ""
         else:
             fmin_max = f"_f{fmin}-{fmax}"
-        self.log_melspectorogram_dir = os.path.abspath(
+        self.log_melspectrogram_dir = os.path.abspath(
             "{dir}/mels{n_mels}_fft{n_fft}_hop{hop_length}{fmin_max}".format(
                 dir=self.pickle_dir,
                 n_mels=n_mels,
@@ -68,7 +79,8 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
                     machine_type=machine_type,
                     data_type=data_type,
                     download_path_yaml=DOWNLOAD_PATH_YAML,
-                    dataset=dataset_name
+                    dataset=dataset_name,
+                    root=root,
                 )
 
         # get section names from wave file names
@@ -78,13 +90,13 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
         
         # generate dataset
         print("============== DATASET_GENERATOR ==============")
-        if not os.path.exists(self.log_melspectorogram_dir):
-            os.makedirs(self.log_melspectorogram_dir, exist_ok=True)
+        if not os.path.exists(self.log_melspectrogram_dir):
+            Path(self.log_melspectrogram_dir).mkdir(parents=True, exist_ok=True)
         pickle_name = section_keyword
         for section_id in section_ids:
             pickle_name = f"{pickle_name}_{section_id}"
         pickle_name = f"{pickle_name}_{source_domain}_TF{frames}-{frame_hop_length}_mel{n_fft}-{hop_length}"
-        pickle_path = os.path.abspath(f"{self.log_melspectorogram_dir}/{pickle_name}.pickle")
+        pickle_path = os.path.abspath(f"{self.log_melspectrogram_dir}/{pickle_name}.pickle")
  
         if os.path.exists(pickle_path):
             print(f"load pickle : {pickle_path}")
@@ -107,7 +119,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
                                                         section_name=section_name,
                                                         unique_section_names=unique_section_names,
                                                         dir_name=dir_name,
-                                                        mode=mode,
+                                                        mode=self.mode,
                                                         train=train)
                 n_files_ea_section.append(len(files))
                 for file in files:
@@ -125,7 +137,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
                                         fmin=fmin,
                                         win_length=win_length)
                 self.data = np.append(self.data, data_ea_section, axis=0)
-                if mode or train:
+                if self.mode or train:
                     self.y_true = np.append(self.y_true, y_true, axis=0)
                 for i in range(len(data_ea_section) // len(files)):
                     self.condition = np.append(self.condition, condition, axis=0)

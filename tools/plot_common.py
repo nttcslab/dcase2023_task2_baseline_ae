@@ -4,7 +4,7 @@
 import sys
 import os
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker      # to use Formatter and Loactor
+import matplotlib.ticker as ticker      # to use Formatter and Locator
 import matplotlib.patches as patches
 import numpy as np
 import librosa

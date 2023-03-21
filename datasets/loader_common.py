@@ -20,6 +20,9 @@ import yaml
 import urllib.request
 import urllib.error
 import zipfile
+from pathlib import Path
+
+from tools.legacy import rename_eval_legacy_wav
 
 ########################################################################
 
@@ -285,7 +288,7 @@ def file_list_generator(target_dir,
 
     # evaluation
     else:
-        query = os.path.abspath("{target_dir}/{dir_name}/{section_name}_*.{ext}".format(target_dir=target_dir,
+        query = os.path.abspath("{target_dir}/{dir_name}/*{section_name}_*.{ext}".format(target_dir=target_dir,
                                                                                                      dir_name=dir_name,
                                                                                                      section_name=section_name,
                                                                                                      ext=ext))
@@ -315,17 +318,19 @@ def download_raw_data(
     data_type,
     download_path_yaml,
     dataset,
+    root,
 ):
     if not os.path.exists(target_dir):
-        os.makedirs(target_dir, exist_ok=True)
+        Path(target_dir).mkdir(parents=True, exist_ok=True)
 
     with open(download_path_yaml, "r") as f:
         file_url = yaml.safe_load(f)[dataset]
 
+    download_dir_path = "/".join(target_dir.split("/")[:-1])
     for i in np.arange(len(file_url[machine_type][data_type])):
-        zip_file_path = f"{target_dir}/{dataset}{machine_type}_{data_type}_{i}.zip"
+        zip_file_path = f"{download_dir_path}/{dataset}{machine_type}_{data_type}_{i}.zip"
         try:
-            print("Downloading...")
+            print(f"Downloading... : {file_url[machine_type][data_type][i]}")
             with urllib.request.urlopen(file_url[machine_type][data_type][i]) as download_file:
                 data = download_file.read()
                 with open(zip_file_path, mode='wb') as save_file:
@@ -334,9 +339,15 @@ def download_raw_data(
             print(e)
 
         if os.path.exists(zip_file_path):
-            print("unzip...")
+            print(f"unzip... : {zip_file_path} \n\t-> {target_dir}")
             with zipfile.ZipFile(zip_file_path) as obj_zip:
-                obj_zip.extractall(target_dir)
+                obj_zip.extractall(download_dir_path)
+        
+        if data_type == "eval" and i == len(file_url[machine_type][data_type]) - 1:
+            rename_eval_legacy_wav.copy_wav(
+                dataset_parent_dir=root,
+                dataset_type=dataset,
+            )
 
     return
 
@@ -344,7 +355,7 @@ def download_raw_data(
 # get machine type and section id in yaml
 ########################################################################
 YAML_PATH = {
-    "legacy":"datasets/machine_type_legacy.yaml",
+    "legacy":"datasets/legacy/machine_type_legacy.yaml",
     "DCASE2023T2_dev":"datasets/machine_type_2023_dev.yaml",
     "DCASE2023T2_eval":"datasets/machine_type_2023_eval.yaml",
 }

@@ -12,10 +12,10 @@ dir_name="summarize"
 float_format=None
 # float_format="%.4f"
 summarize_dir_list=" \
-results/all/baseline_MAHALA \
-results/all/baseline_MSE \
+results/dev_data/baseline_MAHALA \
+results/dev_data/baseline_MSE \
 "
 
 # summarize all data
-export_dir="results/dev/baseline/${dir_name}/${dataset}"
+export_dir="results/dev_data/baseline/${dir_name}/${dataset}"
 bash tools/export_results.sh $dataset $export_dir $float_format $summarize_dir_list

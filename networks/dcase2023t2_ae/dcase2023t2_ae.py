@@ -23,7 +23,7 @@ class DCASE2023T2AE(BaseModel):
             test=test
         )
         parameter_list = [{"params":self.model.parameters()}]
-        self.optimizer = optim.Adam(parameter_list, lr=self.args.learninig_rate)
+        self.optimizer = optim.Adam(parameter_list, lr=self.args.learning_rate)
 
     def init_model(self):
         self.block_size = self.data.height

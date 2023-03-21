@@ -1,3 +1,6 @@
+ROOT_DIR=$(cd $(dirname $0); pwd)/../../
+cd $ROOT_DIR
+
 mkdir -p "data/dcase2022t2/dev_data/raw"
 mkdir -p "data/dcase2022t2/eval_data/raw"
 
@@ -18,3 +21,8 @@ unzip "eval_data_${machine_type}_train.zip"
 wget "https://zenodo.org/record/6586456/files/eval_data_${machine_type}_test.zip"
 unzip "eval_data_${machine_type}_test.zip"
 done
+
+# rename eval data
+python3 tools/rename_eval_legacy_wav.py \
+--dataset_parent_dir=data \
+--dataset_type=DCASE2022T2 \
