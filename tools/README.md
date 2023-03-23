@@ -1,6 +1,10 @@
 # Utility tools
 
+<<<<<<< Updated upstream
 ## Description for plot script
+=======
+## Description for plot tools
+>>>>>>> Stashed changes
 
 - concat_divided_roc.py
     - This script is called by export_results.sh.
@@ -23,11 +27,16 @@
 - plot_time_frequency.py
     - Export time frequency image.
 
+<<<<<<< Updated upstream
 ## Description for legacy dataset to using
+=======
+## Tools for legacy dataset
+>>>>>>> Stashed changes
 
 Those script are in `tools/legacy`. 
 
 - 01_train_legacy.sh
+<<<<<<< Updated upstream
     - Run DCASE2020T2 and DCASE2022T2 for training.
     - Use dev data and eval data.
 - 02a_test_legacy.sh (Use MSE as a score function for the Simple Autoencoder mode)
@@ -36,6 +45,25 @@ Those script are in `tools/legacy`.
 - 02b_test_legacy.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
     - Run DCASE2020T2 and DCASE2022T2 for evaluation.
     - Use dev data and eval data.
+=======
+    - Run this script for training with DCASE2020T2 or DCASE2022T2 dataset.
+    - Specify dev data or eval data.
+    - Usage:
+    ```$ 01_train_legacy.sh [-d|-e] [DCASE2020T2|DCASE2022T2]```
+
+- 02a_test_legacy.sh (Use MSE as a score function for the Simple Autoencoder mode)
+    - Run this script for evaluation with DCASE2020T2 or DCASE2022T2 dataset.
+    - Specify dev data or eval data.
+    - Usage:
+    ```$ 02a_test_legacy.sh [-d|-e] [DCASE2020T2|DCASE2022T2]```
+
+- 02b_test_legacy.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
+    - Run this script for evaluation with DCASE2020T2 or DCASE2022T2 dataset.
+    - Specift dev data and eval data.
+    - Usage:
+    ```$ 02b_test_legacy.sh [-d|-e] [DCASE2020T2|DCASE2022T2]```
+
+>>>>>>> Stashed changes
 - data_download_2020.sh
     - Download DCASE2020 Challenge Task 2 data.
     - Copy renamed eval data 'test' to 'test_rename' after download wav file.
