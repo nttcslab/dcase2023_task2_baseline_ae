@@ -68,7 +68,8 @@ Clone this repository from GitHub.
 We will launch the datasets in three stages. Therefore, please download the datasets in each stage:
 
   + "Development dataset"
-    + Download `dev\_data_<machine_type>.zip from [https://zenodo.org/record/7690148](https://zenodo.org/record/7690148).
+    + ~~Download `dev\_data_<machine_type>.zip from [https://zenodo.org/record/7690148](https://zenodo.org/record/7690148).~~ 
+    + Download `dev\_data_<machine_type>.zip from [https://zenodo.org/record/7690157](https://zenodo.org/record/7690157).
   + "Additional training dataset", i.e., the evaluation dataset for training
     + After April 15, 2023, download additional training dataset
   + "Evaluation dataset", i.e., the evaluation dataset for test
