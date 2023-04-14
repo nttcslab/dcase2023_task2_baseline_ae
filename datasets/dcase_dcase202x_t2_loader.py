@@ -50,7 +50,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             fmin_max = ""
         else:
             fmin_max = f"_f{fmin}-{fmax}"
-        self.log_melspectorogram_dir = os.path.abspath(
+        self.log_melspectrogram_dir = os.path.abspath(
             "{dir}/mels{n_mels}_fft{n_fft}_hop{hop_length}{fmin_max}".format(
                 dir=self.pickle_dir,
                 n_mels=n_mels,
@@ -78,13 +78,13 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
         
         # generate dataset
         print("============== DATASET_GENERATOR ==============")
-        if not os.path.exists(self.log_melspectorogram_dir):
-            os.makedirs(self.log_melspectorogram_dir, exist_ok=True)
+        if not os.path.exists(self.log_melspectrogram_dir):
+            os.makedirs(self.log_melspectrogram_dir, exist_ok=True)
         pickle_name = section_keyword
         for section_id in section_ids:
             pickle_name = f"{pickle_name}_{section_id}"
         pickle_name = f"{pickle_name}_{source_domain}_TF{frames}-{frame_hop_length}_mel{n_fft}-{hop_length}"
-        pickle_path = os.path.abspath(f"{self.log_melspectorogram_dir}/{pickle_name}.pickle")
+        pickle_path = os.path.abspath(f"{self.log_melspectrogram_dir}/{pickle_name}.pickle")
  
         if os.path.exists(pickle_path):
             print(f"load pickle : {pickle_path}")

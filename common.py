@@ -59,7 +59,7 @@ def get_argparse():
     parser.add_argument('--n_mels',type=int, default=128, 
                         help='Length of the melfilter bank')
     parser.add_argument('--frames',type=int, default=5, 
-                        help='Number of frames in a feture vector')
+                        help='Number of frames in a feature vector')
     parser.add_argument('--frame_hop_length',type=int, default=1, 
                         help='number of frames between successive feature')
     parser.add_argument('--n_fft',type=int, default=1024, 
@@ -76,7 +76,7 @@ def get_argparse():
                         help='input batch size for training (default: 512)')
     parser.add_argument('--epochs', type=int, default=10, metavar='N',
                         help='number of epochs to train (default: 10)')
-    parser.add_argument('-lr', '--learninig_rate', default=0.03, type=float,
+    parser.add_argument('-lr', '--learning_rate', default=0.03, type=float,
                         help='learning rate (default: 0.03)')
     parser.add_argument('--shuffle', type=str, default="full",
                         help='shuffle type (full , simple)')
@@ -94,7 +94,7 @@ def get_argparse():
     parser.add_argument('--use_ids', type=int, nargs='*', default=[],
                     help='Machine ID to be treated as nml data')
     parser.add_argument('--is_auto_download', type=str2bool, default=False,
-                        help="Donload dataset if not exist")
+                        help="Download dataset if not exist")
 
     # save data
     parser.add_argument('--result_directory', type=str, default='results/', metavar='N',
@@ -106,9 +106,9 @@ def get_argparse():
 
     # resume learning
     parser.add_argument('--restart',action='store_true', 
-                        help='Resume lerning with checkpoint')
+                        help='Resume learning with checkpoint')
     parser.add_argument('--checkpoint_path', type=str, default="",
-                        help="Useing checkpoint file path. default: this checkpoint")
+                        help="Using checkpoint file path. default: this checkpoint")
     parser.add_argument('--train_only', action='store_true', default=False,
                         help='Run train only')
     parser.add_argument('--test_only', action='store_true', default=False,

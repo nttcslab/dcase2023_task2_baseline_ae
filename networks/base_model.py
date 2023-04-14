@@ -130,15 +130,19 @@ class BaseModel(object):
     def load_optim_state_dict(self, checkpoint, key='optimizer_state_dict'):
         return checkpoint[key]
     
-    def fit_anomaly_score_distribution(self, y_pred):
+    def fit_anomaly_score_distribution(self, y_pred, score_distr_file_path=None):
+        if not score_distr_file_path:
+            score_distr_file_path = self.score_distr_file_path
         shape_hat, loc_hat, scale_hat = scipy.stats.gamma.fit(y_pred)
         gamma_params = [shape_hat, loc_hat, scale_hat]
-        with open(self.score_distr_file_path, "wb") as f:
+        with open(score_distr_file_path, "wb") as f:
             pickle.dump(gamma_params, f, protocol=pickle.HIGHEST_PROTOCOL)
     
-    def calc_decision_threshold(self):
+    def calc_decision_threshold(self, score_distr_file_path=None):
+        if not score_distr_file_path:
+            score_distr_file_path = self.score_distr_file_path
         # load anomaly score distribution for determining threshold
-        with open(self.score_distr_file_path, "rb") as f:
+        with open(score_distr_file_path, "rb") as f:
             shape_hat, loc_hat, scale_hat = pickle.load(f)
 
         # determine threshold for decision

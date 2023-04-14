@@ -13,7 +13,7 @@ class TimeFrequencyFigData():
         self.figdatas = []
         self.max_imgs = max_imgs
         self.max_extract = max_extract
-        self.anm_saffix = ["nml","anm"]
+        self.anm_suffix = ["nml","anm"]
         self.frames = frames
         self.frame_hop_length = frame_hop_length
         self.shape = shape
@@ -34,7 +34,7 @@ class TimeFrequencyFigData():
                 title = "ID{id}-{idx}_{anm}\n{frame_min}-{frame_max}frame\n{fig_name}".format(
                     id=machine_id,
                     idx=idx,
-                    anm=self.anm_saffix[label],
+                    anm=self.anm_suffix[label],
                     frame_min=i*self.frames,
                     frame_max=(i+1)*self.frames,
                     fig_name=fig_name

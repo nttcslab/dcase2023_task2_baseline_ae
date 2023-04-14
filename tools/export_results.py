@@ -66,7 +66,7 @@ def df_to_1d(df, machine_type, dev_eval, file_name):
             summarize_df[base_name] = df.at[index, column]
     return summarize_df
 
-def describle_df(df, df_1d, columns, file_name):
+def describe_df(df, df_1d, columns, file_name):
     describe_1d = df_1d.describe()
     describe_1d.loc["hmean"] =  stats.hmean(np.maximum(df_1d, sys.float_info.epsilon),axis=0)
     describe_df = pd.DataFrame(index=[file_name])
@@ -149,7 +149,7 @@ def main(parent_dir, dataset, machine_type_dict, row_index=["arithmetic mean", "
                     df_machine_type = pd.concat([df_machine_type, df_extract])
                 df_target = pd.concat([df_target, df_machine_type])
                 if len(df_machine_type_1d.index) > 0:
-                    df_describe = describle_df(
+                    df_describe = describe_df(
                         df=df_machine_type,
                         df_1d=df_machine_type_1d,
                         file_name=target_dir,

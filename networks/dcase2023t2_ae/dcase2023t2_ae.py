@@ -23,7 +23,10 @@ class DCASE2023T2AE(BaseModel):
             test=test
         )
         parameter_list = [{"params":self.model.parameters()}]
-        self.optimizer = optim.Adam(parameter_list, lr=self.args.learninig_rate)
+        self.optimizer = optim.Adam(parameter_list, lr=self.args.learning_rate)
+        self.mse_score_distr_file_path = self.model_dir/f"score_distr_{self.args.model}_{self.args.dataset}{self.model_name_suffix}{self.eval_suffix}_seed{self.args.seed}_mse.pickle"
+        self.mahala_score_distr_file_path = self.model_dir/f"score_distr_{self.args.model}_{self.args.dataset}{self.model_name_suffix}{self.eval_suffix}_seed{self.args.seed}_mahala.pickle"
+
 
     def init_model(self):
         self.block_size = self.data.height
@@ -62,6 +65,7 @@ class DCASE2023T2AE(BaseModel):
             cov_x_target = cov_x_source.clone().detach()
             num_source = 0
             num_target = 0
+            epoch = self.args.epochs
         else:
             self.model.train()
             is_calc_cov = False
@@ -151,6 +155,30 @@ class DCASE2023T2AE(BaseModel):
             self.model.cov_source.data = cov_x_source
             self.model.cov_target.data = cov_x_target
 
+            inv_cov_source, inv_cov_target = calc_inv_cov(
+                model=self.model,
+                device=self.device
+            )
+            y_pred_mahala = []
+            for batch_idx, batch in enumerate(tqdm(train_loader)):
+                y_pred_mahala = self.calc_valid_mahala_score(
+                    data=batch[0],
+                    y_pred=y_pred_mahala,
+                    inv_cov_source=inv_cov_source,
+                    inv_cov_target=inv_cov_target,
+                )
+            for batch_idx, batch in enumerate(self.valid_loader):
+                y_pred_mahala = self.calc_valid_mahala_score(
+                    data=batch[0],
+                    y_pred=y_pred_mahala,
+                    inv_cov_source=inv_cov_source,
+                    inv_cov_target=inv_cov_target,
+                )
+            self.fit_anomaly_score_distribution(
+                y_pred=y_pred_mahala,
+                score_distr_file_path=self.mahala_score_distr_file_path
+            )
+
         # validation test
         val_loss = 0
         with torch.no_grad():
@@ -192,8 +220,11 @@ class DCASE2023T2AE(BaseModel):
                 fig_count=len(self.column_heading_list),
                 cut_first_epoch=True
             )
-            self.fit_anomaly_score_distribution(y_pred=y_pred)
-        
+            self.fit_anomaly_score_distribution(
+                y_pred=y_pred,
+                score_distr_file_path=self.mse_score_distr_file_path
+            )
+
         # save model
         torch.save(self.model.state_dict(), self.model_path)
         torch.save({
@@ -203,7 +234,31 @@ class DCASE2023T2AE(BaseModel):
             'loss':self.loss
         }, self.checkpoint_path)
 
-        
+    def calc_valid_mahala_score(self, data, y_pred, inv_cov_source, inv_cov_target):
+        data = data.to(self.device).float()
+        recon_data, _ = self.model(data)
+        loss_source, num = loss_function_mahala(
+            recon_x=recon_data,
+            x=data,
+            block_size=self.block_size,
+            cov=inv_cov_source,
+            use_precision=True,
+            reduction=False
+        )
+        loss_source = self.loss_reduction(score=self.loss_reduction_1d(loss_source), n_loss=num)
+
+        loss_target, num = loss_function_mahala(
+            recon_x=recon_data,
+            x=data,
+            block_size=self.block_size,
+            cov=inv_cov_target,
+            use_precision=True,
+            reduction=False
+        )
+        loss_target = self.loss_reduction(score=self.loss_reduction_1d(loss_target), n_loss=num)
+        y_pred.append(min(loss_target.item(), loss_source.item()))
+        return y_pred
+
     def loss_reduction_1d(self, score):
         return torch.mean(score, dim=1)
 
@@ -237,7 +292,10 @@ class DCASE2023T2AE(BaseModel):
         self.model.load_state_dict(torch.load(self.model_path))
         self.model.eval()
 
-        decision_threshold = self.calc_decision_threshold()
+        if self.args.score == "MAHALA":
+            decision_threshold = self.calc_decision_threshold(score_distr_file_path=self.mahala_score_distr_file_path)
+        else:
+            decision_threshold = self.calc_decision_threshold(score_distr_file_path=self.mse_score_distr_file_path)
         
         dir_name = "test"
         inv_cov_source, inv_cov_target = calc_inv_cov(
