@@ -24,7 +24,7 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
   - data_download_2023add.sh **Newly added!!**
     - "Additional train dataset for Evaluation":
       - This script downloads evaluation data files and put them into "data/dcase2023t2/eval_data/raw/train". 
-  - data_download_2023eval.sh **will be available later**
+  - data_download_2023eval.sh **Newly added!!**
     - "Additional test dataset for Evaluation"
       - This script downloads evaluation data files and put them into "data/dcase2023t2/eval_data/raw/test". 
 
@@ -72,9 +72,10 @@ We will launch the datasets in three stages. Therefore, please download the data
     + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7690157](https://zenodo.org/record/7690157).
   + "Additional training dataset", i.e., the evaluation dataset for training **New!**
     + After April 15, 2023, download additional training dataset
-    + Download "add\_data_<machine_type>.zip" from [https://zenodo.org/record/7830345](https://zenodo.org/record/7830345).
-  + "Evaluation dataset", i.e., the evaluation dataset for test
+    + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/record/7830345](https://zenodo.org/record/7830345).
+  + "Evaluation dataset", i.e., the evaluation dataset for test **New!**
     + After May 1, 2023, download evaluation dataset.
+    + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/record/7860847](https://zenodo.org/record/7860847).
 
 ### 3. Unzip the downloaded files and make the directory structure as the followings:
    
