@@ -5,7 +5,7 @@ This is audoencoder based baseline for the [DCASE2023 Challenge Task 2](https://
 
 This source code is an example implementation of the baseline Auto Encoder of DCASE 2023 Challenge Task 2: First-Shot Unsupervised Anomalous Sound Detection for Machine Condition Monitoring.
 
-This baseline implementation is based on the previous baseline, dcase2022_baseline_ae. The model parameter settings of this baseline AE are almost equivalent to those of the dcase2022\_task2\_baseline\_ae. 
+This baseline implementation is based on the previous baseline, dcase2022_baseline_ae. The model parameter settings of this baseline AE are almost equivalent to those of the dcase2022\_task2\_baseline\_ae.
 
 Difference between the previouse dcase2022_baseline_ae and this version are as follows:
 
@@ -69,11 +69,13 @@ We will launch the datasets in three stages. Therefore, please download the data
 
   + "Development dataset"
     + ~~Download dev\_data_<machine_type>.zip from [https://zenodo.org/record/7690148](https://zenodo.org/record/7690148).~~ 
-    + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7690157](https://zenodo.org/record/7690157).
-  + "Additional training dataset", i.e., the evaluation dataset for training **New!**
+    + ~~Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7690157](https://zenodo.org/record/7690157). **Updated on 2023/04/15**~~
+    + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7882613](https://zenodo.org/record/7882613). **Updated on 2023/05/01**
+
+  + "Additional training dataset", i.e., the evaluation dataset for training ** Updated on 2023/04/15 **
     + After April 15, 2023, download additional training dataset
     + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/record/7830345](https://zenodo.org/record/7830345).
-  + "Evaluation dataset", i.e., the evaluation dataset for test **New!**
+  + "Evaluation dataset", i.e., the evaluation dataset for test **New! (2023/05/01)**
     + After May 1, 2023, download evaluation dataset.
     + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/record/7860847](https://zenodo.org/record/7860847).
 
