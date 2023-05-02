@@ -72,7 +72,7 @@ We will launch the datasets in three stages. Therefore, please download the data
     + ~~Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7690157](https://zenodo.org/record/7690157). **Updated on 2023/04/15**~~
     + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7882613](https://zenodo.org/record/7882613). **Updated on 2023/05/01**
 
-  + "Additional training dataset", i.e., the evaluation dataset for training ** Updated on 2023/04/15 **
+  + "Additional training dataset", i.e., the evaluation dataset for training **Updated on 2023/04/15**
     + After April 15, 2023, download additional training dataset
     + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/record/7830345](https://zenodo.org/record/7830345).
   + "Evaluation dataset", i.e., the evaluation dataset for test **New! (2023/05/01)**
