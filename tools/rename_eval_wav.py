@@ -5,11 +5,15 @@ import shutil
 import argparse
 from pathlib import Path
 
+ROOT_DIR = f"{os.path.dirname(os.path.abspath(__file__))}/../"
+os.chdir(ROOT_DIR)
+
 # labeled data path
 EVAL_DATA_LIST_PATH = {
-    "DCASE2020T2":os.getcwd()+"/datasets/legacy/eval_data_list_2020.csv",
-    "DCASE2022T2":os.getcwd()+"/datasets/legacy/eval_data_list_2022.csv",
-    "DCASE2023T2":None,
+    "DCASE2020T2":f"{ROOT_DIR}/datasets/eval_data_list_2020.csv",
+    "DCASE2021T2":f"{ROOT_DIR}/datasets/eval_data_list_2021.csv",
+    "DCASE2022T2":f"{ROOT_DIR}/datasets/eval_data_list_2022.csv",
+    "DCASE2023T2":f"{ROOT_DIR}/datasets/eval_data_list_2023.csv",
 }
 
 FILENAME_COL = 0
@@ -19,7 +23,7 @@ MACHINE_TYPE_COL = 0
 CHK_MACHINE_TYPE_LINE = 2
 
 def copy_wav(dataset_parent_dir, dataset_type):
-    dataset_dir = os.path.abspath(os.getcwd()+f"/{dataset_parent_dir}/raw/")
+    dataset_dir = str(Path(f"{ROOT_DIR}/{dataset_parent_dir}/raw/").relative_to(ROOT_DIR))
     eval_data_list_path = EVAL_DATA_LIST_PATH[dataset_type]
     if not eval_data_list_path:
         return None
@@ -49,15 +53,17 @@ def copy_wav(dataset_parent_dir, dataset_type):
                     default_dir + "/" + eval_data[FILENAME_COL],
                     save_dir + "/" + eval_data[LABELING_FILENAME_COL])
                 count += 1
-            sys.stdout.write( '\r   '+machine_type+":"+str(count)+" files" )
+            sys.stdout.write(f'\r\t{machine_type}: {str(count)} files\tsaved dir: {save_dir}')
             sys.stdout.flush()
     sys.stdout.write('\n')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
             description='Main function to call training for different AutoEncoders')
-    parser.add_argument("--dataset_parent_dir", type=str, default="data")
-    parser.add_argument("--dataset_type", type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2022T2", "DCASE2023T2"])
+    parser.add_argument("--dataset_parent_dir", type=str, default="data",
+                        help="saving datasets directory name.")
+    parser.add_argument("--dataset_type", type=str, required=True, choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2"],
+                        help="what Dataset name to renamed.")
     args = parser.parse_args()
 
     copy_wav(

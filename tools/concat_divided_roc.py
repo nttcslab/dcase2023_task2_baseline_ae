@@ -122,10 +122,23 @@ if __name__ == "__main__":
                         help='')
     parser.add_argument("--file_name", type=str, default='*roc.csv', metavar='N',
                         help='')
-    parser.add_argument('--dataset',type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2022T2", "DCASE2023T2"])
+    parser.add_argument('--dataset',type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2"])
+    parser.add_argument('-d', '--dev', action='store_true',
+                        help='Use Development dataset')
+    parser.add_argument('-e', '--eval', action='store_true',
+                        help='Use Evaluation dataset')
     args = parser.parse_args()
 
-    machine_type_dict = get_machine_type_dict(dataset_name=args.dataset)["machine_type"]
+    if args.eval:
+        dev_mode = False
+    elif args.dev:
+        dev_mode = True
+    else:
+        print("incorrect argument")
+        print("please set option argument '--dev' or '--eval'")
+        sys.exit()
+
+    machine_type_dict = get_machine_type_dict(dataset_name=args.dataset, mode=dev_mode)["machine_type"]
     all_types = list(machine_type_dict.keys())
     
     if args.machine_type == "all":

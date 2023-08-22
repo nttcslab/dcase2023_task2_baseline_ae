@@ -61,6 +61,73 @@ DCASE2020T2:
         - "06"
   section_keyword: id
 
+DCASE2021T2:
+  machine_type:
+    ToyCar:
+      dev:
+        - "00"
+        - "01"
+        - "02"
+      eval:
+        - "03"
+        - "04"
+        - "05"
+    ToyTrain:
+      dev:
+        - "00"
+        - "01"
+        - "02"
+      eval:
+        - "03"
+        - "04"
+        - "05"
+    fan:
+      dev:
+        - "00"
+        - "01"
+        - "02"
+      eval:
+        - "03"
+        - "04"
+        - "05"
+    gearbox:
+      dev:
+        - "00"
+        - "01"
+        - "02"
+      eval:
+        - "03"
+        - "04"
+        - "05"
+    slider:
+      dev:
+        - "00"
+        - "01"
+        - "02"
+      eval:
+        - "03"
+        - "04"
+        - "05"
+    pump:
+      dev:
+        - "00"
+        - "01"
+        - "02"
+      eval:
+        - "03"
+        - "04"
+        - "05"
+    valve:
+      dev:
+        - "00"
+        - "01"
+        - "02"
+      eval:
+        - "03"
+        - "04"
+        - "05"
+  section_keyword: section
+
 DCASE2022T2:
   machine_type:
     ToyCar:

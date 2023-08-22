@@ -1,0 +1,24 @@
+DCASE2023T2:
+  machine_type:
+    ToyDrone:
+      eval:
+        - "00"
+    ToyNscale:
+      eval:
+        - "00"
+    ToyTank:
+      eval:
+        - "00"
+    Vacuum:
+      eval:
+        - "00"
+    bandsaw:
+      eval:
+        - "00"
+    grinder:
+      eval:
+        - "00"
+    shaker:
+      eval:
+        - "00"
+  section_keyword: section

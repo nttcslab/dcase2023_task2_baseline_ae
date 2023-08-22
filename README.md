@@ -1,13 +1,13 @@
 # Anomalous Sound Detection
 ## DCASE 2023 Challenge Task 2 Baseline Auto Encoder: dcase2023_task2_baseline_ae
 
-This is audoencoder based baseline for the [DCASE2023 Challenge Task 2](https://dcase.community/challenge2023/).
+This is autoencoder based baseline for the [DCASE2023 Challenge Task 2](https://dcase.community/challenge2023/).
 
 This source code is an example implementation of the baseline Auto Encoder of DCASE 2023 Challenge Task 2: First-Shot Unsupervised Anomalous Sound Detection for Machine Condition Monitoring.
 
-This baseline implementation is based on the previous baseline, dcase2022_baseline_ae. The model parameter settings of this baseline AE are almost equivalent to those of the dcase2022\_task2\_baseline\_ae. 
+This baseline implementation is based on the previous baseline, dcase2022_baseline_ae. The model parameter settings of this baseline AE are almost equivalent to those of the dcase2022\_task2\_baseline\_ae.
 
-Difference between the previouse dcase2022_baseline_ae and this version are as follows:
+Difference between the previous dcase2022_baseline_ae and this version are as follows:
 
 - The dcase2022_baseline_ae was implemented with Keras; however, this version is written in PyTorch.
 - Date folder structure is updated to support DCASE 2023 Challenge Task 2 data sets.
@@ -21,12 +21,13 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
   - data_download_2023dev.sh
     - "Development dataset":
       - This script downloads development data files and put them into "data/dcase2023t2/dev_data/raw/train/" and "data/dcase2023t2/dev_data/raw/test/".
-  - data_download_2023add.sh **will be available later**
+  - data_download_2023add.sh **Newly added!!**
     - "Additional train dataset for Evaluation":
       - This script downloads evaluation data files and put them into "data/dcase2023t2/eval_data/raw/train". 
-  - data_download_2023eval.sh **will be available later**
+  - data_download_2023eval.sh **Newly added!!**
     - "Additional test dataset for Evaluation"
       - This script downloads evaluation data files and put them into "data/dcase2023t2/eval_data/raw/test". 
+      - Add reference labels to test data in "data/dcase2023t2/eval_data/raw/test" and put them into "data/dcase2023t2/eval_data/raw/test_rename". **Newly added!!**
 
 - 01_train.sh
   - "Development" mode:
@@ -41,9 +42,9 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
   
   - "Evaluation" mode:
-    - This script makes a csv file for each section inclusing the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation datset".)
+    - This script makes a csv file for each section including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
     - The csv files are stored in the directory `results/`.
-
+    - If you have `data/dcase2023t2/eval_data/raw/<machine_type>/test_rename/`, It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
 - 02b_test.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
   - "Development" mode:
     - This script makes a csv file for each section including the anomaly scores for each wav file in the directories `data/dcase2023t2/dev_data/raw/<machine_type>/test/`.
@@ -51,8 +52,9 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
   
   - "Evaluation" mode:
-    - This script makes a csv file for each section inclusing the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation datset".)
+    - This script makes a csv file for each section including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
     - The csv files are stored in the directory `results/`.
+    - If you have `data/dcase2023t2/eval_data/raw/<machine_type>/test_rename/`, It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
 
 - 03_summarize_results.sh
   - This script summarize results into a csv file.
@@ -68,11 +70,16 @@ Clone this repository from GitHub.
 We will launch the datasets in three stages. Therefore, please download the datasets in each stage:
 
   + "Development dataset"
-    + Download `dev\_data_<machine_type>.zip from [https://zenodo.org/record/7690148](https://zenodo.org/record/7690148).
-  + "Additional training dataset", i.e., the evaluation dataset for training
+    + ~~Download dev\_data_<machine_type>.zip from [https://zenodo.org/record/7690148](https://zenodo.org/record/7690148).~~ 
+    + ~~Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7690157](https://zenodo.org/record/7690157). **Updated on 2023/04/15**~~
+    + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7882613](https://zenodo.org/record/7882613). **Updated on 2023/05/01**
+
+  + "Additional training dataset", i.e., the evaluation dataset for training **Updated on 2023/04/15**
     + After April 15, 2023, download additional training dataset
-  + "Evaluation dataset", i.e., the evaluation dataset for test
+    + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/record/7830345](https://zenodo.org/record/7830345).
+  + "Evaluation dataset", i.e., the evaluation dataset for test **New! (2023/05/01)**
     + After May 1, 2023, download evaluation dataset.
+    + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/record/7860847](https://zenodo.org/record/7860847).
 
 ### 3. Unzip the downloaded files and make the directory structure as the followings:
    
@@ -110,7 +117,11 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section_00_target_train_normal_0000_.wav
           + ...
           + section_00_target_train_normal_0009_.wav
-        + test/
+        + test/ (after launch of the evaluation dataset)
+          + section_00_test_0000.wav
+          + ...
+          + section_00_test_0199.wav
+        + test_rename/ (convert from test directory using `tools/rename.py`)
           + section_00_source_test_normal_0000_.wav
           + ...
           + section_00_source_test_normal_0049_.wav
@@ -123,21 +134,30 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section_00_target_test_anomaly_0000_.wav 
           + ...
           + section_00_target_test_anomaly_0049_.wav
-        + test/ (after launch of the evaluation dataset)
-          + section_00_test_0000.wav
-          + ...
-          + section_00_test_0199.wav
         + attributes_00.csv (attributes csv for section 00)
      + <machine_type1_of_additional_dataset>/ (The other machine types have the same directory structure as <machine_type0_of_additional_dataset>/.)
+
+#### 3.1. Add reference labels to test data in eval data
+Run the `tools/rename_eval_wav.py`. This script add reference labels to test data in "data/dcase2023t2/eval_data/raw/test" and put them into "data/dcase2023t2/eval_data/raw/test_rename".
+
+```dotnetcli
+$ python tools/rename_eval_wev.py --dataset_parent_dir=data --dataset_type=DCASE2023T2
+```
+Note that this script is also used in `data_download_2023eval.sh`
 
 ### 4. Change parameters
 
 You can change parameters for feature extraction and model definition by editing `baseline.yaml`.
 Note that if values is specified with command line option, it will overwrite the parameter settings in `baseline.yaml`.
 
+### 4.1. Enable Auto download dataset
+
+If you didn't download dataset or you don't use download script (example, `data_download_2023dev.sh`) then you use auto download.
+You change the parameter `--is_auto_download` (default: `False`) in `baseline.yaml`. If `--is_auto_download` is `True`, then auto download is executed.
+
 ### 5. Run the training script (for the development dataset)
 
-Run the training script 01_train.sh. Use the option -d for the development dataset `data/dcase2023t2/dev_data/<machine_tyep>/raw/train/`.
+Run the training script 01_train.sh. Use the option -d for the development dataset `data/dcase2023t2/dev_data/<machine_type>/raw/train/`.
 
 ```dotnetcli
 $ 01_train.sh -d
@@ -148,8 +168,8 @@ After the parameter update of the Autoencoder at the last epoch specified by eit
 
 ### 6. Run the test script (for the development dataset)
 
-### 6.1. Testing with the Simple Audoencoder mode
-Run the test script `02a_test.sh`. Use the option `-d` for the development dataset `data/dcase2023t2/dev_data/<machine_tyep>/raw/test/`.
+### 6.1. Testing with the Simple Autoencoder mode
+Run the test script `02a_test.sh`. Use the option `-d` for the development dataset `data/dcase2023t2/dev_data/<machine_type>/raw/test/`.
 
 ```dotnetcli
 $ 02a_test.sh -d
@@ -160,7 +180,7 @@ A csv file for each section including the anomaly scores will be stored in the d
 
 
 ### 6.2. Testing with the Selective Mahalanobis mode
-Run the test script `02a_test.sh`. Use the option `-d` for the development dataset `data/dcase2023t2/dev_data/<machine_tyep>/raw/test/`.
+Run the test script `02b_test.sh`. Use the option `-d` for the development dataset `data/dcase2023t2/dev_data/<machine_type>/raw/test/`.
 
 ```dotnetcli
 $ 02b_test.sh -d
@@ -197,7 +217,7 @@ section_00_source_test_normal_0003_car_A2_spd_28V_mic_1_noise_1.wav,0
 ...
 ```
 
-In addition, you can check performance indicatiors such as AUC, pAUC, precision, recall, and F1-score:
+In addition, you can check performance indicators such as AUC, pAUC, precision, recall, and F1-score:
 
 `result.csv`
 
@@ -228,7 +248,7 @@ After the evaluation dataset for test is launched, download and unzip it. Move i
 $ 02a_test.sh -e
 ```
 
-Anomaly scores are calculated usijng the evaluation dataset, i.e., `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as csv files in the directory `results/`. You can submit the csv files for the challenge. From the submitted csv files, we will calculate AUC, pAUC, and your ranking.
+Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as csv files in the directory `results/`. You can submit the csv files for the challenge. From the submitted csv files, we will calculate AUC, pAUC, and your ranking.
 
 ### 9.2. Testing with the Selective Mahalanobis mode
 
@@ -238,8 +258,30 @@ After the evaluation dataset for test is launched, download and unzip it. Move i
 $ 02b_test.sh -e
 ```
 
-Anomaly scores are calculated usijng the evaluation dataset, i.e., `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as csv files in the directory `results/`. You can submit the csv files for the challenge. From the submitted csv files, we will calculate AUC, pAUC, and your ranking.
+Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as csv files in the directory `results/`. You can submit the csv files for the challenge. From the submitted csv files, we will calculate AUC, pAUC, and your ranking.
 
+### 10. Summarize results
+
+After the executed `02a_test.sh`, `02b_test.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2023T2 -d` or `DCASE2023T2 -e`.
+
+```dotnetcli
+# Summarize development dataset
+$ 03_summarize_results.sh DCASE2023T2 -d
+
+# Summarize evaluation dataset
+$ 03_summarize_results.sh DCASE2023T2 -e
+```
+
+After summarized, results csv are export to `results/dev_data/baseline/summarize/DCASE2023T2` or `results/eval_data/baseline/summarize/DCASE2023T2`.
+
+If you want to change summarize results directory or export directory, edit `03_summarize_results.sh`.
+
+## Legacy support
+
+You can use DCASE2020 task2, DCASE2021 task2, and DCASE2022 task2 dataset for inputs.
+Legacy support script are similar to main scripts. These are in `tools` directory.
+
+[learn more](README_legacy.md)
 
 ## Dependency
 
@@ -262,6 +304,7 @@ We develop the source code on Ubuntu 18.04.6 LTS.
 - matplotlib == 3.7.0
 - tqdm == 4.63
 - seaborn == 0.12.2
+- fasteners == 0.18
 
 ## Citation
 

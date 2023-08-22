@@ -30,12 +30,12 @@ class DCASE202XT2(object):
             print("please set option argument '--dev' or '--eval'")
             sys.exit()
 
-        self.machine_type_dict = get_machine_type_dict(dataset_name)["machine_type"]
+        self.machine_type_dict = get_machine_type_dict(dataset_name, mode=args.dev)["machine_type"]
         self.section_id_list = self.machine_type_dict[machine_type][data_type]
         self.num_classes = len(self.section_id_list)
         print("num classes: %d" % (self.num_classes))
         self.id_list = [int(machine_id) for machine_id in self.section_id_list]
-        section_keyword = get_machine_type_dict(dataset_name)["section_keyword"]
+        section_keyword = get_machine_type_dict(dataset_name, mode=args.dev)["section_keyword"]
         train_data = DCASE202XT2Loader(
                 data_path,
                 dataset_name=dataset_name,
@@ -70,6 +70,8 @@ class DCASE202XT2(object):
         )
 
         self.test_loader = []
+        if args.train_only:
+            return
         for id in self.section_id_list:
            _test_loader = DCASE202XT2Loader(
                 data_path,
@@ -100,15 +102,21 @@ class DCASE202XT2(object):
            self.mode = args.dev or _test_loader.mode
 
 
-
 class Datasets:
-    DatasetsDic = {        
+    DatasetsDic = {
+        'DCASE2023T2bandsaw':DCASE202XT2,
         'DCASE2023T2bearing':DCASE202XT2,
         'DCASE2023T2fan':DCASE202XT2,
+        'DCASE2023T2grinder':DCASE202XT2,
         'DCASE2023T2gearbox':DCASE202XT2,
+        'DCASE2023T2shaker':DCASE202XT2,
         'DCASE2023T2slider':DCASE202XT2,
         'DCASE2023T2ToyCar':DCASE202XT2,
+        'DCASE2023T2ToyDrone':DCASE202XT2,
+        'DCASE2023T2ToyNscale':DCASE202XT2,
+        'DCASE2023T2ToyTank':DCASE202XT2,
         'DCASE2023T2ToyTrain':DCASE202XT2,
+        'DCASE2023T2Vacuum':DCASE202XT2,
         'DCASE2023T2valve':DCASE202XT2,
         'DCASE2022T2bearing':DCASE202XT2,
         'DCASE2022T2fan':DCASE202XT2,
@@ -117,6 +125,13 @@ class Datasets:
         'DCASE2022T2ToyCar':DCASE202XT2,
         'DCASE2022T2ToyTrain':DCASE202XT2,
         'DCASE2022T2valve':DCASE202XT2,
+        'DCASE2021T2fan':DCASE202XT2,
+        'DCASE2021T2gearbox':DCASE202XT2,
+        'DCASE2021T2pump':DCASE202XT2,
+        'DCASE2021T2slider':DCASE202XT2,
+        'DCASE2021T2ToyCar':DCASE202XT2,
+        'DCASE2021T2ToyTrain':DCASE202XT2,
+        'DCASE2021T2valve':DCASE202XT2,
         'DCASE2020T2ToyCar':DCASE202XT2,
         'DCASE2020T2ToyConveyor': DCASE202XT2,
         'DCASE2020T2fan':DCASE202XT2,
