@@ -20,7 +20,15 @@ import yaml
 import urllib.request
 import urllib.error
 import zipfile
-
+import shutil
+import time
+import fasteners
+import pickle
+import pickletools
+import time
+import datetime
+from enum import Enum, auto
+from tools.rename_eval_wav import copy_wav as rename_wav
 ########################################################################
 
 
@@ -47,6 +55,16 @@ logger.addHandler(handler)
 # version
 ########################################################################
 __versions__ = "1.0.0"
+########################################################################
+
+
+########################################################################
+# download dataset parameter
+########################################################################
+DOWNLOAD_PATH_YAML_DICT = {
+    "DCASE2023T2":"datasets/download_path_2023.yaml",
+    "legacy":"datasets/download_path_legacy.yaml",
+}        
 ########################################################################
 
 
@@ -132,7 +150,7 @@ def file_to_vectors(file_name,
     if n_vectors < 1:
         return np.empty((0, dims))
 
-    # generate feature vectors by concatenating multiframes
+    # generate feature vectors by concatenating multi frames
     vectors = np.zeros((n_vectors, dims))
     for t in range(n_frames):
         vectors[:, n_mels * t : n_mels * (t + 1)] = log_mel_spectrogram[:, t : t + n_vectors].T
@@ -285,7 +303,7 @@ def file_list_generator(target_dir,
 
     # evaluation
     else:
-        query = os.path.abspath("{target_dir}/{dir_name}/{section_name}_*.{ext}".format(target_dir=target_dir,
+        query = os.path.abspath("{target_dir}/{dir_name}/*{section_name}_*.{ext}".format(target_dir=target_dir,
                                                                                                      dir_name=dir_name,
                                                                                                      section_name=section_name,
                                                                                                      ext=ext))
@@ -311,34 +329,133 @@ def file_list_generator(target_dir,
 
 def download_raw_data(
     target_dir,
+    dir_name,
     machine_type,
     data_type,
-    download_path_yaml,
     dataset,
+    root
 ):
+    if dataset == "DCASE2023T2":
+        download_path_yaml = DOWNLOAD_PATH_YAML_DICT["DCASE2023T2"]
+    else:
+        download_path_yaml = DOWNLOAD_PATH_YAML_DICT["legacy"]
+    
     if not os.path.exists(target_dir):
         os.makedirs(target_dir, exist_ok=True)
 
     with open(download_path_yaml, "r") as f:
         file_url = yaml.safe_load(f)[dataset]
 
+    lock_file_path = get_lockfile_path(target_dir=target_dir)
+    if os.path.exists(f"{target_dir}/{dir_name}") and not os.path.isfile(lock_file_path):
+        print(f"{target_dir}/{dir_name} is already downloaded")
+        return
+    print(f"{target_dir}/{dir_name} is not directory.\nperform dataset download.")
+
+    lock = fasteners.InterProcessReaderWriterLock(lock_file_path)
+    try:
+        lock.acquire_write_lock()
+    except:
+        print(f"{target_dir}/{dir_name} is already downloaded")
+        return
+
+    if os.path.exists(f"{target_dir}/{dir_name}"):
+        print(f"{target_dir}/{dir_name} is already downloaded")
+        release_write_lock(
+            lock=lock,
+            lock_file_path=lock_file_path,
+        )
+        return
+
     for i in np.arange(len(file_url[machine_type][data_type])):
-        zip_file_path = f"{target_dir}/{dataset}{machine_type}_{data_type}_{i}.zip"
+        zip_file_basename = os.path.basename(file_url[machine_type][data_type][i])
+        zip_file_path = f"{target_dir}/../{zip_file_basename}"
         try:
-            print("Downloading...")
-            with urllib.request.urlopen(file_url[machine_type][data_type][i]) as download_file:
-                data = download_file.read()
-                with open(zip_file_path, mode='wb') as save_file:
-                    save_file.write(data)
+            if not zipfile.is_zipfile(zip_file_path):
+                print(f"Downloading...\n\tURL: {file_url[machine_type][data_type][i]}\r\tDownload: {zip_file_path}")
+                urllib.request.urlretrieve(
+                    file_url[machine_type][data_type][i],
+                    zip_file_path,
+                    urllib_progress
+                )
         except urllib.error.URLError as e:
             print(e)
+            print("retry dataset download")
+            download_raw_data(
+                target_dir,
+                dir_name,
+                machine_type,
+                data_type,
+                dataset,
+                root
+            )
+            return
 
-        if os.path.exists(zip_file_path):
-            print("unzip...")
-            with zipfile.ZipFile(zip_file_path) as obj_zip:
-                obj_zip.extractall(target_dir)
+        with zipfile.ZipFile(zip_file_path, "r") as obj_zip:
+            zip_infos = obj_zip.infolist()
+            for zip_info in zip_infos:
+                if zip_info.is_dir():
+                    os.makedirs(f"{target_dir}/../{zip_info.filename}", exist_ok=True)
+                elif not os.path.exists(f"{target_dir}/../{zip_info.filename}"):
+                    sys.stdout.write(f"\runzip: {target_dir}/../{zip_info.filename}")
+                    obj_zip.extract(zip_info, f"{target_dir}/../")                    
+            print("\n")
+    
+    if dataset == "DCASE2021T2":
+        test_data_path = f"{target_dir}/test"
+        split_data_path_list = [
+            f"{target_dir}/source_test",
+            f"{target_dir}/target_test",
+        ]
+        os.makedirs(test_data_path, exist_ok=True)
+        for split_data_path in split_data_path_list:
+            shutil.copytree(split_data_path, test_data_path, dirs_exist_ok=True)
 
+    if data_type == "eval":
+        rename_wav(
+            dataset_parent_dir=root,
+            dataset_type=dataset,
+        )
+
+    release_write_lock(
+        lock=lock,
+        lock_file_path=lock_file_path
+    )
     return
+
+def urllib_progress (block_count, block_size, total_size):
+    progress_value = block_count * block_size / total_size * 100
+    sys.stdout.write(f"\r{block_count*block_size/(1024**2):.2f}MB / {total_size/(1024**2):.2f}MB ({progress_value:.2f}%%)")
+
+def get_lockfile_path(target_dir):
+    return f"{target_dir}/lockfile"
+
+def release_write_lock(lock, lock_file_path):
+    print(f"{datetime.datetime.now()}\trelease write lock : {lock_file_path}")
+    lock.release_write_lock()
+    if os.path.isfile(lock_file_path):
+        try:
+            os.remove(lock_file_path)
+        except OSError:
+            print(f"can not remove {lock_file_path}")
+
+def release_read_lock(lock, lock_file_path):
+    print(f"{datetime.datetime.now()}\trelease read lock : {lock_file_path}")
+    lock.release_read_lock()
+    if os.path.isfile(lock_file_path):
+        try:
+            os.remove(lock_file_path)
+        except OSError:
+            print(f"can not remove {lock_file_path}")
+
+def is_enabled_pickle(pickle_path):
+    opcodes = []
+    with open(pickle_path, "rb") as f:
+        pickle = f.read()
+        output = pickletools.genops(pickle=pickle)
+        for opcode in output:
+            opcodes.append(opcode[0])
+    return ("PROTO","STOP") == (opcodes[0].name, opcodes[-1].name)
 
 ########################################################################
 # get machine type and section id in yaml
@@ -350,7 +467,7 @@ YAML_PATH = {
 }
 
 def get_machine_type_dict(dataset_name, mode=True):
-    if dataset_name in ["DCASE2020T2", "DCASE2022T2"]:
+    if dataset_name in ["DCASE2020T2", "DCASE2021T2", "DCASE2022T2"]:
         yaml_path = YAML_PATH["legacy"]
     elif dataset_name == "DCASE2023T2" and not mode:
         yaml_path = YAML_PATH["DCASE2023T2_eval"]

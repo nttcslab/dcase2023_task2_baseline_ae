@@ -73,6 +73,8 @@ class DCASE2023T2AE(BaseModel):
         for batch_idx, batch in enumerate(tqdm(train_loader)):
             data = batch[0]
             data = data.to(self.device).float()
+            if data.shape[0] <= 1:
+                continue
             data_name_list = batch[3]
             machine_id = torch.argmax(batch[2], dim=1).long()
             machine_id = machine_id.to(self.device)
@@ -304,12 +306,14 @@ class DCASE2023T2AE(BaseModel):
         )
         for idx, test_loader_tmp in enumerate(self.test_loader):
             section_name = f"section_{self.data.section_id_list[idx]}"
+            result_dir = self.result_dir if self.args.dev else self.eval_data_result_dir
+
             # setup anomaly score file path
-            anomaly_score_csv = self.result_dir/f"anomaly_score_{self.args.dataset}_{section_name}_{dir_name}_seed{self.args.seed}{self.model_name_suffix}{self.eval_suffix}.csv"
+            anomaly_score_csv = result_dir/f"anomaly_score_{self.args.dataset}_{section_name}_{dir_name}_seed{self.args.seed}{self.model_name_suffix}{self.eval_suffix}.csv"
             anomaly_score_list = []
 
             # setup decision result file path
-            decision_result_csv = self.result_dir/f"decision_result_{self.args.dataset}_{section_name}_{dir_name}_seed{self.args.seed}{self.model_name_suffix}{self.eval_suffix}.csv"
+            decision_result_csv = result_dir/f"decision_result_{self.args.dataset}_{section_name}_{dir_name}_seed{self.args.seed}{self.model_name_suffix}{self.eval_suffix}.csv"
             decision_result_list = []
 
             domain_list = None
@@ -410,12 +414,6 @@ class DCASE2023T2AE(BaseModel):
                     performance.append([auc_s, p_auc, prec_s, recall_s, f1_s])
                     performance_over_all.append([auc_s, p_auc, prec_s, recall_s, f1_s])
 
-            else:
-                if int(self.data.section_id_list[idx]) in self.args.use_ids:
-                    self.copy_eval_data_score(
-                        decision_result_csv_path = decision_result_csv,
-                        anomaly_score_csv_path = anomaly_score_csv,
-                    )
             
             print("\n============ END OF TEST FOR A SECTION ============")
 
@@ -430,12 +428,12 @@ class DCASE2023T2AE(BaseModel):
             # output results
             anm_score_figdata.show_fig(
                 title=self.args.model+"_"+self.args.dataset+self.model_name_suffix+self.eval_suffix+"_anm_score",
-                export_dir=self.result_dir
+                export_dir=result_dir
             )
         else:
             return
         
-        result_path = self.result_dir/f"result_{self.args.dataset}_{dir_name}_seed{self.args.seed}{self.model_name_suffix}{self.eval_suffix}_roc.csv"
+        result_path = result_dir/f"result_{self.args.dataset}_{dir_name}_seed{self.args.seed}{self.model_name_suffix}{self.eval_suffix}_roc.csv"
         print("results -> {}".format(result_path))
         save_csv(save_file_path=result_path, save_data=csv_lines)
    

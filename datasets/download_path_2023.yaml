@@ -1,0 +1,50 @@
+DCASE2023T2:
+  bearing:
+    dev:
+      - https://zenodo.org/record/7882613/files/dev_bearing.zip
+  fan:
+    dev:
+      - https://zenodo.org/record/7882613/files/dev_fan.zip
+  gearbox:
+    dev:
+      - https://zenodo.org/record/7882613/files/dev_gearbox.zip
+  slider:
+    dev:
+      - https://zenodo.org/record/7882613/files/dev_slider.zip
+  ToyCar:
+    dev:
+      - https://zenodo.org/record/7882613/files/dev_ToyCar.zip
+  ToyTrain:
+    dev:
+      - https://zenodo.org/record/7882613/files/dev_ToyTrain.zip
+  valve:
+    dev:
+      - https://zenodo.org/record/7882613/files/dev_valve.zip
+  bandsaw:
+    eval:
+      - https://zenodo.org/record/7830345/files/eval_data_bandsaw_train.zip
+      - https://zenodo.org/record/7860847/files/eval_data_bandsaw_test.zip
+  grinder:
+    eval:
+      - https://zenodo.org/record/7830345/files/eval_data_grinder_train.zip
+      - https://zenodo.org/record/7860847/files/eval_data_grinder_test.zip
+  shaker:
+    eval:
+      - https://zenodo.org/record/7830345/files/eval_data_shaker_train.zip
+      - https://zenodo.org/record/7860847/files/eval_data_shaker_test.zip
+  ToyDrone:
+    eval:
+      - https://zenodo.org/record/7830345/files/eval_data_ToyDrone_train.zip
+      - https://zenodo.org/record/7860847/files/eval_data_ToyDrone_test.zip
+  ToyNscale:
+    eval:
+      - https://zenodo.org/record/7830345/files/eval_data_ToyNscale_train.zip
+      - https://zenodo.org/record/7860847/files/eval_data_ToyNscale_test.zip
+  ToyTank:
+    eval:
+      - https://zenodo.org/record/7830345/files/eval_data_ToyTank_train.zip
+      - https://zenodo.org/record/7860847/files/eval_data_ToyTank_test.zip
+  Vacuum:
+    eval:
+      - https://zenodo.org/record/7830345/files/eval_data_Vacuum_train.zip
+      - https://zenodo.org/record/7860847/files/eval_data_Vacuum_test.zip

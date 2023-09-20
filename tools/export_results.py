@@ -158,6 +158,8 @@ def main(parent_dir, dataset, machine_type_dict, row_index=["arithmetic mean", "
                     for column in df_describe.columns.values:
                         summarize_df.at[target_dir, column] = df_describe.at[target_dir, column]
         auc_header = [column for column in columns_header if "AUC" in column]
+        if "pAUC" in auc_header:
+            auc_header = [column for column in auc_header if "pAUC" not in column or column == "pAUC"]
         df_mean.loc[target_dir, list(columns_header)] = stats.hmean(np.maximum(df_target.loc[:,list(columns_header)], sys.float_info.epsilon),axis=0)
         df_mean.loc[target_dir, "TOTAL_hmean"] = stats.hmean(np.maximum(df_target.loc[:,auc_header], sys.float_info.epsilon),axis=None)
         df_mean.loc[target_dir, "TOTAL_ave"] = df_target.loc[:,auc_header].to_numpy().mean()
@@ -181,10 +183,23 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser(
             description='Main function to call training for different AutoEncoders')
     parser.add_argument("parent_dir", type=str)
-    parser.add_argument("--dataset", type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2022T2", "DCASE2023T2"])
+    parser.add_argument("--dataset", type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2"])
+    parser.add_argument('-d', '--dev', action='store_true',
+                        help='Use Development dataset')
+    parser.add_argument('-e', '--eval', action='store_true',
+                        help='Use Evaluation dataset')
     args = parser.parse_args()
 
-    machine_type_dict = get_machine_type_dict(dataset_name=args.dataset)
+    if args.eval:
+        dev_mode = False
+    elif args.dev:
+        dev_mode = True
+    else:
+        print("incorrect argument")
+        print("please set option argument '--dev' or '--eval'")
+        sys.exit()
+
+    machine_type_dict = get_machine_type_dict(dataset_name=args.dataset, mode=dev_mode)
 
     main(
         parent_dir=args.parent_dir,

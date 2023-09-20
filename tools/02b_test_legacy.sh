@@ -18,6 +18,7 @@ score="MAHALA"
 args_flag=0
 args_flag_dataset=0
 if [ "${dataset}" != "DCASE2020T2" ] \
+    && [ "${dataset}" != "DCASE2021T2" ] \
     && [ "${dataset}" != "DCASE2022T2" ]
 then
     args_flag=1
@@ -37,13 +38,14 @@ fi
 if [ $args_flag -eq 1 ]
 then
     echo "$0: argument error"
-    echo -e "usage\t: $0 ['DCASE2020T2' | 'DCASE2022T2'] ['-d' | '--dev' | '-e' | '--eval']"
+    echo -e "usage\t: $0 ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2'] ['-d' | '--dev' | '-e' | '--eval']"
 
     if [ $args_flag_dataset -eq 1 ]
     then
         echo -e "\tdataset: invalid choice '$dataset'"
-        echo -e "\tchoice from ['DCASE2020T2' | 'DCASE2022T2']."
+        echo -e "\tchoice from ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2']."
         echo -e "\t\tDCASE2020T2\t: Use DCASE2020 Task2 datasets. "
+        echo -e "\t\tDCASE2021T2\t: Use DCASE2021 Task2 datasets. "
         echo -e "\t\tDCASE2022T2\t: Use DCASE2022 Task2 datasets. "
         echo 
     fi
@@ -73,6 +75,20 @@ for job in "test_ae.sh"; do
             done
         else # $dev_eval = "-e" || $dev_eval = "--eval"
             for machine_type in DCASE2022T2bearing DCASE2022T2fan DCASE2022T2gearbox DCASE2022T2slider DCASE2022T2ToyCar DCASE2022T2ToyTrain DCASE2022T2valve; do
+                ${base_job} $job ${machine_type} ${dev_eval} ${score} 3
+                ${base_job} $job ${machine_type} ${dev_eval} ${score} 4
+                ${base_job} $job ${machine_type} ${dev_eval} ${score} 5
+            done
+        fi
+    elif [ $dataset = "DCASE2021T2" ]; then
+        if [ $dev_eval = "-d" ] || [ $dev_eval = "--dev" ]; then
+            for machine_type in DCASE2021T2fan DCASE2021T2gearbox DCASE2021T2pump DCASE2021T2slider DCASE2021T2ToyCar DCASE2021T2ToyTrain DCASE2021T2valve; do
+                ${base_job} $job ${machine_type} ${dev_eval} ${score} 0
+                ${base_job} $job ${machine_type} ${dev_eval} ${score} 1
+                ${base_job} $job ${machine_type} ${dev_eval} ${score} 2
+            done
+        else # $dev_eval = "-e" || $dev_eval = "--eval"
+            for machine_type in DCASE2021T2fan DCASE2021T2gearbox DCASE2021T2pump DCASE2021T2slider DCASE2021T2ToyCar DCASE2021T2ToyTrain DCASE2021T2valve; do
                 ${base_job} $job ${machine_type} ${dev_eval} ${score} 3
                 ${base_job} $job ${machine_type} ${dev_eval} ${score} 4
                 ${base_job} $job ${machine_type} ${dev_eval} ${score} 5

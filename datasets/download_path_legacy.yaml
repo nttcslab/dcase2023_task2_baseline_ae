@@ -36,6 +36,50 @@ DCASE2020T2:
       - https://zenodo.org/record/3727685/files/eval_data_train_pump.zip
       - https://zenodo.org/record/3841772/files/eval_data_test_pump.zip
 
+DCASE2021T2:
+  fan:
+    dev:
+      - https://zenodo.org/record/4562016/files/dev_data_fan.zip
+    eval:
+      - https://zenodo.org/record/4660992/files/eval_data_fan_train.zip
+      - https://zenodo.org/record/4884786/files/eval_data_fan_test.zip
+  gearbox:
+    dev:
+      - https://zenodo.org/record/4562016/files/dev_data_gearbox.zip
+    eval:
+      - https://zenodo.org/record/4660992/files/eval_data_gearbox_train.zip
+      - https://zenodo.org/record/4884786/files/eval_data_gearbox_test.zip
+  pump:
+    dev:
+      - https://zenodo.org/record/4562016/files/dev_data_pump.zip
+    eval:
+      - https://zenodo.org/record/4660992/files/eval_data_pump_train.zip
+      - https://zenodo.org/record/4884786/files/eval_data_pump_test.zip
+  slider:
+    dev:
+      - https://zenodo.org/record/4562016/files/dev_data_slider.zip
+    eval:
+      - https://zenodo.org/record/4660992/files/eval_data_slider_train.zip
+      - https://zenodo.org/record/4884786/files/eval_data_slider_test.zip
+  ToyCar:
+    dev:
+      - https://zenodo.org/record/4562016/files/dev_data_ToyCar.zip
+    eval:
+      - https://zenodo.org/record/4660992/files/eval_data_ToyCar_train.zip
+      - https://zenodo.org/record/4884786/files/eval_data_ToyCar_test.zip
+  ToyTrain:
+    dev:
+      - https://zenodo.org/record/4562016/files/dev_data_ToyTrain.zip
+    eval:
+      - https://zenodo.org/record/4660992/files/eval_data_ToyTrain_train.zip
+      - https://zenodo.org/record/4884786/files/eval_data_ToyTrain_test.zip
+  valve:
+    dev:
+      - https://zenodo.org/record/4562016/files/dev_data_valve.zip
+    eval:
+      - https://zenodo.org/record/4660992/files/eval_data_valve_train.zip
+      - https://zenodo.org/record/4884786/files/eval_data_valve_test.zip
+
 DCASE2022T2:
   bearing:
     dev:

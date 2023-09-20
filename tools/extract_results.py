@@ -10,7 +10,7 @@ if __name__ == "__main__":
 from datasets.loader_common import get_machine_type_dict
 
 SCORE_COLUMNS = ["h-mean", "a-mean"]
-SCORE_INDEXES = ["AUC (source)", "AUC (target)", "pAUC (source, target)", "AUC", "pAUC", "TOTAL score"]
+SCORE_INDEXES = ["AUC (source)", "AUC (target)", "pAUC (source, target)", "pAUC (source)", "pAUC (target)", "AUC", "pAUC", "TOTAL score"]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -18,16 +18,31 @@ if __name__ == "__main__":
     parser.add_argument("parent_dir", type=str)
     parser.add_argument("--file_name", type=str, default="auc_pauc")
     parser.add_argument("--ext", type=str, default=".csv")
-    parser.add_argument("--dataset", type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2022T2", "DCASE2023T2"])
+    parser.add_argument("--dataset", type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2"])
     parser.add_argument("--float_format", type=str, default="%.4f")
+    parser.add_argument('-d', '--dev', action='store_true',
+                        help='Use Development dataset')
+    parser.add_argument('-e', '--eval', action='store_true',
+                        help='Use Evaluation dataset')
     args = parser.parse_args()
+
+    if args.eval:
+        dev_mode = False
+        dev_eval = "eval"
+    elif args.dev:
+        dev_mode = True
+        dev_eval="dev"
+    else:
+        print("incorrect argument")
+        print("please set option argument '--dev' or '--eval'")
+        sys.exit()
 
     float_format = args.float_format
     if float_format in ["None", "none", "", " "]:
         float_format = None
 
     file_path = f"{args.parent_dir}/{args.dataset}_{args.file_name}{args.ext}"
-    machine_type_dict = get_machine_type_dict(dataset_name=args.dataset)
+    machine_type_dict = get_machine_type_dict(dataset_name=args.dataset, mode=dev_mode)
     machine_type_list = list(machine_type_dict["machine_type"].keys())
 
     all_summarize_df = pd.read_csv(file_path, index_col=0)
@@ -47,7 +62,7 @@ if __name__ == "__main__":
     for domain in ["source", "target"]:
         is_pick_mean = False
         for machine_type in machine_type_list:
-            loc_column = f"{machine_type}_dev_arithmetic mean_AUC ({domain})"
+            loc_column = f"{machine_type}_{dev_eval}_arithmetic mean_AUC ({domain})"
             if loc_column in all_summarize_df.columns.values.tolist():
                 is_pick_mean = True
                 for index in all_summarize_df.index:
@@ -63,7 +78,7 @@ if __name__ == "__main__":
     is_pick_mean = False
     if not use_source_target:
         for machine_type in machine_type_list:
-            loc_column = f"{machine_type}_dev_arithmetic mean_AUC"
+            loc_column = f"{machine_type}_{dev_eval}_arithmetic mean_AUC"
             if loc_column in all_summarize_df.columns.values.tolist():
                 is_pick_mean = True
                 for index in all_summarize_df.index:
@@ -75,17 +90,22 @@ if __name__ == "__main__":
 
     # pAUC
     is_pick_mean = False
-    extract_column = "pAUC (source, target)" if use_source_target else "pAUC"
-    for machine_type in machine_type_list:
-        loc_column = f"{machine_type}_dev_arithmetic mean_pAUC"
-        if loc_column in all_summarize_df.columns.values.tolist():
-            is_pick_mean = True
+    extract_columns = ["pAUC (source, target)"] if use_source_target else ["pAUC"]
+    pickup_columns = ["pAUC"]
+    if use_source_target and not any([pickup_columns[0] in c for c in all_summarize_df.columns]):
+        extract_columns = ["pAUC (source)", "pAUC (target)"]
+        pickup_columns = ["pAUC (source)", "pAUC (target)"]
+    for pickup_column, extract_column in zip(pickup_columns, extract_columns):
+        for machine_type in machine_type_list:
+            loc_column = f"{machine_type}_{dev_eval}_arithmetic mean_{pickup_column}"
+            if loc_column in all_summarize_df.columns.values.tolist():
+                is_pick_mean = True
+                for index in all_summarize_df.index:
+                    extract_df.at[(index, extract_column), machine_type] = all_summarize_df.loc[index, loc_column]
+        if is_pick_mean:
             for index in all_summarize_df.index:
-                extract_df.at[(index, extract_column), machine_type] = all_summarize_df.loc[index, loc_column]
-    if is_pick_mean:
-        for index in all_summarize_df.index:
-            extract_df.at[(index, extract_column), "a-mean"] = all_summarize_df.loc[index, f"ALL_pAUC_ave"]
-            extract_df.at[(index, extract_column), "h-mean"] = all_summarize_df.loc[index, f"ALL_pAUC_hmean"]
+                extract_df.at[(index, extract_column), "a-mean"] = all_summarize_df.loc[index, f"ALL_{pickup_column}_ave"]
+                extract_df.at[(index, extract_column), "h-mean"] = all_summarize_df.loc[index, f"ALL_{pickup_column}_hmean"]
 
     # Total score
     for index in all_summarize_df.index:
