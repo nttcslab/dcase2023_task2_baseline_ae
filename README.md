@@ -306,6 +306,22 @@ We developed and tested the source code on Ubuntu 18.04.6 LTS.
 - seaborn == 0.12.2
 - fasteners == 0.18
 
+## Change Log
+
+### [2.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v2.0.1)
+
+#### Fixed
+
+- Fix anomaly score distribution.
+- Decision threshold has changed, but AUC, pAUC, etc. have not changed.
+
+### [2.0.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v2.0.0)
+
+#### Added
+
+- provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
+
+
 ## Citation
 
 If you use this system, please cite all the following four papers:
