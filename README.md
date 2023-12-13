@@ -268,6 +268,21 @@ We develop the source code on Ubuntu 18.04.6 LTS.
 - tqdm == 4.63
 - seaborn == 0.12.2
 
+## Change Log
+
+### [1.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v1.0.1)
+
+#### Fixed
+
+- Fix anomaly score distribution.
+- Decision threshold has changed, but AUC, pAUC, etc. have not changed.
+
+### [1.0.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v1.0.0)
+
+#### Added
+
+- This version is the one officially provided for the DCASE2023 Challenge Task 2.
+
 ## Citation
 
 If you use this system, please cite all the following four papers:

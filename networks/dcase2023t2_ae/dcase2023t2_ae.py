@@ -197,7 +197,7 @@ class DCASE2023T2AE(BaseModel):
                 val_loss += float(loss)
                 
                 # calculate y_pred for fitting anomaly score distribution
-                y_pred.append(self.loss.item())
+                y_pred.append(loss.item())
 
         if not is_calc_cov:
             # plot train log
