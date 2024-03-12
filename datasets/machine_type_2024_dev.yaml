@@ -1,0 +1,9 @@
+DCASE2023T2:
+  machine_type:
+    ToyCar:
+      dev:
+        - "00"
+    ToyTrain:
+      dev:
+        - "00"
+  section_keyword: section

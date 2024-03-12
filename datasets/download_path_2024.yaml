@@ -1,0 +1,7 @@
+DCASE2024T2:
+  ToyCar:
+    dev:
+      - /files/dev_ToyCar.zip
+  ToyTrain:
+    dev:
+      - /files/dev_ToyTrain.zip
