@@ -1,22 +1,22 @@
 DCASE2024T2:
   bearing:
     dev:
-      - https://zenodo.org/record/dummy/files/dev_bearing.zip
+      - https://zenodo.org/record/10850880/files/dev_bearing.zip
   fan:
     dev:
-      - https://zenodo.org/record/dummy/files/dev_fan.zip
+      - https://zenodo.org/record/10850880/files/dev_fan.zip
   gearbox:
     dev:
-      - https://zenodo.org/record/dummy/files/dev_gearbox.zip
+      - https://zenodo.org/record/10850880/files/dev_gearbox.zip
   slider:
     dev:
-      - https://zenodo.org/record/dummy/files/dev_slider.zip
+      - https://zenodo.org/record/10850880/files/dev_slider.zip
   ToyCar:
     dev:
-      - https://zenodo.org/record/dummy/files/dev_ToyCar.zip
+      - https://zenodo.org/record/10850880/files/dev_ToyCar.zip
   ToyTrain:
     dev:
-      - https://zenodo.org/record/dummy/files/dev_ToyTrain.zip
+      - https://zenodo.org/record/10850880/files/dev_ToyTrain.zip
   valve:
     dev:
-      - https://zenodo.org/record/dummy/files/dev_valve.zip
+      - https://zenodo.org/record/10850880/files/dev_valve.zip
