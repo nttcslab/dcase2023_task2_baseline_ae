@@ -62,7 +62,7 @@ if __name__ == "__main__":
             description='Main function to call training for different AutoEncoders')
     parser.add_argument("--dataset_parent_dir", type=str, default="data",
                         help="saving datasets directory name.")
-    parser.add_argument("--dataset_type", type=str, required=True, choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2"],
+    parser.add_argument("--dataset_type", type=str, required=True, choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2", "DCASE2024T2"],
                         help="what Dataset name to renamed.")
     args = parser.parse_args()
 
