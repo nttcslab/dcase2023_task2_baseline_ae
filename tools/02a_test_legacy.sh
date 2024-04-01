@@ -48,7 +48,7 @@ then
         echo -e "\t\tDCASE2020T2\t: Use DCASE2020 Task2 datasets. "
         echo -e "\t\tDCASE2021T2\t: Use DCASE2021 Task2 datasets. "
         echo -e "\t\tDCASE2022T2\t: Use DCASE2022 Task2 datasets. "
-        echo -e "\t\tDCASE2022T2\t: Use DCASE2023 Task2 datasets. "
+        echo -e "\t\tDCASE2023T2\t: Use DCASE2023 Task2 datasets. "
         echo 
     fi
 
@@ -77,6 +77,7 @@ for job in "test_ae.sh"; do
             for machine_type in DCASE2023T2ToyDrone DCASE2023T2ToyNscale DCASE2023T2ToyTank DCASE2023T2Vacuum DCASE2023T2bandsaw DCASE2023T2grinder DCASE2023T2shaker; do
                 ${base_job} $job ${machine_type} ${dev_eval} ${score} 0
             done
+        fi
     elif [ $dataset = "DCASE2022T2" ]; then
         if [ $dev_eval = "-d" ] || [ $dev_eval = "--dev" ]; then
             for machine_type in DCASE2022T2bearing DCASE2022T2fan DCASE2022T2gearbox DCASE2022T2slider DCASE2022T2ToyCar DCASE2022T2ToyTrain DCASE2022T2valve; do
