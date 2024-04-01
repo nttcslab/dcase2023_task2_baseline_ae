@@ -1,6 +1,6 @@
 # Legacy support
 
-This version supports reading the datasets from DCASE2020 task2, DCASE2021 task2, and DCASE2022 task2 dataset for inputs.
+This version supports reading the datasets from DCASE2020 task2, DCASE2021 task2, DCASE2022 task2 and DCASE2023 task2 dataset for inputs.
 
 ## Description
 
@@ -17,6 +17,9 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
   - tools/data\_download\_2022.sh
     - This script downloads development data and evaluation data files and puts them into `data/dcase2022t2/dev_data/raw/` and `data/dcase2022t2/eval_data/raw/`.
     - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2022t2/eval_data/raw/test_rename`
+    - This script downloads development data and evaluation data files and puts them into `data/dcase2023t2/dev_data/raw/` and `data/dcase2023t2/eval_data/raw/`.
+    - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2023t2/eval_data/raw/test_rename`
+
 
 - tools/01\_train\_legacy.sh
   - DCASE2020 task2 mode:
@@ -34,6 +37,12 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script trains a model for each machine type for each section ID by using the directory `data/dcase2022t2/dev_data/raw/<machine_type>/train/<section_id>`
     - "Evaluation" mode:
       - This script trains a model for each machine type for each section ID by using the directory `data/dcase2022t2/eval_data/raw/<machine_type>/train/<section_id>`.
+  - DCASE2023 task2 mode:
+    - "Development" mode:
+      - This script trains a model for each machine type for each section ID by using the directory `data/dcase2023t2/dev_data/raw/<machine_type>/train/<section_id>`
+    - "Evaluation" mode:
+      - This script trains a model for each machine type for each section ID by using the directory `data/dcase2023t2/eval_data/raw/<machine_type>/train/<section_id>`.
+
   
 - tools/02a\_test\_legacy.sh (Use MSE as a score function for the Simple Autoencoder mode)
   - DCASE2020 task2 mode:
@@ -63,6 +72,15 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2022t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
       - The generated CSV files are stored in the directory `results/`.
       - If `test_rename` directory is available, this script generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
+  - DCASE2023 task2 mode:
+    - "Development" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/dev_data/raw/<machine_type>/test/`.
+      - The generated CSV files will be stored in the directory `results/`.
+      - It also generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
+    - "Evaluation" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+      - The generated CSV files are stored in the directory `results/`.
+      - If `test_rename` directory is available, this script generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
 
 - tools/02b\_test\_legacy.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
     - "Development" mode:
@@ -82,36 +100,53 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2022t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
       - The generated CSV files are stored in the directory.
       - This script also generates a CSV file, containing AUC, pAUC, precision, recall, and F1-score for each section.
+  - DCASE2023 task2 mode:
+    - "Development" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/dev_data/raw/<machine_type>/test/`.
+      - The CSV files will be stored in the directory `results/`.
+      - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
+    - "Evaluation" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+      - The generated CSV files are stored in the directory.
+      - This script also generates a CSV file, containing AUC, pAUC, precision, recall, and F1-score for each section.
 - 03_summarize_results.sh
   - This script summarizes results into a csv file.
-  - Use the same as when summarizing DCASE2023T2 results.
+  - Use the same as when summarizing DCASE2023T2 and DCASE2024T2 results.
 
 ## Usage
 
 Legacy scripts in `tools` directory can be executed regardless of the current directory.
 
 ### 1. Download datasets
-  + DCASE2020T2 task2
+  + DCASE2020T2
     + "Development dataset"
       + Download "dev\_data\_\<machine\_type\>\.zip" from [https://zenodo.org/record/3678171](https://zenodo.org/record/3678171).
     + "Additional training dataset", i.e., the evaluation dataset for training
       + Download "eval\_data\_<machine\_type\>\_train.zip" from [https://zenodo.org/record/3727685](https://zenodo.org/record/3727685).
     + "Evaluation dataset", i.e., the evaluation dataset for test
       + Download "eval\_data\_\<machine\_type\>\_test.zip" from [https://zenodo.org/record/3841772](https://zenodo.org/record/3841772).
-  + DCASE2021T2 task2
+  + DCASE2021T2
     + "Development dataset"
       + Download "dev\_data\_\<machine\_type\>.zip" from [https://zenodo.org/record/4562016](https://zenodo.org/record/4562016).
     + "Additional training dataset", i.e., the evaluation dataset for training
       + Download "eval\_data\_\<machine\_\type\>_train.zip" from [https://zenodo.org/record/4660992](https://zenodo.org/record/4660992).
     + "Evaluation dataset", i.e., the evaluation dataset for test
       + Download "eval\_data\_\<machine\_type>\_test.zip" from [https://zenodo.org/record/4884786](https://zenodo.org/record/4884786).
-  + DCASE2022T2 task2
+  + DCASE2022T2
     + "Development dataset"
       + Download "dev\_data\_\<machine\_type\>.zip" from [https://zenodo.org/record/6355122](https://zenodo.org/record/6355122).
     + "Additional training dataset", i.e., the evaluation dataset for training
       + Download "eval\_data\_\<machine\_type\>\_train.zip" from [https://zenodo.org/record/6462969](https://zenodo.org/record/6462969).
     + "Evaluation dataset", i.e., the evaluation dataset for test
       + Download "eval\_data\_\<machine\_type\>\_test.zip" from [https://zenodo.org/record/6586456](https://zenodo.org/record/6586456).
+  + DCASE2023T2
+    + "Development Dataset"
+      + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7882613](https://zenodo.org/record/7882613).
+    + "Additional Training Dataset", i.e., the evaluation dataset for training 
+      + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/record/7830345](https://zenodo.org/record/7830345).
+    + "Evaluation Dataset", i.e., the evaluation dataset for test
+      + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/record/7860847](https://zenodo.org/record/7860847).
+
 
 ### 3. Unzip the downloaded files and make the directory structure as follows:
 
@@ -123,12 +158,13 @@ The legacy dataset directory structure is the same as DCASE2023 task2. These par
     - /dcase2021t2
     - /dcase2022t2
     - /dcase2023t2
+    - /dcase2024t2
 
 [learn more about directory structure](#directory-structure-of-downloaded-dataset).
 
 ### 4. Change parameters
 
-Change parameters using `baseline.yaml` in the same as [DCASE2023 mode](./README.md#4-change-parameters).
+Change parameters using `baseline.yaml` in the same as [DCASE2024 mode](./README.md#4-change-parameters).
 
 ### 5. Run the training script
 
@@ -145,6 +181,7 @@ $ bash tools/01_train.sh DCASE2020T2 -d
   - `DCASE2020T2`
   - `DCASE2021T2`
   - `DCASE2022T2`
+  - `DCASE2023T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -165,6 +202,7 @@ $ bash tools/02a_test_legacy.sh DCASE2020T2 -d
   - `DCASE2020T2`
   - `DCASE2021T2`
   - `DCASE2022T2`
+  - `DCASE2023T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -183,6 +221,7 @@ $ bash tools/02b_test_legacy.sh DCASE2020T2 -d
   - `DCASE2020T2`
   - `DCASE2021T2`
   - `DCASE2022T2`
+  - `DCASE2023T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -214,6 +253,7 @@ $ 03_summarize_results.sh DCASE2020T2 -e
   - `DCASE2021T2`
   - `DCASE2022T2`
   - `DCASE2023T2`
+  - `DCASE2024T2`
 - Second parameters
   - `-d`
   - `-e`
