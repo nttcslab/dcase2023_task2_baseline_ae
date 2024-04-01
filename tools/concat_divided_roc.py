@@ -122,7 +122,7 @@ if __name__ == "__main__":
                         help='')
     parser.add_argument("--file_name", type=str, default='*roc.csv', metavar='N',
                         help='')
-    parser.add_argument('--dataset',type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2", "DCASE2024T2"])
+    parser.add_argument('--dataset',type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2"])
     parser.add_argument('-d', '--dev', action='store_true',
                         help='Use Development dataset')
     parser.add_argument('-e', '--eval', action='store_true',
