@@ -141,7 +141,7 @@ We will launch the datasets in three stages. Therefore, please download the data
 Run the `tools/rename_eval_wav.py`. This script adds reference labels to test data in "data/dcase2023t2/eval\_data/raw/test" and puts them into "data/dcase2023t2/eval\_data/raw/test\_rename".
 
 ```dotnetcli
-$ python tools/rename_eval_wev.py --dataset_parent_dir=data --dataset_type=DCASE2023T2
+$ python tools/rename_eval_wav.py --dataset_parent_dir=data --dataset_type=DCASE2023T2
 ```
 Note that this script is also used in `data_download_2023eval.sh`
 
