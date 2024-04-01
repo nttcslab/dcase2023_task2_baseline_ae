@@ -1,67 +1,30 @@
 # Anomalous Sound Detection
 ## DCASE 2023 Challenge Task 2 Baseline Auto Encoder: dcase2023\_task2\_baseline\_ae
 
-This is an autoencoder-based baseline for the [DCASE2023 Challenge Task 2](https://dcase.community/challenge2023/).
+This is an autoencoder-based baseline for the [DCASE2024 Challenge Task 2 (DCASE2024T2)](https://dcase.community/challenge2024/) and the [DCASE2023 Challenge Task 2 (DCASE2023T2)](https://dcase.community/challenge2023/).
 
-This source code is an example implementation of the baseline Auto Encoder of DCASE 2023 Challenge Task 2: First-Shot Unsupervised Anomalous Sound Detection for Machine Condition Monitoring.
-
+This source code is an example implementation of the baseline Auto Encoder of DASE2024T2 and DCASE2023T2: First-Shot Unsupervised Anomalous Sound Detection for Machine Condition Monitoring.
 This baseline implementation is based on the previous baseline, dcase2022\_baseline\_ae. The model parameter settings of this baseline AE are almost equivalent to those of the dcase2022\_task2\_baseline\_ae.
 
 Differences between the previous dcase2022\_baseline\_ae and this version are as follows:
 
 - The dcase2022\_baseline\_ae was implemented with Keras; however, this version is written in PyTorch.
-- Data folder structure is updated to support DCASE 2023 Challenge Task 2 data sets.
+- Data folder structure is updated to support DCASE2024T2 and DCASE2023T2 data sets.
 - The system uses the MSE loss as a loss function for training, but for testing, two score functions depend on the testing modes (i.e., MSE for the Simple Autoencoder mode and Mahalanobis distance for the Selective Mahalanobis mode).
   
 ## Description
 
-This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_test.sh) with some helper scripts:
+This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_test.sh) with some helper scripts for DCASE2024T2 (For DCASE2023T2, see [README_legacy](README_legacy.md)):
+ :
 
-- Helper scripts
-  - data\_download\_2023dev.sh
-    - "Development dataset":
-      - This script downloads development data files and puts them into "data/dcase2023t2/dev\_data/raw/train/" and "data/dcase2023t2/dev\_data/raw/test/".
-  - data\_download\_2023add.sh
-    - "Additional train dataset for Evaluation":
-      - This script downloads evaluation data files and puts them into "data/dcase2023t2/eval\_data/raw/train". 
-  - data\_download\_2023eval.sh
-    - "Additional test dataset for Evaluation"
-      - This script downloads evaluation data files and puts them into "data/dcase2023t2/eval\_data/raw/test". 
-      - Add reference labels to test data in "data/dcase2023t2/eval\_data/raw/test" and put them into "data/dcase2023t2/eval\_data/raw/test\_rename".
+- Helper scripts for DCASE2024T2
   - data\_download\_2024dev.sh
     - "Development dataset":
-      - This script downloads development data files and puts them into "data/dcase2023t2/dev\_data/raw/train/" and "data/dcase2023t2/dev\_data/raw/test/". **Newly added!!**
+      - This script downloads development data files and puts them into "data/dcase2024t2/dev\_data/raw/train/" and "data/dcase2024t2/dev\_data/raw/test/". **Newly added!!**
 
-- 01_train_2023t2.sh
-  - "Development" mode:
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2023t2/dev_data/raw/<machine_type>/train/<section_id>`. **Newly added!!**
-  - "Evaluation" mode:
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2023t2/eval_data/raw/<machine_type>/train/<section_id>`.
-  
 - 01_train_2024t2.sh
   - "Development" mode:
     - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/dev_data/raw/<machine_type>/train/<section_id>`.  **Newly added!!**
-  
-- 02a_test_2023t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
-  - "Development" mode:
-    - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2023t2/dev_data/raw/<machine_type>/test/`.
-    - The CSV files will be stored in the directory `results/`.
-    - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  
-  - "Evaluation" mode:
-    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
-    - The CSV files are stored in the directory `results/`.
-    - If you have `data/dcase2023t2/eval_data/raw/<machine_type>/test_rename/`, It also makes a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
-- 02b_test_2023t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
-  - "Development" mode:
-    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/dev_data/raw/<machine_type>/test/`.
-    - The CSV files will be stored in the directory `results/`.
-    - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  
-  - "Evaluation" mode:
-    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
-    - The CSV files are stored in the directory `results/`.
-    - If you have `data/dcase2023t2/eval_data/raw/<machine_type>/test_rename/`, It also makes a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
 
 - 02a_test_2024t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
   - "Development" mode:
@@ -90,8 +53,6 @@ We will launch the datasets in three stages. Therefore, please download the data
 
   + DCASE 2023 Challenge Task 2
     + "Development Dataset"
-      + ~~Download dev\_data_<machine_type>.zip from [https://zenodo.org/record/7690148](https://zenodo.org/record/7690148).~~ 
-      + ~~Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7690157](https://zenodo.org/record/7690157). **Updated on 2023/04/15**~~
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7882613](https://zenodo.org/record/7882613). **Updated on 2023/05/01**
 
     + "Additional Training Dataset", i.e., the evaluation dataset for training **Updated on 2023/04/15**
@@ -102,9 +63,8 @@ We will launch the datasets in three stages. Therefore, please download the data
       + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/record/7860847](https://zenodo.org/record/7860847).
 
   + DCASE 2024 Challenge Task 2
-    <!-- TODO: URLを設定してください。 -->
     + "Development Dataset" **New! (2024/04/01)**
-      + Download "dev\_data_<machine_type>.zip" from []().
+      + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/10850880](https://zenodo.org/records/10850880).
 
 ### 3. Unzip the downloaded files and make the directory structure as follows:
    
