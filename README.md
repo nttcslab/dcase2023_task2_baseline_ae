@@ -284,6 +284,21 @@ We developed and tested the source code on Ubuntu 18.04.6 LTS.
 
 - provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
 
+## Truth attribute of evaluation data
+
+### Public ground truth
+
+The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
+
+- [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
+
+### In this repository
+
+This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
+You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
+
+- [DCASE2023 task2](datasets/eval_data_list_2023.csv)
+
 
 ## Citation
 
