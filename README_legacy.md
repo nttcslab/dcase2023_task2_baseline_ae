@@ -17,6 +17,7 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
   - tools/data\_download\_2022.sh
     - This script downloads development data and evaluation data files and puts them into `data/dcase2022t2/dev_data/raw/` and `data/dcase2022t2/eval_data/raw/`.
     - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2022t2/eval_data/raw/test_rename`
+  - tools/data\_download\_2023.sh
     - This script downloads development data and evaluation data files and puts them into `data/dcase2023t2/dev_data/raw/` and `data/dcase2023t2/eval_data/raw/`.
     - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2023t2/eval_data/raw/test_rename`
 
@@ -166,6 +167,11 @@ The legacy dataset directory structure is the same as DCASE2023 task2. These par
 
 Change parameters using `baseline.yaml` in the same as [DCASE2024 mode](./README.md#4-change-parameters).
 
+### 4.1. Enable Auto-download dataset
+
+If you haven't yet downloaded the dataset yourself nor you have not run the download script (example, `data_download_2020.sh`) then you may want to use the auto download.
+To enable the auto-downloading, set the parameter `--is_auto_download` (default: `False`) `True` in `baseline.yaml`. If `--is_auto_download` is `True`, then auto-download is executed.
+
 ### 5. Run the training script
 
 Run the training script `01_train_legacy.sh`. this script differs from `01_train.sh` in using two options. The first option is using the dataset name. An example is `DCASE2020T2`. The second option chooses whether to use dev data or eval data. Use the options `DCASE2020T2` and `-d` for the development dataset `data/dcase2020t2/dev_data/<machine_type>/raw/train/`.
@@ -231,7 +237,7 @@ Others are the same as in [02a_test_legacy.sh](./README.md#61-testing-with-the-s
 ### 7. Check results
 
 You can check the anomaly scores in the csv files `anomaly_score_<machine_type>_section_<section_index>_test.csv` in the directory `results/`.
-Each anomaly score corresponds to a wav file in the directories. If you were learning with `DCASE2020T2` then `data/dcase2023t2/dev_data/<machine_type>/test/`.
+Each anomaly score corresponds to a wav file in the directories. If you were learning with `DCASE2020T2` then `data/dcase2020t2/dev_data/<machine_type>/test/`.
 
 Also, anomaly detection results based on the corresponding threshold can be checked in the CSV files `decision_result_<machine_type>_section_<section_index>_test.csv`.
 In addition, you can check performance indicators such as AUC, pAUC, precision, recall, and F1-score.
@@ -501,4 +507,120 @@ Note that the wav file's parent directory. At that time dataset directory is `de
     - /slider (`slider` means "slide rail")
     - /ToyCar  
     - /ToyTrain  
-    - /valve  
+    - /valve
+
+### DCASE2023 task2
+- dcase2023\_task2\_baseline\_ae
+  - /data/dcase2023t2/dev\_data/raw
+    - /bearing
+      - /train (only normal clips)
+        - /section\_00\_source\_train\_normal\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_train\_normal\_0989\_\<attribute\>.wav
+        - /section\_00\_target\_train\_normal\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_target\_train\_normal\_0009\_\<attribute\>.wav
+      - test/
+        - /section\_00\_source\_test\_normal\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_normal\_0049\_\<attribute\>.wav
+        - /section\_00\_source\_test\_anomaly\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_anomaly\_0049\_\<attribute\>.wav
+        - /section\_00\_target\_test\_normal\_0000\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_normal\_0049\_\<attribute\>.wav 
+        - /section\_00\_target\_test\_anomaly\_0000\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_anomaly\_0049\_\<attribute\>.wav
+      - attributes\_00.csv (attributes CSV for section 00)
+    - /fan (The other machine types have the same directory structure as fan.)
+    - /gearbox
+    - /slider (`slider` means "slide rail")
+    - /ToyCar
+    - /ToyTrain
+    - /valve
+  - /data/dcase2023t2/eval\_data/raw/
+    - /bandsaw
+      - /train (after launch of the additional training dataset)
+        - /section\_00\_source\_train\_normal\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_train\_normal\_0989\_\<attribute\>.wav
+        - /section\_00\_target\_train\_normal\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_target\_train\_normal\_0009\_\<attribute\>.wav
+      - /test (after launch of the evaluation dataset)
+        - /section\_00\_test\_0000.wav
+        - ...
+        - /section\_00\_test\_0199.wav
+      - /test_rename (convert from test directory using `tools/rename.py`)
+        - /section\_00\_source\_test\_normal\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_normal\_0049\_\<attribute\>.wav
+        - /section\_00\_source\_test\_anomaly\_0000\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_anomaly\_0049\_\<attribute\>.wav
+        - /section\_00\_target\_test\_normal\_0000\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_normal\_0049\_\<attribute\>.wav 
+        - /section\_00\_target\_test\_anomaly\_0000\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_anomaly\_0049\_\<attribute\>.wav
+      - attributes\_00.csv (attributes CSV for section 00)
+    - /grinder
+    - /shaker
+    - /ToyDrone
+    - /ToyNscale
+    - /ToyTank
+    - /Vacuum
+
+## Truth attribute of evaluation data
+
+### Public ground truth
+
+The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
+
+- [dcase2020_task2_evaluator](https://github.com/y-kawagu/dcase2020_task2_evaluator)
+- [dcase2021_task2_evaluator](https://github.com/y-kawagu/dcase2021_task2_evaluator)
+- [dcase2022_task2_evaluator](https://github.com/Kota-Dohi/dcase2022_evaluator)
+- [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
+
+### In this repository
+
+This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
+You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
+
+- [DCASE2020 task2](datasets/eval_data_list_2020.csv)
+- [DCASE2021 task2](datasets/eval_data_list_2021.csv)
+- [DCASE2022 task2](datasets/eval_data_list_2022.csv)
+- [DCASE2023 task2](datasets/eval_data_list_2023.csv)
+
+
+## Citation
+
+If you use this system, please cite all papers that correspond to the datasets you use.
+
+### [DCASE2020 task2](https://dcase.community/challenge2020/task-unsupervised-detection-of-anomalous-sounds#citation)
+
++ Yuma Koizumi, Shoichiro Saito, Hisashi Uematsu, Noboru Harada, and Keisuke Imoto. ToyADMOS: a dataset of miniature-machine operating sounds for anomalous sound detection. In Proceedings of IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA), 308 E12. November 2019. [URL](https://ieeexplore.ieee.org/document/8937164).
++ Harsh Purohit, Ryo Tanabe, Takeshi Ichige, Takashi Endo, Yuki Nikaido, Kaori Suefusa, and Yohei Kawaguchi. MIMII Dataset: sound dataset for malfunctioning industrial machine investigation and inspection. In Proceedings of the Detection and Classification of Acoustic Scenes and Events 2019 Workshop (DCASE2019), 209 E13. November 2019. [URL](http://dcase.community/documents/workshop2019/proceedings/DCASE2019Workshop_Purohit_21.pdf).
++ Yuma Koizumi, Yohei Kawaguchi, Keisuke Imoto, Toshiki Nakamura, Yuki Nikaido, Ryo Tanabe, Harsh Purohit, Kaori Suefusa, Takashi Endo, Masahiro Yasuda, and Noboru Harada. Description and discussion on DCASE2020 challenge task2: unsupervised anomalous sound detection for machine condition monitoring. In Proceedings of the Detection and Classification of Acoustic Scenes and Events 2020 Workshop (DCASE2020), 81 E5. November 2020. [URL](http://dcase.community/documents/workshop2020/proceedings/DCASE2020Workshop_Koizumi_3.pdf).
+
+### [DCASE2021 task2](https://dcase.community/challenge2021/task-unsupervised-detection-of-anomalous-sounds#citation)
+
++ Ryo Tanabe, Harsh Purohit, Kota Dohi, Takashi Endo, Yuki Nikaido, Toshiki Nakamura, and Yohei Kawaguchi. MIMII DUE: sound dataset for malfunctioning industrial machine investigation and inspection with domain shifts due to changes in operational and environmental conditions. IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA), pages 21 E5, 2021. doi:10.1109/WASPAA52581.2021.9632802. [URL](https://ieeexplore.ieee.org/document/9632802).
++ Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, and Shoichiro Saito. ToyADMOS2: another dataset of miniature-machine operating sounds for anomalous sound detection under domain shift conditions. In Proceedings of the 6th Detection and Classification of Acoustic Scenes and Events 2021 Workshop (DCASE2021), 1 E. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf).
++ Yohei Kawaguchi, Keisuke Imoto, Yuma Koizumi, Noboru Harada, Daisuke Niizumi, Kota Dohi, Ryo Tanabe, Harsh Purohit, and Takashi Endo. Description and discussion on dcase 2021 challenge task 2: unsupervised anomalous detection for machine condition monitoring under domain shifted conditions. In Proceedings of the 6th Detection and Classification of Acoustic Scenes and Events 2021 Workshop (DCASE2021), 186 E90. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Kawaguchi_61.pdf).
+
+### [DCASE2022 task2](https://dcase.community/challenge2022/task-unsupervised-anomalous-sound-detection-for-machine-condition-monitoring#citation)
+
++ Kota Dohi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, Yuki Nikaido, and Yohei Kawaguchi. MIMII DG: sound dataset for malfunctioning industrial machine investigation and inspection for domain generalization task. In Proceedings of the 7th Detection and Classification of Acoustic Scenes and Events 2022 Workshop (DCASE2022), 1 E. Nancy, France, November 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_62.pdf).
++ Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, and Shoichiro Saito. ToyADMOS2: another dataset of miniature-machine operating sounds for anomalous sound detection under domain shift conditions. In Proceedings of the 6th Detection and Classification of Acoustic Scenes and Events 2021 Workshop (DCASE2021), 1 E. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf).
++ Kota Dohi, Keisuke Imoto, Noboru Harada, Daisuke Niizumi, Yuma Koizumi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, and Yohei Kawaguchi. Description and discussion on DCASE 2022 challenge task 2: unsupervised anomalous sound detection for machine condition monitoring applying domain generalization techniques. In Proceedings of the 7th Detection and Classification of Acoustic Scenes and Events 2022 Workshop (DCASE2022), 1 E. Nancy, France, November 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_63.pdf).
+
+### [DCASE2023 task2](https://dcase.community/challenge2023/task-first-shot-unsupervised-anomalous-sound-detection-for-machine-condition-monitoring#citation)
+
++ Kota Dohi, Keisuke Imoto, Noboru Harada, Daisuke Niizumi, Yuma Koizumi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, and Yohei Kawaguchi. Description and discussion on DCASE 2023 challenge task 2: first-shot unsupervised anomalous sound detection for machine condition monitoring. In arXiv e-prints: 2305.07828, 2023. [URL](https://arxiv.org/pdf/2305.07828.pdf).
++ Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, and Shoichiro Saito. ToyADMOS2: another dataset of miniature-machine operating sounds for anomalous sound detection under domain shift conditions. In Proceedings of the Detection and Classification of Acoustic Scenes and Events Workshop (DCASE), 1 E. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf).
++ Kota Dohi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, Yuki Nikaido, and Yohei Kawaguchi. MIMII DG: sound dataset for malfunctioning industrial machine investigation and inspection for domain generalization task. In Proceedings of the 7th Detection and Classification of Acoustic Scenes and Events 2022 Workshop (DCASE2022). Nancy, France, November 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_62.pdf).
++ Noboru Harada, Daisuke Niizumi, Yasunori Ohishi, Daiki Takeuchi and Masahiro Yasuda, "First-Shot Anomaly Sound Detection for Machine Condition Monitoring: A Domain Generalization Baseline," 2023 31st European Signal Processing Conference (EUSIPCO), Helsinki, Finland, 2023, pp. 191-195, doi: 10.23919/EUSIPCO58844.2023.10289721. [URL](https://ieeexplore.ieee.org/document/10289721).
