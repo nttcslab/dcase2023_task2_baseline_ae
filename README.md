@@ -19,21 +19,26 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
 - Helper scripts for DCASE2024T2
   - data\_download\_2024dev.sh
     - "Development dataset":
-      - This script downloads development data files and puts them into "data/dcase2024t2/dev\_data/raw/train/" and "data/dcase2024t2/dev\_data/raw/test/". **Newly added!!**
+      - This script downloads development data files and puts them into "data/dcase2024t2/dev\_data/raw/train/" and "data/dcase2024t2/dev\_data/raw/test/".
+  - data\_download\_2024add.sh  **Newly added!!**
+    - "Additional train dataset for Evaluation":
+      - This script downloads Addition data files and puts them into "data/dcase2024t2/eval\_data/raw/train/". **Newly added!!**
 
 - 01_train_2024t2.sh
   - "Development" mode:
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/dev_data/raw/<machine_type>/train/<section_id>`.  **Newly added!!**
+    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/dev_data/raw/<machine_type>/train/<section_id>`.
+  - "Evaluation" mode:
+    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/eval_data/raw/<machine_type>/train/<section_id>`.  **Newly added!!**
 
 - 02a_test_2024t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
   - "Development" mode:
-    - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`. **Newly added!!**
+    - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
   
 - 02b_test_2024t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
   - "Development" mode:
-    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`. **Newly added!!**
+    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
   
@@ -55,8 +60,9 @@ We will launch the datasets in three stages. Therefore, please download the data
 
   + DCASE 2024 Challenge Task 2
     + "Development Dataset" **New! (2024/04/01)**
-      + Download "dev\_data_<machine_type>.zip" from 
-[https://zenodo.org/records/10902294](https://zenodo.org/records/10902294).
+      + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/10902294](https://zenodo.org/records/10902294).
+    + "Additional Training Dataset", i.e., the evaluation dataset for training  **New! (2024/05/15)**
+      + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/11183284](https://zenodo.org/records/11183284).
 
   + For DCASE 2023 Challenge Task 2
 	(C.f., for DCASE2023T2, see [README_legacy](README_legacy.md))
@@ -96,6 +102,16 @@ We will launch the datasets in three stages. Therefore, please download the data
         + attributes\_00.csv (attributes CSV for section 00)
      + gearbox/ (The other machine types have the same directory structure as fan.)
    + data/dcase2024t2/eval\_data/raw/
+     + \<machine\_type0\_of\_additional\_dataset\>/
+        + train/ (after launch of the additional training dataset)
+          + section\_00\_source\_train\_normal\_0000\_.wav
+          + ...
+          + section\_00\_source\_train\_normal\_0989\_.wav
+          + section\_00\_target\_train\_normal\_0000\_.wav
+          + ...
+          + section\_00\_target\_train\_normal\_0009\_.wav
+        + attributes\_00.csv (attributes CSV for section 00)
+     + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
 
 ### 4. Change parameters
 
@@ -242,7 +258,7 @@ The Legacy support scripts are similar to the main scripts. These are in `tools`
 
 ## Dependency
 
-We developed and tested the source code on Ubuntu 18.04.6 LTS.
+We developed and tested the source code on Ubuntu 20.04.4 LTS.
 
 ### Software package
 
@@ -264,12 +280,33 @@ We developed and tested the source code on Ubuntu 18.04.6 LTS.
 - fasteners == 0.18
 
 ## Change Log
+### [3.1.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.1.0)
+
+#### Added
+
+- Provides support for the additional training datasets to be used in DCASE2024T2.
+
+### [3.0.2](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.0.2)
+
+#### Added
+
+- Added information about ground truth and citations for each year's task in README.md and README_legacy.md.
+
+### [3.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.0.1)
+
+#### Added
+
+- Provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
+
+#### Fixed
+
+- Fixed a typo in README.md in the previous release, v3.0.0.
 
 ### [3.0.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.0.0)
 
 #### Added
 
-- provides support for the datasets used in DCASE2024.
+- Provides support for the development datasets used in DCASE2024.
 
 ### [2.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v2.0.1)
 
@@ -282,7 +319,22 @@ We developed and tested the source code on Ubuntu 18.04.6 LTS.
 
 #### Added
 
-- provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
+- Provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
+
+## Truth attribute of evaluation data
+
+### Public ground truth
+
+The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
+
+- [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
+
+### In this repository
+
+This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
+You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
+
+- [DCASE2023 task2](datasets/eval_data_list_2023.csv)
 
 ## Truth attribute of evaluation data
 
@@ -309,6 +361,3 @@ If you use this system, please cite all the following four papers:
 + Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, Shoichiro Saito, "ToyADMOS2: Another Dataset of Miniature-Machine Operating Sounds for Anomalous Sound Detection under Domain Shift Conditions," in Proc. DCASE 2022 Workshop, 2022. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf)
 + Kota Dohi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, Yuki Nikaido, and Yohei Kawaguchi, "MIMII DG: sound dataset for malfunctioning industrial machine investigation and inspection for domain generalization task," in Proc. DCASE 2022 Workshop, 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_62.pdf)
 + Noboru Harada, Daisuke Niizumi, Yasunori Ohishi, Daiki Takeuchi and Masahiro Yasuda, "First-Shot Anomaly Sound Detection for Machine Condition Monitoring: A Domain Generalization Baseline," 2023 31st European Signal Processing Conference (EUSIPCO), Helsinki, Finland, 2023, pp. 191-195, doi: 10.23919/EUSIPCO58844.2023.10289721. [URL](https://ieeexplore.ieee.org/document/10289721)
-
-
-

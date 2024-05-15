@@ -414,7 +414,7 @@ def download_raw_data(
         for split_data_path in split_data_path_list:
             shutil.copytree(split_data_path, test_data_path, dirs_exist_ok=True)
 
-    if data_type == "eval":
+    if data_type == "eval" and dataset != "DCASE2024T2":
         rename_wav(
             dataset_parent_dir=root,
             dataset_type=dataset,
@@ -468,6 +468,7 @@ YAML_PATH = {
     "DCASE2023T2_dev":"datasets/machine_type_2023_dev.yaml",
     "DCASE2023T2_eval":"datasets/machine_type_2023_eval.yaml",
     "DCASE2024T2_dev":"datasets/machine_type_2024_dev.yaml",
+    "DCASE2024T2_eval":"datasets/machine_type_2024_eval.yaml",
 }
 
 def get_machine_type_dict(dataset_name, mode=True):
@@ -480,8 +481,7 @@ def get_machine_type_dict(dataset_name, mode=True):
     elif dataset_name == "DCASE2024T2" and mode:
         yaml_path = YAML_PATH["DCASE2024T2_dev"]
     elif dataset_name == "DCASE2024T2" and not mode:
-        raise ValueError("DCASE2024T2 eval data has not been published yet.")
-        # yaml_path = YAML_PATH["DCASE2024T2_eval"]
+        yaml_path = YAML_PATH["DCASE2024T2_eval"]
     else: 
         raise KeyError()
     

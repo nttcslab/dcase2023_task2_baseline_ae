@@ -1,0 +1,30 @@
+DCASE2024T2:
+  machine_type:
+    3DPrinter:
+      eval:
+        - "00"
+    AirCompressor:
+      eval:
+        - "00"
+    Scanner:
+      eval:
+        - "00"
+    ToyCircuit:
+      eval:
+        - "00"
+    HoveringDrone:
+      eval:
+        - "00"
+    HairDryer:
+      eval:
+        - "00"
+    ToothBrush:
+      eval:
+        - "00"
+    RoboticArm:
+      eval:
+        - "00"
+    BrushlessMotor:
+      eval:
+        - "00"
+  section_keyword: section
