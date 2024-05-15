@@ -284,7 +284,7 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 
 #### Added
 
-- Provides support for the additional training datasets used in DCASE2024.
+- Provides support for the additional training datasets to be used in DCASE2024T2.
 
 ### [3.0.2](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.0.2)
 
