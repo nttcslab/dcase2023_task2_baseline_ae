@@ -104,6 +104,15 @@ class DCASE202XT2(object):
 
 class Datasets:
     DatasetsDic = {
+        'DCASE2024T23DPrinter':DCASE202XT2,
+        'DCASE2024T2AirCompressor':DCASE202XT2,
+        'DCASE2024T2Scanner':DCASE202XT2,
+        'DCASE2024T2ToyCircuit':DCASE202XT2,
+        'DCASE2024T2HoveringDrone':DCASE202XT2,
+        'DCASE2024T2HairDryer':DCASE202XT2,
+        'DCASE2024T2ToothBrush':DCASE202XT2,
+        'DCASE2024T2RoboticArm':DCASE202XT2,
+        'DCASE2024T2BrushlessMotor':DCASE202XT2,
         'DCASE2024T2ToyCar':DCASE202XT2,
         'DCASE2024T2ToyTrain':DCASE202XT2,
         'DCASE2024T2bearing':DCASE202XT2,
