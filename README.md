@@ -65,6 +65,7 @@ We will launch the datasets in three stages. Therefore, please download the data
       + ~~Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/11183284](https://zenodo.org/records/11183284). **Updated on (2024/05/15)**~~
       + Download "eval\_data_<machine_type>_\[train\|train_r2\].zip" from [https://zenodo.org/records/11259435](https://zenodo.org/records/11259435). **New! 2023/05/24**
 
+
   + For DCASE 2023 Challenge Task 2
 	(C.f., for DCASE2023T2, see [README_legacy](README_legacy.md))
     + "Development Dataset"
@@ -290,6 +291,7 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
   - For the other machine types, data files are identical.
   - This version reflects the update on the additional training dataset.
 
+
 ### [3.1.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.1.0)
 
 #### Added
@@ -330,6 +332,22 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 #### Added
 
 - Provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
+
+## Truth attribute of evaluation data
+
+### Public ground truth
+
+The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
+
+- [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
+
+### In this repository
+
+This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
+You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
+
+- [DCASE2023 task2](datasets/eval_data_list_2023.csv)
+
 
 ## Truth attribute of evaluation data
 
