@@ -22,28 +22,28 @@ DCASE2024T2:
       - https://zenodo.org/record/10902294/files/dev_valve.zip
   3DPrinter:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_3DPrinter_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_3DPrinter_train_r2.zip
   AirCompressor:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_AirCompressor_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_AirCompressor_train.zip
   Scanner:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_Scanner_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_Scanner_train.zip
   ToyCircuit:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_ToyCircuit_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_ToyCircuit_train.zip
   HoveringDrone:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_HoveringDrone_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_HoveringDrone_train.zip
   HairDryer:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_HairDryer_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_HairDryer_train.zip
   ToothBrush:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_ToothBrush_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_ToothBrush_train.zip
   RoboticArm:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_RoboticArm_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_RoboticArm_train_r2.zip
   BrushlessMotor:
     eval:
-      - https://zenodo.org/records/11183284/files/eval_data_BrushlessMotor_train.zip
+      - https://zenodo.org/records/11259435/files/eval_data_BrushlessMotor_train.zip
