@@ -61,8 +61,10 @@ We will launch the datasets in three stages. Therefore, please download the data
   + DCASE 2024 Challenge Task 2
     + "Development Dataset" **New! (2024/04/01)**
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/10902294](https://zenodo.org/records/10902294).
-    + "Additional Training Dataset", i.e., the evaluation dataset for training  **New! (2024/05/15)**
-      + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/11183284](https://zenodo.org/records/11183284).
+    + "Additional Training Dataset", i.e., the evaluation dataset for training
+      + ~~Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/11183284](https://zenodo.org/records/11183284). **Updated on (2024/05/15)**~~
+      + Download "eval\_data_<machine_type>_\[train\|train_r2\].zip" from [https://zenodo.org/records/11259435](https://zenodo.org/records/11259435). **New! 2023/05/24**
+
 
   + For DCASE 2023 Challenge Task 2
 	(C.f., for DCASE2023T2, see [README_legacy](README_legacy.md))
@@ -280,6 +282,16 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 - fasteners == 0.18
 
 ## Change Log
+### [3.1.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.1.1)
+ 
+#### Updated the Zenodo link for the DCASE2024T2 additional training dataset
+ 
+- We have corrected the Additional training datasets data used in DCASE2024T2.
+  - eval_data_3DPrinter_train.zip and eval_data_RoboticArm_train.zip were replaced with eval_data_3DPrinter_train_r2.zip and eval_data_RoboticArm_train_r2.zip
+  - For the other machine types, data files are identical.
+  - This version reflects the update on the additional training dataset.
+
+
 ### [3.1.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.1.0)
 
 #### Added
@@ -335,6 +347,7 @@ This repository have evaluation data's ground truth csv. this csv is using to re
 You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
 
 - [DCASE2023 task2](datasets/eval_data_list_2023.csv)
+
 
 ## Truth attribute of evaluation data
 
