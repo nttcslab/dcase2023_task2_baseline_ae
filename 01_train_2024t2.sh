@@ -42,6 +42,7 @@ then
         DCASE2024T2RoboticArm \
         DCASE2024T2BrushlessMotor \
     "
+
 fi
 
 for dataset in $dataset_list; do

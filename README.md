@@ -20,15 +20,18 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
   - data\_download\_2024dev.sh
     - "Development dataset":
       - This script downloads development data files and puts them into "data/dcase2024t2/dev\_data/raw/train/" and "data/dcase2024t2/dev\_data/raw/test/".
-  - data\_download\_2024add.sh  **Newly added!!**
+  - data\_download\_2024add.sh  **Updated on (2024/05/15)**
     - "Additional train dataset for Evaluation":
-      - This script downloads Addition data files and puts them into "data/dcase2024t2/eval\_data/raw/train/". **Newly added!!**
+      - This script downloads Addition data files and puts them into "data/dcase2024t2/eval\_data/raw/train/". **Updated on (2024/05/15)**
+  - data\_download\_2024eval.sh **Newly added!!**
+    - "Additional test dataset for Evaluation"
+      - This script downloads evaluation data files and puts them into "data/dcase2024t2/eval\_data/raw/test". 
 
 - 01_train_2024t2.sh
   - "Development" mode:
     - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/dev_data/raw/<machine_type>/train/<section_id>`.
   - "Evaluation" mode:
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/eval_data/raw/<machine_type>/train/<section_id>`.  **Newly added!!**
+    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/eval_data/raw/<machine_type>/train/<section_id>`.  **Updated on (2024/05/15)**
 
 - 02a_test_2024t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
   - "Development" mode:
@@ -41,7 +44,10 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  
+  - "Evaluation" mode: **Newly added!!**
+    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+    - The CSV files are stored in the directory `results/`.
+      
 - 03_summarize_results.sh
   - This script summarizes results into a CSV file.
 
@@ -64,6 +70,8 @@ We will launch the datasets in three stages. Therefore, please download the data
     + "Additional Training Dataset", i.e., the evaluation dataset for training
       + ~~Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/11183284](https://zenodo.org/records/11183284). **Updated on (2024/05/15)**~~
       + Download "eval\_data_<machine_type>_\[train\|train_r2\].zip" from [https://zenodo.org/records/11259435](https://zenodo.org/records/11259435). **New! 2023/05/24**
+    + "Evaluation Dataset", i.e., the evaluation dataset for test
+      + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/records/11363076](https://zenodo.org/records/11363076).
 
 
   + For DCASE 2023 Challenge Task 2
@@ -113,6 +121,10 @@ We will launch the datasets in three stages. Therefore, please download the data
           + ...
           + section\_00\_target\_train\_normal\_0009\_.wav
         + attributes\_00.csv (attributes CSV for section 00)
+      + test/ (after launch of the evaluation dataset)
+        + section\_00\_test\_0000.wav
+        + ...
+        + section\_00\_test\_0199.wav
      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
 
 ### 4. Change parameters
@@ -282,6 +294,12 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 - fasteners == 0.18
 
 ## Change Log
+### [3.2.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.0)
+
+#### Added
+
+- Provides support for the evaluation dataset to be used in DCASE2024T2.
+
 ### [3.1.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.1.1)
  
 #### Updated the Zenodo link for the DCASE2024T2 additional training dataset
