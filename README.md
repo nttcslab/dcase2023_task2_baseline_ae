@@ -294,6 +294,12 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 - fasteners == 0.18
 
 ## Change Log
+### [3.2.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.1)
+
+#### Fixed download shell script
+
+- The URL to download DCASE2024T2 Evaluation dataset was incorrect, so I fixed data_download_2024eval.sh.
+
 ### [3.2.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.0)
 
 #### Added
