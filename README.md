@@ -301,13 +301,14 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 
 #### Fixed test script
 
-- We have modified 02a_test_2024t2.sh and 02b_test_2024t2.sh so that we can perform evaluation using evaluation dataset.
+- Updated to fix issues in 02a_test_2024t2.sh and 02b_test_2024t2.sh.
+- Run the evaluation using the evaluation dataset.
 
 ### [3.2.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.1)
 
 #### Fixed download shell script
 
-- The URL to download DCASE2024T2 Evaluation dataset was incorrect, so I fixed data_download_2024eval.sh.
+- The URL to download DCASE2024T2 Evaluation dataset was incorrect. Updated to fix issues in data_download_2024eval.sh.
 
 ### [3.2.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.0)
 
