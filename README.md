@@ -38,6 +38,9 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
     - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
+  - "Evaluation" mode: **Newly added!!**
+    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+    - The CSV files are stored in the directory `results/`.
   
 - 02b_test_2024t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
   - "Development" mode:
@@ -294,6 +297,12 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 - fasteners == 0.18
 
 ## Change Log
+### [3.2.2](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.2)
+
+#### Fixed test script
+
+- We have modified 02a_test_2024t2.sh and 02b_test_2024t2.sh so that we can perform evaluation using evaluation dataset.
+
 ### [3.2.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.1)
 
 #### Fixed download shell script

@@ -31,8 +31,17 @@ then
     dataset_list="DCASE2024T2bearing DCASE2024T2fan DCASE2024T2gearbox DCASE2024T2slider DCASE2024T2ToyCar DCASE2024T2ToyTrain DCASE2024T2valve"
 elif [ "${dev_eval}" = "-e" ] || [ "${dev_eval}" = "--eval" ]
 then
-    echo eval data has not been published yet.
-    exit 1
+    dataset_list="\
+        DCASE2024T23DPrinter \
+        DCASE2024T2AirCompressor \
+        DCASE2024T2Scanner \
+        DCASE2024T2ToyCircuit \
+        DCASE2024T2HoveringDrone \
+        DCASE2024T2HairDryer \
+        DCASE2024T2ToothBrush \
+        DCASE2024T2RoboticArm \
+        DCASE2024T2BrushlessMotor \
+    "
 fi
 
 for dataset in $dataset_list; do
