@@ -301,7 +301,7 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 
 #### Updated citation in README
 
-- Updated the README and README legacy files to reflect the latest references.
+- Updated the README and README legacy files to reflect the latest citations.
 
 ### [3.2.2](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.2)
 
