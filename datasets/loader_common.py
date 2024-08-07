@@ -414,7 +414,7 @@ def download_raw_data(
         for split_data_path in split_data_path_list:
             shutil.copytree(split_data_path, test_data_path, dirs_exist_ok=True)
 
-    if data_type == "eval" and dataset != "DCASE2024T2":
+    if data_type == "eval":
         rename_wav(
             dataset_parent_dir=root,
             dataset_type=dataset,

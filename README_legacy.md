@@ -1,6 +1,6 @@
 # Legacy support
 
-This version supports reading the datasets from DCASE2020 task2, DCASE2021 task2, DCASE2022 task2 and DCASE2023 task2 dataset for inputs.
+This version supports reading the datasets from DCASE2020 task2, DCASE2021 task2, DCASE2022 task2, DCASE2023 task2 and DCASE2024 task2 dataset for inputs.
 
 ## Description
 
@@ -20,6 +20,9 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
   - tools/data\_download\_2023.sh
     - This script downloads development data and evaluation data files and puts them into `data/dcase2023t2/dev_data/raw/` and `data/dcase2023t2/eval_data/raw/`.
     - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2023t2/eval_data/raw/test_rename`
+  - tools/data\_download\_2024.sh
+    - This script downloads development data and evaluation data files and puts them into `data/dcase2024t2/dev_data/raw/` and `data/dcase2024t2/eval_data/raw/`.
+    - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2024t2/eval_data/raw/test_rename`
 
 
 - tools/01\_train\_legacy.sh
@@ -43,6 +46,11 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script trains a model for each machine type for each section ID by using the directory `data/dcase2023t2/dev_data/raw/<machine_type>/train/<section_id>`
     - "Evaluation" mode:
       - This script trains a model for each machine type for each section ID by using the directory `data/dcase2023t2/eval_data/raw/<machine_type>/train/<section_id>`.
+  - DCASE2024 task2 mode:
+    - "Development" mode:
+      - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/dev_data/raw/<machine_type>/train/<section_id>`
+    - "Evaluation" mode:
+      - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/eval_data/raw/<machine_type>/train/<section_id>`.
 
   
 - tools/02a\_test\_legacy.sh (Use MSE as a score function for the Simple Autoencoder mode)
@@ -82,6 +90,15 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
       - The generated CSV files are stored in the directory `results/`.
       - If `test_rename` directory is available, this script generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
+  - DCASE2024 task2 mode:
+    - "Development" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`.
+      - The generated CSV files will be stored in the directory `results/`.
+      - It also generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
+    - "Evaluation" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+      - The generated CSV files are stored in the directory `results/`.
+      - If `test_rename` directory is available, this script generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
 
 - tools/02b\_test\_legacy.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
     - "Development" mode:
@@ -108,6 +125,15 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
     - "Evaluation" mode:
       - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2023t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+      - The generated CSV files are stored in the directory.
+      - This script also generates a CSV file, containing AUC, pAUC, precision, recall, and F1-score for each section.
+  - DCASE2024 task2 mode:
+    - "Development" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/dev_data/raw/<machine_type>/test/`.
+      - The CSV files will be stored in the directory `results/`.
+      - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
+    - "Evaluation" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
       - The generated CSV files are stored in the directory.
       - This script also generates a CSV file, containing AUC, pAUC, precision, recall, and F1-score for each section.
 - 03_summarize_results.sh
@@ -147,6 +173,13 @@ Legacy scripts in `tools` directory can be executed regardless of the current di
       + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/record/7830345](https://zenodo.org/record/7830345).
     + "Evaluation Dataset", i.e., the evaluation dataset for test
       + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/record/7860847](https://zenodo.org/record/7860847).
+  + DCASE2024T2
+    + "Development Dataset"
+      + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/10902294](https://zenodo.org/records/10902294).
+    + "Additional Training Dataset", i.e., the evaluation dataset for training 
+      + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/11259435](https://zenodo.org/records/11259435).
+    + "Evaluation Dataset", i.e., the evaluation dataset for test
+      + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/records/11363076](https://zenodo.org/records/11363076).
 
 
 ### 3. Unzip the downloaded files and make the directory structure as follows:
@@ -188,6 +221,7 @@ $ bash tools/01_train.sh DCASE2020T2 -d
   - `DCASE2021T2`
   - `DCASE2022T2`
   - `DCASE2023T2`
+  - `DCASE2024T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -209,6 +243,7 @@ $ bash tools/02a_test_legacy.sh DCASE2020T2 -d
   - `DCASE2021T2`
   - `DCASE2022T2`
   - `DCASE2023T2`
+  - `DCASE2024T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -228,6 +263,7 @@ $ bash tools/02b_test_legacy.sh DCASE2020T2 -d
   - `DCASE2021T2`
   - `DCASE2022T2`
   - `DCASE2023T2`
+  - `DCASE2024T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -574,9 +610,72 @@ Note that the wav file's parent directory. At that time dataset directory is `de
     - /ToyTank
     - /Vacuum
 
-## Truth attribute of evaluation data
+### DCASE2024 task2
+- dcase2023\_task2\_baseline\_ae
+  - /data/dcase2024t2/dev\_data/raw
+    - /bearing
+      - /train (only normal clips)
+        - /section\_00\_source\_train\_normal\_0001\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_train\_normal\_0990\_\<attribute\>.wav
+        - /section\_00\_target\_train\_normal\_0001\_\<attribute\>.wav
+        - ...
+        - /section\_00\_target\_train\_normal\_0010\_\<attribute\>.wav
+      - test/
+        - /section\_00\_source\_test\_normal\_0001\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_normal\_0050\_\<attribute\>.wav
+        - /section\_00\_source\_test\_anomaly\_0001\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_anomaly\_0050\_\<attribute\>.wav
+        - /section\_00\_target\_test\_normal\_0001\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_normal\_0050\_\<attribute\>.wav 
+        - /section\_00\_target\_test\_anomaly\_0001\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_anomaly\_0050\_\<attribute\>.wav
+      - attributes\_00.csv (attributes CSV for section 00)
+    - /fan (The other machine types have the same directory structure as fan.)
+    - /gearbox
+    - /slider (`slider` means "slide rail")
+    - /ToyCar
+    - /ToyTrain
+    - /valve
+  - /data/dcase2024t2/eval\_data/raw/
+    - /3DPrinter
+      - /train (after launch of the additional training dataset)
+        - /section\_00\_source\_train\_normal\_0001\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_train\_normal\_0990\_\<attribute\>.wav
+        - /section\_00\_target\_train\_normal\_0001\_\<attribute\>.wav
+        - ...
+        - /section\_00\_target\_train\_normal\_0010\_\<attribute\>.wav
+      - /test (after launch of the evaluation dataset)
+        - /section\_00\_test\_0001.wav
+        - ...
+        - /section\_00\_test\_0200.wav
+      - /test_rename (convert from test directory using `tools/rename.py`)
+        - /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
+        - ...
+        - /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
+        - ...
+      - attributes\_00.csv (attributes CSV for section 00)
+    - /AirCompressor
+    - /BrushlessMotor
+    - /HairDryer
+    - /HoveringDrone
+    - /RoboticArm
+    - /Scanner
+    - /ToothBrush
+    - /ToyCircuit
 
-### Public ground truth
+## Ground truth attribute
+
+### Public ground truth of evaluation dataset
 
 The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
 
@@ -584,8 +683,9 @@ The following code was used to calculate the official score. Among these is eval
 - [dcase2021_task2_evaluator](https://github.com/y-kawagu/dcase2021_task2_evaluator)
 - [dcase2022_task2_evaluator](https://github.com/Kota-Dohi/dcase2022_evaluator)
 - [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
+- [dcase2024_task2_evaluator](https://github.com/nttcslab/dcase2024_task2_evaluator)
 
-### In this repository
+### Ground truth for evaluation datasets in this repository
 
 This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
 You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
@@ -594,7 +694,26 @@ You can calculate AUC and other score if add ground truth to evaluation datasets
 - [DCASE2021 task2](datasets/eval_data_list_2021.csv)
 - [DCASE2022 task2](datasets/eval_data_list_2022.csv)
 - [DCASE2023 task2](datasets/eval_data_list_2023.csv)
+- [DCASE2024 task2](datasets/eval_data_list_2024.csv)
 
+### Ground truth attributes
+
+Attribute information is hidden by default for the following machine types:
+
+- DCASE2024 Task2
+  - dev data
+    - gearbox
+    - slider
+    - ToyTrain
+  - eval data
+    - AirCompressor
+    - BrushlessMotor
+    - HoveringDrone
+    - ToothBrush
+
+You can view the hidden attributes in the following directory:
+
+- [DCASE2024 task2 Ground truth Attributes](datasets/ground_truth_attributes)
 
 ## Citation
 

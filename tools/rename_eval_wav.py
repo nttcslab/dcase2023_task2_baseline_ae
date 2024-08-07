@@ -14,6 +14,7 @@ EVAL_DATA_LIST_PATH = {
     "DCASE2021T2":f"{ROOT_DIR}/datasets/eval_data_list_2021.csv",
     "DCASE2022T2":f"{ROOT_DIR}/datasets/eval_data_list_2022.csv",
     "DCASE2023T2":f"{ROOT_DIR}/datasets/eval_data_list_2023.csv",
+    "DCASE2024T2":f"{ROOT_DIR}/datasets/eval_data_list_2024.csv",
 }
 
 FILENAME_COL = 0
