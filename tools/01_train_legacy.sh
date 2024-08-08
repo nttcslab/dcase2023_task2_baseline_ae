@@ -19,7 +19,8 @@ args_flag_dataset=0
 if [ "${dataset}" != "DCASE2020T2" ] \
     && [ "${dataset}" != "DCASE2021T2" ] \
     && [ "${dataset}" != "DCASE2022T2" ] \
-    && [ "${dataset}" != "DCASE2023T2" ]
+    && [ "${dataset}" != "DCASE2023T2" ] \
+    && [ "${dataset}" != "DCASE2024T2" ]
 then
     args_flag=1
     args_flag_dataset=1
@@ -38,16 +39,17 @@ fi
 if [ $args_flag -eq 1 ]
 then
     echo "$0: argument error"
-    echo -e "usage\t: $0 ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2'] ['-d' | '--dev' | '-e' | '--eval']"
+    echo -e "usage\t: $0 ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2' | 'DCASE2024T2'] ['-d' | '--dev' | '-e' | '--eval']"
 
     if [ $args_flag_dataset -eq 1 ]
     then
         echo -e "\tdataset: invalid choice '$dataset'"
-        echo -e "\tchoice from ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2']."
+        echo -e "\tchoice from ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2' | 'DCASE2023T2']."
         echo -e "\t\tDCASE2020T2\t: Use DCASE2020 Task2 datasets. "
         echo -e "\t\tDCASE2021T2\t: Use DCASE2021 Task2 datasets. "
         echo -e "\t\tDCASE2022T2\t: Use DCASE2022 Task2 datasets. "
         echo -e "\t\tDCASE2023T2\t: Use DCASE2023 Task2 datasets. "
+        echo -e "\t\tDCASE2024T2\t: Use DCASE2024 Task2 datasets. "
         echo 
     fi
 
@@ -66,7 +68,27 @@ fi
 
 # main process
 for job in "train_ae.sh"; do
-    if [ $dataset = "DCASE2023T2" ]; then
+    if [ $dataset = "DCASE2024T2" ]; then
+        if [ $dev_eval = "-d" ] || [ $dev_eval = "--dev" ]; then
+            for machine_type in DCASE2024T2bearing DCASE2024T2fan DCASE2024T2gearbox DCASE2024T2slider DCASE2024T2ToyCar DCASE2024T2ToyTrain DCASE2024T2valve; do
+                ${base_job} $job ${machine_type} ${dev_eval} 0
+            done
+        else # $dev_eval = "-e" || $dev_eval = "--eval"
+            for machine_type in \
+                DCASE2024T23DPrinter \
+                DCASE2024T2AirCompressor \
+                DCASE2024T2Scanner \
+                DCASE2024T2ToyCircuit \
+                DCASE2024T2HoveringDrone \
+                DCASE2024T2HairDryer \
+                DCASE2024T2ToothBrush \
+                DCASE2024T2RoboticArm \
+                DCASE2024T2BrushlessMotor \
+            ; do
+                ${base_job} $job ${machine_type} ${dev_eval} 0
+            done
+        fi
+    elif [ $dataset = "DCASE2023T2" ]; then
         if [ $dev_eval = "-d" ] || [ $dev_eval = "--dev" ]; then
             for machine_type in DCASE2023T2bearing DCASE2023T2fan DCASE2023T2gearbox DCASE2023T2slider DCASE2023T2ToyCar DCASE2023T2ToyTrain DCASE2023T2valve; do
                 ${base_job} $job ${machine_type} ${dev_eval} 0

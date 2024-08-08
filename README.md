@@ -128,6 +128,16 @@ We will launch the datasets in three stages. Therefore, please download the data
         + section\_00\_test\_0000.wav
         + ...
         + section\_00\_test\_0199.wav
+      + /test_rename (convert from test directory using `tools/rename.py`)
+        + /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
+        + ...
+        + /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
+        + ...
+        + /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
+        + ...
+        + /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
+        + ...
+      + attributes\_00.csv (attributes CSV for section 00)
      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
 
 ### 4. Change parameters
@@ -238,7 +248,9 @@ After the evaluation dataset for the test is launched, download and unzip it. Mo
 $ 02a_test_2024t2.sh -e
 ```
 
-Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
+Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. ~~You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.~~
+
+If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
 
 ### 9.2. Testing with the Selective Mahalanobis mode
 
@@ -248,7 +260,9 @@ After the evaluation dataset for the test is launched, download and unzip it. Mo
 $ 02b_test_2024t2.sh -e
 ```
 
-Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
+Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. ~~You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.~~
+
+If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
 
 ### 10. Summarize results
 
@@ -268,7 +282,7 @@ If you want to change, summarize results directory or export directory, edit `03
 
 ## Legacy support
 
-This version takes the legacy datasets provided in DCASE2020 task2, DCASE2021 task2, DCASE2022 task2, and DCASE2023 task2 dataset for inputs.
+This version takes the legacy datasets provided in DCASE2020 task2, DCASE2021 task2, DCASE2022 task2, DCASE2023 task2, and DCASE2024 task2 dataset for inputs.
 The Legacy support scripts are similar to the main scripts. These are in `tools` directory.
 
 [learn more](README_legacy.md)
@@ -297,6 +311,18 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 - fasteners == 0.18
 
 ## Change Log
+### [3.3.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.3.0)
+
+#### Made DCASE2024 Task2 legacy
+
+- Added a link to the DCASE2024 task2 evaluator that calculates the official score.
+  - [dcase2024_task2_evaluator](https://github.com/nttcslab/dcase2024_task2_evaluator)
+- Added DCASE2024 Task2 Ground Truth data.
+  - [DCASE2024 task2 Ground truth data](datasets/eval_data_list_2024.csv)
+- Added DCASE2024 Task2 Ground truth attributes.
+  - [DCASE2024 task2 Ground truth Attributes](datasets/ground_truth_attributes)
+- The legacy script has been updated to be compatible with DCASE2024 Task2.
+
 ### [3.2.3](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.2.3)
 
 #### Updated citation in README
@@ -372,37 +398,39 @@ We developed and tested the source code on Ubuntu 20.04.4 LTS.
 
 - Provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
 
-## Truth attribute of evaluation data
 
-### Public ground truth
+## Ground truth attribute
+
+### Public ground truth of evaluation dataset
 
 The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
 
-- [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
+- [dcase2024_task2_evaluator](https://github.com/nttcslab/dcase2024_task2_evaluator)
 
-### In this repository
+### Ground truth for evaluation datasets in this repository
 
 This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
 You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
 
-- [DCASE2023 task2](datasets/eval_data_list_2023.csv)
+- [DCASE2024 task2 ground truth](datasets/eval_data_list_2024.csv)
 
+### Ground truth attributes
 
-## Truth attribute of evaluation data
+Attribute information is hidden by default for the following machine types:
 
-### Public ground truth
+- dev data
+  - gearbox
+  - slider
+  - ToyTrain
+- eval data
+  - AirCompressor
+  - BrushlessMotor
+  - HoveringDrone
+  - ToothBrush
 
-The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
+You can view the hidden attributes in the following directory:
 
-- [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
-
-### In this repository
-
-This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
-You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
-
-- [DCASE2023 task2](datasets/eval_data_list_2023.csv)
-
+- [DCASE2024 task2 Ground truth Attributes](datasets/ground_truth_attributes)
 
 ## Citation
 
