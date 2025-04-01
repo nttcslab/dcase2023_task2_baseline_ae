@@ -1,7 +1,7 @@
 # Anomalous Sound Detection
 ## DCASE 2025 Challenge Task 2 and DCASE 2023 Challenge Task 2 Baseline Auto Encoder: dcase2023\_task2\_baseline\_ae
 
-This is an autoencoder-based baseline for the [DCASE2025 Challenge Task 2 (DCASE2025T2)](https://dcase.community/challenge2025/), the [DCASE2025 Challenge Task 2 (DCASE2024T2)](https://dcase.community/challenge2024/) and the [DCASE2023 Challenge Task 2 (DCASE2023T2)](https://dcase.community/challenge2023/).
+This is an autoencoder-based baseline for the [DCASE2025 Challenge Task 2 (DCASE2025T2)](https://dcase.community/challenge2025/), the [DCASE2024 Challenge Task 2 (DCASE2024T2)](https://dcase.community/challenge2024/) and the [DCASE2023 Challenge Task 2 (DCASE2023T2)](https://dcase.community/challenge2023/).
 
 This source code is an example implementation of the baseline Auto Encoder of DCASE2025T2, DCASE2024T2 and DCASE2023T2: First-Shot Unsupervised Anomalous Sound Detection for Machine Condition Monitoring.
 This baseline implementation is based on the previous baseline, dcase2022\_baseline\_ae. The model parameter settings of this baseline AE are almost equivalent to those of the dcase2022\_task2\_baseline\_ae.
@@ -320,7 +320,7 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 
 #### Added
 
-- Provides support for the development datasets used in DCASE2025.
+- Provides support for the development datasets used in DCASE2025T2.
 
 ### [3.3.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v3.3.0)
 
