@@ -1,11 +1,11 @@
-scipy==1.10.1
-librosa==0.9.2
-matplotlib==3.7.0
-tqdm==4.63
-seaborn==0.12.2
-fasteners==0.18
+scipy
+librosa
+matplotlib
+tqdm
+seaborn
+fasteners
 
 # Included in docker image 
-torch==1.13.1
-torchvision==0.14.1
-pyYAML==6.0
+torch==2.6.0+cu118
+torchvision==0.21.0+cu118
+PyYAML==6.0.2

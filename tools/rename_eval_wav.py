@@ -15,6 +15,7 @@ EVAL_DATA_LIST_PATH = {
     "DCASE2022T2":f"{ROOT_DIR}/datasets/eval_data_list_2022.csv",
     "DCASE2023T2":f"{ROOT_DIR}/datasets/eval_data_list_2023.csv",
     "DCASE2024T2":f"{ROOT_DIR}/datasets/eval_data_list_2024.csv",
+    "DCASE2025T2":f"{ROOT_DIR}/datasets/eval_data_list_2025.csv",
 }
 
 FILENAME_COL = 0
@@ -63,7 +64,15 @@ if __name__ == "__main__":
             description='Main function to call training for different AutoEncoders')
     parser.add_argument("--dataset_parent_dir", type=str, default="data",
                         help="saving datasets directory name.")
-    parser.add_argument("--dataset_type", type=str, required=True, choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2", "DCASE2024T2"],
+    parser.add_argument("--dataset_type", type=str, required=True,
+                        choices=[
+                            "DCASE2020T2",
+                            "DCASE2021T2",
+                            "DCASE2022T2",
+                            "DCASE2023T2",
+                            "DCASE2024T2",
+                            "DCASE2025T2",
+                        ],
                         help="what Dataset name to renamed.")
     args = parser.parse_args()
 
