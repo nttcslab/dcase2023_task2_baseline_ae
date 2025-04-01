@@ -18,7 +18,15 @@ if __name__ == "__main__":
     parser.add_argument("parent_dir", type=str)
     parser.add_argument("--file_name", type=str, default="auc_pauc")
     parser.add_argument("--ext", type=str, default=".csv")
-    parser.add_argument("--dataset", type=str, default="DCASE2020T2", choices=["DCASE2020T2", "DCASE2021T2", "DCASE2022T2", "DCASE2023T2", "DCASE2024T2"])
+    parser.add_argument("--dataset", type=str, default="DCASE2020T2",
+                        choices=[
+                            "DCASE2020T2",
+                            "DCASE2021T2",
+                            "DCASE2022T2",
+                            "DCASE2023T2",
+                            "DCASE2024T2",
+                            "DCASE2025T2",
+                        ])
     parser.add_argument("--float_format", type=str, default="%.4f")
     parser.add_argument('-d', '--dev', action='store_true',
                         help='Use Development dataset')

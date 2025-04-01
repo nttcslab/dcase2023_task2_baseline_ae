@@ -62,6 +62,7 @@ __versions__ = "1.0.0"
 # download dataset parameter
 ########################################################################
 DOWNLOAD_PATH_YAML_DICT = {
+    "DCASE2025T2":"datasets/download_path_2025.yaml",
     "DCASE2024T2":"datasets/download_path_2024.yaml",
     "DCASE2023T2":"datasets/download_path_2023.yaml",
     "legacy":"datasets/download_path_legacy.yaml",
@@ -336,7 +337,9 @@ def download_raw_data(
     dataset,
     root
 ):
-    if dataset == "DCASE2024T2":
+    if dataset == "DCASE2025T2":
+        download_path_yaml = DOWNLOAD_PATH_YAML_DICT["DCASE2025T2"]
+    elif dataset == "DCASE2024T2":
         download_path_yaml = DOWNLOAD_PATH_YAML_DICT["DCASE2024T2"]
     elif dataset == "DCASE2023T2":
         download_path_yaml = DOWNLOAD_PATH_YAML_DICT["DCASE2023T2"]
@@ -469,6 +472,7 @@ YAML_PATH = {
     "DCASE2023T2_eval":"datasets/machine_type_2023_eval.yaml",
     "DCASE2024T2_dev":"datasets/machine_type_2024_dev.yaml",
     "DCASE2024T2_eval":"datasets/machine_type_2024_eval.yaml",
+    "DCASE2025T2_dev":"datasets/machine_type_2025_dev.yaml",
 }
 
 def get_machine_type_dict(dataset_name, mode=True):
@@ -482,6 +486,8 @@ def get_machine_type_dict(dataset_name, mode=True):
         yaml_path = YAML_PATH["DCASE2024T2_dev"]
     elif dataset_name == "DCASE2024T2" and not mode:
         yaml_path = YAML_PATH["DCASE2024T2_eval"]
+    elif dataset_name == "DCASE2025T2" and mode:
+        yaml_path = YAML_PATH["DCASE2025T2_dev"]
     else: 
         raise KeyError()
     

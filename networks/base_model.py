@@ -20,10 +20,10 @@ class BaseModel(object):
         print(self.device)
         try: 
             self.data = Datasets(self.args.dataset).data(self.args)
-        except KeyError: 
+        except Exception as e: 
             print('dataset "{}" is not supported'.format(self.args.dataset))
             print("please set another name \n{}".format(Datasets.show_list()))
-            sys.exit()
+            raise e
         self.train_loader = self.data.train_loader
         self.valid_loader = self.data.valid_loader
         self.test_loader = self.data.test_loader

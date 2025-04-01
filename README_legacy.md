@@ -138,7 +138,7 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script also generates a CSV file, containing AUC, pAUC, precision, recall, and F1-score for each section.
 - 03_summarize_results.sh
   - This script summarizes results into a csv file.
-  - Use the same as when summarizing DCASE2023T2 and DCASE2024T2 results.
+  - Use the same as when summarizing DCASE2025, DCASE2024T2 and DCASE2023T2 results.
 
 ## Usage
 

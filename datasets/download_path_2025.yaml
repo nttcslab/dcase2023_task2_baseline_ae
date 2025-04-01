@@ -1,0 +1,22 @@
+DCASE2025T2:
+  ToyCar:
+    dev:
+      - https://zenodo.org/records/15097779/files/dev_ToyCar.zip
+  ToyTrain:
+    dev:
+      - https://zenodo.org/records/15097779/files/dev_ToyTrain.zip
+  bearing:
+    dev:
+      - https://zenodo.org/records/15097779/files/dev_bearing.zip
+  fan:
+    dev:
+      - https://zenodo.org/records/15097779/files/dev_fan.zip
+  gearbox:
+    dev:
+      - https://zenodo.org/records/15097779/files/dev_gearbox.zip
+  slider:
+    dev:
+      - https://zenodo.org/records/15097779/files/dev_slider.zip
+  valve:
+    dev:
+      - https://zenodo.org/records/15097779/files/dev_valve.zip
