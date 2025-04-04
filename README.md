@@ -161,7 +161,6 @@ To enable the auto-downloading, set the parameter `--is_auto_download` (default:
 ### 5. Run the training script (for the development dataset)
 
 Run the training script `01_train_2025t2.sh`. Use the option -d for the development dataset `data/dcase2025t2/dev_data/<machine_type>/raw/train/`.
-`01_train_2025t2.sh` differs from `01_train_2025t2.sh` only in dataset;
 
 ```dotnetcli
 # using DCASE2025 Task 2 Datasets
@@ -174,7 +173,6 @@ After the parameter update of the Autoencoder at the last epoch specified by eit
 
 ### 6.1. Testing with the Simple Autoencoder mode
 Run the test script `02a_test_2025t2.sh`. Use the option `-d` for the development dataset `data/dcase2025t2/dev_data/<machine_type>/raw/test/`.
-`02a_test_2025t2.sh` differs from `02a_test_2023t2.sh` only in dataset;
 
 ```dotnetcli
 # using DCASE2025 Task 2 Datasets
@@ -187,7 +185,6 @@ A CSV file for each section, including the anomaly scores, will be stored in the
 
 ### 6.2. Testing with the Selective Mahalanobis mode
 Run the test script `02b_test_2025t2.sh`. Use the option `-d` for the development dataset `data/dcase2025t2/dev_data/<machine_type>/raw/test/`.
-`02b_test_2025t2.sh` differs from `02b_test_2023t2.sh` only in dataset;
 
 ```dotnetcli
 # using DCASE2025 Task 2 Datasets
@@ -316,6 +313,14 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - fasteners >= 0.19
 
 ## Change Log
+
+### [4.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.0.1)
+
+#### Previous DCASE Task2 scripts have been moved into legacy
+
+- The DCASE2023 and DCASE2024 scripts have been removed from the top directory.
+- You can continue to use the DCASE2020 through DCASE2024 scripts by using the scripts in the legacy directory.
+
 ### [4.0.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.0.0)
 
 #### Added
