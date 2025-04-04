@@ -313,9 +313,10 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - fasteners >= 0.19
 
 ## Change Log
+
 ### [4.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.0.1)
 
-#### Previous DCASE scripts have been unified into legacy
+#### Previous DCASE Task2 scripts have been moved into legacy
 
 - The DCASE2023 and DCASE2024 scripts have been removed from the top directory.
 - You can continue to use the DCASE2020 through DCASE2024 scripts by using the scripts in the legacy directory.
