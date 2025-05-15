@@ -20,3 +20,27 @@ DCASE2025T2:
   valve:
     dev:
       - https://zenodo.org/records/15097779/files/dev_valve.zip
+  ToyRCCar:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_ToyRCCar_train.zip
+  ToyPet:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_ToyPet_train.zip
+  HomeCamera:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_HomeCamera_train.zip
+  AutoTrash:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_AutoTrash_train.zip
+  Polisher:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_Polisher_train.zip
+  ScrewFeeder:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_ScrewFeeder_train.zip
+  BandSealer:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_BandSealer_train.zip
+  CoffeeGrinder:
+    eval:
+      - https://zenodo.org/records/15392814/files/eval_data_CoffeeGrinder_train.zip
