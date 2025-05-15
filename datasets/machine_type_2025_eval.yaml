@@ -1,0 +1,27 @@
+DCASE2025T2:
+  machine_type:
+    ToyRCCar:
+      eval:
+        - "00"
+    ToyPet:
+      eval:
+        - "00"
+    HomeCamera:
+      eval:
+        - "00"
+    AutoTrash:
+      eval:
+        - "00"
+    Polisher:
+      eval:
+        - "00"
+    ScrewFeeder:
+      eval:
+        - "00"
+    BandSealer:
+      eval:
+        - "00"
+    CoffeeGrinder:
+      eval:
+        - "00"
+  section_keyword: section

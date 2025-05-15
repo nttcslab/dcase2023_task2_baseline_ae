@@ -17,23 +17,23 @@ Differences between the previous dcase2022\_baseline\_ae and this version are as
 This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_test.sh) with some helper scripts for DCASE2025T2 (For DCASE2024T2 and DCASE2023T2, see [README_legacy](README_legacy.md)):
 
 - Helper scripts for DCASE2025T2
-  - data\_download\_2025dev.sh **Newly added!! (2025/04/01)**
+  - data\_download\_2025dev.sh **Updated on (2025/04/01)**
     - "Development dataset":
       - This script downloads development data files and puts them into `data/dcase2025t2/dev\_data/raw/train/` and `data/dcase2025t2/dev\_data/raw/test/`.
-  <!-- - data\_download\_2025add.sh
+  - data\_download\_2025add.sh **Newly added!! (2025/05/15)**
     - "Additional train dataset for Evaluation":
-      - This script downloads Addition data files and puts them into "data/dcase2025t2/eval\_data/raw/train/".
-  - data\_download\_2025eval.sh
+      - This script downloads Addition data files and puts them into `data/dcase2025t2/eval\_data/raw/train/`.
+  <!-- - data\_download\_2025eval.sh
     - "Additional test dataset for Evaluation"
       - This script downloads evaluation data files and puts them into "data/dcase2025t2/eval\_data/raw/test".  -->
 
-- 01_train_2025t2.sh **Newly added!! (2025/04/01)**
-  - "Development" mode:
+- 01_train_2025t2.sh
+  - "Development" mode: **Updated on (2025/04/01)**
     - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/dev_data/raw/<machine_type>/train/<section_id>`.
-  <!-- - "Evaluation" mode:
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/eval_data/raw/<machine_type>/train/<section_id>`. -->
+  - "Evaluation" mode: **Newly added!! (2025/05/15)**
+    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/eval_data/raw/<machine_type>/train/<section_id>`.
 
-- 02a_test_2025t2.sh (Use MSE as a score function for the Simple Autoencoder mode) **Newly added!! (2025/04/01)**
+- 02a_test_2025t2.sh (Use MSE as a score function for the Simple Autoencoder mode) **Updated on (2025/04/01)**
   - "Development" mode:
     - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
@@ -42,7 +42,7 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
     - The CSV files are stored in the directory `results/`. -->
 
-- 02b_test_2025t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode) **Newly added!! (2025/04/01)**
+- 02b_test_2025t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode) **Updated on (2025/04/01)**
   - "Development" mode:
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
@@ -70,9 +70,9 @@ We will launch the datasets in three stages. Therefore, please download the data
   + DCASE 2025 Challenge Task 2
     + "Development Dataset" **New! (2025/04/01)**
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/15097779](https://zenodo.org/records/15097779).
-    <!-- + "Additional Training Dataset", i.e., the evaluation dataset for training 
-      + Download "eval\_data_<machine_type>_train.zip" from []().
-    + "Evaluation Dataset", i.e., the evaluation dataset for test
+    + "Additional Training Dataset", i.e., the evaluation dataset for training  **New! (2025/05/15)**
+      + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/15392814](https://zenodo.org/records/15392814).
+    <!-- + "Evaluation Dataset", i.e., the evaluation dataset for test
       + Download "eval\_data_<machine_type>_test.zip" from [](). -->
 
   + DCASE 2024 Challenge Task 2 (C.f., for DCASE2024T2, see [README_legacy](README_legacy.md))
@@ -121,9 +121,13 @@ We will launch the datasets in three stages. Therefore, please download the data
           + ...
           + section\_00\_target\_test\_anomaly\_0049\_.wav
         + attributes\_00.csv (attributes CSV for section 00)
-      + + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
-   <!-- + data/dcase2025t2/eval\_data/raw/
+      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
+   + data/dcase2025t2/eval\_data/raw/
      + \<machine\_type0\_of\_additional\_dataset\>/
+        + supplemental/ (after launch of the additional training dataset)
+          + section\_00\_machine\_0001\_.wav
+          + ...
+          + section\_00\_machine\_0100\_.wav
         + train/ (after launch of the additional training dataset)
           + section\_00\_source\_train\_normal\_0000\_.wav
           + ...
@@ -131,22 +135,21 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section\_00\_target\_train\_normal\_0000\_.wav
           + ...
           + section\_00\_target\_train\_normal\_0009\_.wav
+        <!-- + test/ (after launch of the evaluation dataset)
+          + section\_00\_test\_0000.wav
+          + ...
+          + section\_00\_test\_0199.wav
+        + test_rename/ (convert from test directory using `tools/rename.py`)
+          + /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
+          + ...
+          + /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
+          + ...
+          + /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
+          + ...
+          + /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
+          + ... -->
         + attributes\_00.csv (attributes CSV for section 00)
-      + test/ (after launch of the evaluation dataset)
-        + section\_00\_test\_0000.wav
-        + ...
-        + section\_00\_test\_0199.wav
-      + /test_rename (convert from test directory using `tools/rename.py`)
-        + /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
-        + ...
-        + /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
-        + ...
-        + /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
-        + ...
-        + /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
-        + ...
-      + attributes\_00.csv (attributes CSV for section 00)
-     + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.) -->
+     + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
 
 ### 4. Change parameters
 
@@ -233,15 +236,15 @@ arithmetic mean,00,0.88,0.5078,0.5063157894736842,0.5536842105263158,0.492631578
 harmonic mean,00,0.88,0.5078,0.5063157894736842,0.5536842105263158,0.4926315789473684,0.0,0.0,0.0,0.0,0.0,0.
 ```
 
-### 8. Run training script for the additional training dataset (after May 15, 2025)
+### 8. Run training script for the additional training dataset **Newly added!! (2025/05/15)**
 
-<!-- After the additional training dataset is launched, download and unzip it. Move it to `data/dcase2025t2/eval_data/raw/<machine_type>/train/`. Run the training script `01_train_2025t2.sh` with the option `-e`.
+After the additional training dataset is launched, download and unzip it. Move it to `data/dcase2025t2/eval_data/raw/<machine_type>/train/`. Run the training script `01_train_2025t2.sh` with the option `-e`.
 
 ```dotnetcli
 $ 01_train_2025t2.sh -e
 ```
 
-Models are trained by using the additional training dataset `data/dcase2025t2/raw/eval_data/<machine_type>/train/`. -->
+Models are trained by using the additional training dataset `data/dcase2025t2/raw/eval_data/<machine_type>/train/`.
 
 ### 9. Run the test script for the evaluation dataset (after June 1, 2025)
 
@@ -271,7 +274,18 @@ If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename`
 
 ### 10. Summarize results
 
-After the executed `02a_test_2025t2.sh`, `02b_test_2025t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2025T2 -d` or `DCASE2025T2 -e`.
+After the executed `02a_test_2025t2.sh`, `02b_test_2025t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2025T2 -d`.
+
+```dotnetcli
+# Summarize development dataset 2025
+$ 03_summarize_results.sh DCASE2025T2 -d
+```
+
+After the summary, the results are exported in CSV format to `results/dev_data/baseline/summarize/DCASE2025T2`.
+
+If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`.
+
+<!-- After the executed `02a_test_2025t2.sh`, `02b_test_2025t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2025T2 -d` or `DCASE2025T2 -e`.
 
 ```dotnetcli
 # Summarize development dataset 2025
@@ -280,7 +294,7 @@ $ 03_summarize_results.sh DCASE2025T2 -d
 
 After the summary, the results are exported in CSV format to `results/dev_data/baseline/summarize/DCASE2025T2` or `results/eval_data/baseline/summarize/DCASE2025T2`.
 
-If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`.
+If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`. -->
 
 ## Legacy support
 
@@ -313,6 +327,12 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - fasteners >= 0.19
 
 ## Change Log
+
+### [4.1.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.1.0)
+
+#### Added
+
+- Provides support for the additional training datasets to be used in DCASE2025T2.
 
 ### [4.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.0.1)
 

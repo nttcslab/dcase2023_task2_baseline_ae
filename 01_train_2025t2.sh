@@ -39,8 +39,16 @@ then
     "
 elif [ "${dev_eval}" = "-e" ] || [ "${dev_eval}" = "--eval" ]
 then
-    echo dcase2025 task2 eval data are not publish
-    exit
+    dataset_list="\
+        DCASE2025T2ToyRCCar \
+        DCASE2025T2ToyPet \
+        DCASE2025T2HomeCamera \
+        DCASE2025T2AutoTrash \
+        DCASE2025T2Polisher \
+        DCASE2025T2ScrewFeeder \
+        DCASE2025T2BandSealer \
+        DCASE2025T2CoffeeGrinder \
+    "
 fi
 
 for dataset in $dataset_list; do
