@@ -13,5 +13,5 @@ for machine_type in \
     "CoffeeGrinder" \
 ; do
 wget "https://zenodo.org/records/15392814/files/eval_data_${machine_type}_train.zip"
-unzip "eval_${machine_type}_train.zip"
+unzip "eval_data_${machine_type}_train.zip"
 done

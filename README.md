@@ -328,6 +328,13 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 
 ## Change Log
 
+### [4.1.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.1.1)
+
+#### Fixed the function to download datasets
+
+- Fixed an error that occurred when using the automatic download function.
+- The path to unzip the DCASE2025T2 Additional training dataset was incorrect. Fixed the issue in data_download_2025add.sh.
+
 ### [4.1.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.1.0)
 
 #### Added
