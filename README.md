@@ -20,36 +20,36 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
   - data\_download\_2025dev.sh **Updated on (2025/04/01)**
     - "Development dataset":
       - This script downloads development data files and puts them into `data/dcase2025t2/dev\_data/raw/train/` and `data/dcase2025t2/dev\_data/raw/test/`.
-  - data\_download\_2025add.sh **Newly added!! (2025/05/15)**
+  - data\_download\_2025add.sh **Updated on (2025/05/15)**
     - "Additional train dataset for Evaluation":
       - This script downloads Addition data files and puts them into `data/dcase2025t2/eval\_data/raw/train/`.
-  <!-- - data\_download\_2025eval.sh
+  - data\_download\_2025eval.sh **Newly added!! (2025/06/01)**
     - "Additional test dataset for Evaluation"
-      - This script downloads evaluation data files and puts them into "data/dcase2025t2/eval\_data/raw/test".  -->
+      - This script downloads evaluation data files and puts them into `data/dcase2025t2/eval\_data/raw/test`. 
 
 - 01_train_2025t2.sh
   - "Development" mode: **Updated on (2025/04/01)**
     - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/dev_data/raw/<machine_type>/train/<section_id>`.
-  - "Evaluation" mode: **Newly added!! (2025/05/15)**
+  - "Evaluation" mode: **Updated on (2025/05/15)**
     - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/eval_data/raw/<machine_type>/train/<section_id>`.
 
-- 02a_test_2025t2.sh (Use MSE as a score function for the Simple Autoencoder mode) **Updated on (2025/04/01)**
-  - "Development" mode:
+- 02a_test_2025t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
+  - "Development" mode: **Updated on (2025/04/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  <!-- - "Evaluation" mode:
+  - "Evaluation" mode: **Newly added!! (2025/06/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
-    - The CSV files are stored in the directory `results/`. -->
+    - The CSV files are stored in the directory `results/`.
 
-- 02b_test_2025t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode) **Updated on (2025/04/01)**
-  - "Development" mode:
+- 02b_test_2025t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
+  - "Development" mode: **Updated on (2025/04/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  <!-- - "Evaluation" mode:
+  - "Evaluation" mode: **Newly added!! (2025/06/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
-    - The CSV files are stored in the directory `results/`. -->
+    - The CSV files are stored in the directory `results/`.
       
 - 03_summarize_results.sh
   - This script summarizes results into a CSV file.
@@ -72,8 +72,8 @@ We will launch the datasets in three stages. Therefore, please download the data
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/15097779](https://zenodo.org/records/15097779).
     + "Additional Training Dataset", i.e., the evaluation dataset for training  **New! (2025/05/15)**
       + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/15392814](https://zenodo.org/records/15392814).
-    <!-- + "Evaluation Dataset", i.e., the evaluation dataset for test
-      + Download "eval\_data_<machine_type>_test.zip" from [](). -->
+    + "Evaluation Dataset", i.e., the evaluation dataset for test **New! (2025/06/01)**
+      + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/records/15519362](https://zenodo.org/records/15519362).
 
   + DCASE 2024 Challenge Task 2 (C.f., for DCASE2024T2, see [README_legacy](README_legacy.md))
     + "Development Dataset"
@@ -135,11 +135,11 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section\_00\_target\_train\_normal\_0000\_.wav
           + ...
           + section\_00\_target\_train\_normal\_0009\_.wav
-        <!-- + test/ (after launch of the evaluation dataset)
+        + test/ (after launch of the evaluation dataset)
           + section\_00\_test\_0000.wav
           + ...
           + section\_00\_test\_0199.wav
-        + test_rename/ (convert from test directory using `tools/rename.py`)
+        <!-- + test_rename/ (convert from test directory using `tools/rename.py`)
           + /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
           + ...
           + /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
@@ -236,7 +236,7 @@ arithmetic mean,00,0.88,0.5078,0.5063157894736842,0.5536842105263158,0.492631578
 harmonic mean,00,0.88,0.5078,0.5063157894736842,0.5536842105263158,0.4926315789473684,0.0,0.0,0.0,0.0,0.0,0.
 ```
 
-### 8. Run training script for the additional training dataset **Newly added!! (2025/05/15)**
+### 8. Run training script for the additional training dataset **Updated (2025/05/15)**
 
 After the additional training dataset is launched, download and unzip it. Move it to `data/dcase2025t2/eval_data/raw/<machine_type>/train/`. Run the training script `01_train_2025t2.sh` with the option `-e`.
 
@@ -246,9 +246,9 @@ $ 01_train_2025t2.sh -e
 
 Models are trained by using the additional training dataset `data/dcase2025t2/raw/eval_data/<machine_type>/train/`.
 
-### 9. Run the test script for the evaluation dataset (after June 1, 2025)
+### 9. Run the test script for the evaluation dataset **Newly added!! (2025/06/01)**
 
-<!-- ### 9.1. Testing with the Simple Autoencoder mode
+### 9.1. Testing with the Simple Autoencoder mode
 
 After the evaluation dataset for the test is launched, download and unzip it. Move it to `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. Run the test script `02a_test_2025t2.sh` with the option `-e`.
 
@@ -258,7 +258,7 @@ $ 02a_test_2025t2.sh -e
 
 Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
-If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
+<!-- If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
 
 ### 9.2. Testing with the Selective Mahalanobis mode
 
@@ -270,7 +270,7 @@ $ 02b_test_2025t2.sh -e
 
 Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
-If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
+<!-- If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
 
 ### 10. Summarize results
 
@@ -327,6 +327,12 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - fasteners >= 0.19
 
 ## Change Log
+
+### [4.2.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.2.0)
+
+#### Added
+
+- Provides support for the evaluation dataset datasets to be used in DCASE2025T2.
 
 ### [4.1.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.1.1)
 
