@@ -23,7 +23,7 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
   - data\_download\_2025add.sh **Updated on (2025/05/15)**
     - "Additional train dataset for Evaluation":
       - This script downloads Addition data files and puts them into `data/dcase2025t2/eval\_data/raw/train/`.
-  - data\_download\_2025eval.sh **Newly added!! (2025/06/01)**
+  - data\_download\_2025eval.sh **Updated on (2025/06/01)**
     - "Additional test dataset for Evaluation"
       - This script downloads evaluation data files and puts them into `data/dcase2025t2/eval\_data/raw/test`. 
 
@@ -38,7 +38,7 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
     - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  - "Evaluation" mode: **Newly added!! (2025/06/01)**
+  - "Evaluation" mode: **Updated on (2025/06/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
     - The CSV files are stored in the directory `results/`.
 
@@ -47,7 +47,7 @@ This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_te
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  - "Evaluation" mode: **Newly added!! (2025/06/01)**
+  - "Evaluation" mode: **Updated on (2025/06/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
     - The CSV files are stored in the directory `results/`.
       
@@ -68,11 +68,11 @@ Clone this repository from GitHub.
 We will launch the datasets in three stages. Therefore, please download the datasets in each stage:
 
   + DCASE 2025 Challenge Task 2
-    + "Development Dataset" **New! (2025/04/01)**
+    + "Development Dataset" **Updated on (2025/04/01)**
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/15097779](https://zenodo.org/records/15097779).
-    + "Additional Training Dataset", i.e., the evaluation dataset for training  **New! (2025/05/15)**
+    + "Additional Training Dataset", i.e., the evaluation dataset for training  **Updated on (2025/05/15)**
       + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/15392814](https://zenodo.org/records/15392814).
-    + "Evaluation Dataset", i.e., the evaluation dataset for test **New! (2025/06/01)**
+    + "Evaluation Dataset", i.e., the evaluation dataset for test **Updated on (2025/06/01)**
       + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/records/15519362](https://zenodo.org/records/15519362).
 
   + DCASE 2024 Challenge Task 2 (C.f., for DCASE2024T2, see [README_legacy](README_legacy.md))
@@ -139,7 +139,7 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section\_00\_test\_0000.wav
           + ...
           + section\_00\_test\_0199.wav
-        <!-- + test_rename/ (convert from test directory using `tools/rename.py`)
+        + test_rename/ (convert from test directory using `tools/rename.py`)
           + /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
           + ...
           + /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
@@ -147,7 +147,7 @@ We will launch the datasets in three stages. Therefore, please download the data
           + /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
           + ...
           + /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
-          + ... -->
+          + ...
         + attributes\_00.csv (attributes CSV for section 00)
      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
 
@@ -246,7 +246,7 @@ $ 01_train_2025t2.sh -e
 
 Models are trained by using the additional training dataset `data/dcase2025t2/raw/eval_data/<machine_type>/train/`.
 
-### 9. Run the test script for the evaluation dataset **Newly added!! (2025/06/01)**
+### 9. Run the test script for the evaluation dataset **Updated on (2025/06/01)**
 
 ### 9.1. Testing with the Simple Autoencoder mode
 
@@ -258,7 +258,7 @@ $ 02a_test_2025t2.sh -e
 
 Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
-<!-- If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
+If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
 
 ### 9.2. Testing with the Selective Mahalanobis mode
 
@@ -270,7 +270,7 @@ $ 02b_test_2025t2.sh -e
 
 Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
-<!-- If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
+If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
 
 ### 10. Summarize results
 
@@ -285,7 +285,7 @@ After the summary, the results are exported in CSV format to `results/dev_data/b
 
 If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`.
 
-<!-- After the executed `02a_test_2025t2.sh`, `02b_test_2025t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2025T2 -d` or `DCASE2025T2 -e`.
+After the executed `02a_test_2025t2.sh`, `02b_test_2025t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2025T2 -d` or `DCASE2025T2 -e`.
 
 ```dotnetcli
 # Summarize development dataset 2025
@@ -294,7 +294,7 @@ $ 03_summarize_results.sh DCASE2025T2 -d
 
 After the summary, the results are exported in CSV format to `results/dev_data/baseline/summarize/DCASE2025T2` or `results/eval_data/baseline/summarize/DCASE2025T2`.
 
-If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`. -->
+If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`.
 
 ## Legacy support
 
@@ -327,6 +327,18 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - fasteners >= 0.19
 
 ## Change Log
+
+### [4.3.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.3.0)
+
+#### Added Ground truth
+
+- Added a link to the DCASE2025 task2 evaluator that calculates the official score.
+  - [dcase2025_task2_evaluator](https://github.com/nttcslab/dcase2025_task2_evaluator)
+- Added DCASE2025 Task2 Ground Truth data.
+  - [DCASE2025 task2 Ground truth data](datasets/eval_data_list_2025.csv)
+- Added DCASE2025 Task2 Ground truth attributes.
+  - [DCASE2025 task2 Ground truth Attributes](datasets/ground_truth_attributes/dcase2025t2)
+- The legacy script has been updated to be compatible with DCASE2025 Task2.
 
 ### [4.2.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.2.0)
 
@@ -450,36 +462,42 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 
 ## Ground truth attribute
 
-<!-- ### Public ground truth of evaluation dataset
+### Public ground truth of evaluation dataset
 
 The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
 
-- [dcase2024_task2_evaluator](https://github.com/nttcslab/dcase2024_task2_evaluator)
+- [dcase2025_task2_evaluator](https://github.com/nttcslab/dcase2025_task2_evaluator)
 
 ### Ground truth for evaluation datasets in this repository
 
 This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
 You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
 
-- [DCASE2024 task2 ground truth](datasets/eval_data_list_2024.csv) -->
+- [DCASE2025 task2 ground truth](datasets/eval_data_list_2025.csv)
 
 ### Ground truth attributes
 
-<!-- Attribute information is hidden by default for the following machine types:
+Attribute information is hidden by default for the following machine types:
 
 - dev data
-  - gearbox
+  - bearing
   - slider
+  - ToyTrain
+- eval_data
+  - AutoTrash
+  - Polisher
+  - ScrewFeeder
+  - ToyPet
 
 You can view the hidden attributes in the following directory:
 
-- [DCASE2025 task2 Ground truth Attributes](datasets/ground_truth_attributes) -->
+- [DCASE2025 task2 Ground truth Attributes](datasets/ground_truth_attributes)
 
 ## Citation
 
 If you use this system, please cite all the following four papers:
 
-+ Tomoya Nishida, Noboru Harada, Daisuke Niizumi, Davide Albertini, Roberto Sannino, Simone Pradolini, Filippo Augusti, Keisuke Imoto, Kota Dohi, Harsh Purohit, Takashi Endo, and Yohei Kawaguchi. Description and discussion on DCASE 2024 challenge task 2: first-shot unsupervised anomalous sound detection for machine condition monitoring. In arXiv e-prints: 2406.07250, 2024. [URL](https://arxiv.org/pdf/2406.07250.pdf)
++ Tomoya Nishida, Noboru Harada, Daisuke Niizumi, Davide Albertini, Roberto Sannino, Simone Pradolini, Filippo Augusti, Keisuke Imoto, Kota Dohi, Harsh Purohit, Takashi Endo, and Yohei Kawaguchi. Description and discussion on DCASE 2025 challenge task 2: first-shot unsupervised anomalous sound detection for machine condition monitoring. In arXiv e-prints: 2506.10097, 2025. [URL](https://arxiv.org/pdf/2506.10097.pdf)
 + Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, and Shoichiro Saito. ToyADMOS2: another dataset of miniature-machine operating sounds for anomalous sound detection under domain shift conditions. In Proceedings of the Detection and Classification of Acoustic Scenes and Events Workshop (DCASE), 1–5. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf)
 + Kota Dohi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, Yuki Nikaido, and Yohei Kawaguchi. MIMII DG: sound dataset for malfunctioning industrial machine investigation and inspection for domain generalization task. In Proceedings of the 7th Detection and Classification of Acoustic Scenes and Events 2022 Workshop (DCASE2022). Nancy, France, November 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_62.pdf)
 + Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, and Masahiro Yasuda. First-shot anomaly detection for machine condition monitoring: a domain generalization baseline. Proceedings of 31st European Signal Processing Conference (EUSIPCO), pages 191–195, 2023. [URL](https://eurasip.org/Proceedings/Eusipco/Eusipco2023/pdfs/0000191.pdf)

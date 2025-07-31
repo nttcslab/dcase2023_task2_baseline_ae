@@ -15,3 +15,6 @@ for machine_type in \
 wget "https://zenodo.org/records/15519362/files/eval_data_${machine_type}_test.zip"
 unzip "eval_data_${machine_type}_test.zip"
 done
+
+# Adds reference labels to test data.
+python tools/rename_eval_wav.py --dataset_parent_dir=data --dataset_type=DCASE2025T2
