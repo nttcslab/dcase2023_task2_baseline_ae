@@ -1,6 +1,6 @@
 # Legacy support
 
-This version supports reading the datasets from DCASE2020 task2, DCASE2021 task2, DCASE2022 task2, DCASE2023 task2 and DCASE2024 task2 dataset for inputs.
+This version supports reading the datasets from DCASE2020 task2, DCASE2021 task2, DCASE2022 task2, DCASE2023 task2, DCASE2024 task2 and DCASE2025 task2 dataset for inputs.
 
 ## Description
 
@@ -23,6 +23,9 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
   - tools/data\_download\_2024.sh
     - This script downloads development data and evaluation data files and puts them into `data/dcase2024t2/dev_data/raw/` and `data/dcase2024t2/eval_data/raw/`.
     - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2024t2/eval_data/raw/test_rename`
+  - tools/data\_download\_2025.sh
+    - This script downloads development data and evaluation data files and puts them into `data/dcase2025t2/dev_data/raw/` and `data/dcase2025t2/eval_data/raw/`.
+    - Rename evaluation data after downloading the dataset to evaluate and calculate AUC score. Renamed data is stored in `data/dcase2025t2/eval_data/raw/test_rename`
 
 
 - tools/01\_train\_legacy.sh
@@ -51,6 +54,11 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/dev_data/raw/<machine_type>/train/<section_id>`
     - "Evaluation" mode:
       - This script trains a model for each machine type for each section ID by using the directory `data/dcase2024t2/eval_data/raw/<machine_type>/train/<section_id>`.
+  - DCASE2025 task2 mode:
+    - "Development" mode:
+      - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/dev_data/raw/<machine_type>/train/<section_id>`
+    - "Evaluation" mode:
+      - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/eval_data/raw/<machine_type>/train/<section_id>`.
 
   
 - tools/02a\_test\_legacy.sh (Use MSE as a score function for the Simple Autoencoder mode)
@@ -99,6 +107,15 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
       - The generated CSV files are stored in the directory `results/`.
       - If `test_rename` directory is available, this script generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
+  - DCASE2025 task2 mode:
+    - "Development" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
+      - The generated CSV files will be stored in the directory `results/`.
+      - It also generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
+    - "Evaluation" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+      - The generated CSV files are stored in the directory `results/`.
+      - If `test_rename` directory is available, this script generates a CSV file including AUC, pAUC, precision, recall, and F1-score for each section.
 
 - tools/02b\_test\_legacy.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
     - "Development" mode:
@@ -136,9 +153,18 @@ Legacy-support scripts are similar to the main scripts. These are in `tools` dir
       - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2024t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
       - The generated CSV files are stored in the directory.
       - This script also generates a CSV file, containing AUC, pAUC, precision, recall, and F1-score for each section.
+  - DCASE2025 task2 mode:
+    - "Development" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
+      - The CSV files will be stored in the directory `results/`.
+      - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
+    - "Evaluation" mode:
+      - This script generates a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+      - The generated CSV files are stored in the directory.
+      - This script also generates a CSV file, containing AUC, pAUC, precision, recall, and F1-score for each section.
 - 03_summarize_results.sh
   - This script summarizes results into a csv file.
-  - Use the same as when summarizing DCASE2025, DCASE2024T2 and DCASE2023T2 results.
+  - Use the same as when summarizing DCASE2025T2, DCASE2024T2 and DCASE2023T2 results.
 
 ## Usage
 
@@ -180,6 +206,13 @@ Legacy scripts in `tools` directory can be executed regardless of the current di
       + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/11259435](https://zenodo.org/records/11259435).
     + "Evaluation Dataset", i.e., the evaluation dataset for test
       + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/records/11363076](https://zenodo.org/records/11363076).
+  + DCASE2025T2
+    + "Development Dataset"
+      + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/15097779](https://zenodo.org/records/15097779).
+    + "Additional Training Dataset", i.e., the evaluation dataset for training 
+      + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/15392814](https://zenodo.org/records/15392814).
+    + "Evaluation Dataset", i.e., the evaluation dataset for test
+      + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/records/15519362](https://zenodo.org/records/15519362).
 
 
 ### 3. Unzip the downloaded files and make the directory structure as follows:
@@ -193,12 +226,13 @@ The legacy dataset directory structure is the same as DCASE2023 task2. These par
     - /dcase2022t2
     - /dcase2023t2
     - /dcase2024t2
+    - /dcase2025t2
 
 [learn more about directory structure](#directory-structure-of-downloaded-dataset).
 
 ### 4. Change parameters
 
-Change parameters using `baseline.yaml` in the same as [DCASE2024 mode](./README.md#4-change-parameters).
+Change parameters using `baseline.yaml` in the same as [DCASE2025 mode](./README.md#4-change-parameters).
 
 ### 4.1. Enable Auto-download dataset
 
@@ -222,6 +256,7 @@ $ bash tools/01_train.sh DCASE2020T2 -d
   - `DCASE2022T2`
   - `DCASE2023T2`
   - `DCASE2024T2`
+  - `DCASE2025T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -244,6 +279,7 @@ $ bash tools/02a_test_legacy.sh DCASE2020T2 -d
   - `DCASE2022T2`
   - `DCASE2023T2`
   - `DCASE2024T2`
+  - `DCASE2025T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -264,6 +300,7 @@ $ bash tools/02b_test_legacy.sh DCASE2020T2 -d
   - `DCASE2022T2`
   - `DCASE2023T2`
   - `DCASE2024T2`
+  - `DCASE2025T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -296,6 +333,7 @@ $ 03_summarize_results.sh DCASE2020T2 -e
   - `DCASE2022T2`
   - `DCASE2023T2`
   - `DCASE2024T2`
+  - `DCASE2025T2`
 - Second parameters
   - `-d`
   - `-e`
@@ -673,6 +711,72 @@ Note that the wav file's parent directory. At that time dataset directory is `de
     - /ToothBrush
     - /ToyCircuit
 
+### DCASE2025 task2
+- dcase2023\_task2\_baseline\_ae
+  - /data/dcase2025t2/dev\_data/raw
+    - /bearing
+      - /train (only normal clips)
+        - section\_00\_source\_train\_normal\_0000\_.wav
+        - ...
+        - section\_00\_source\_train\_normal\_0989\_.wav
+        - section\_00\_target\_train\_normal\_0000\_.wav
+        - ...
+        - section\_00\_target\_train\_normal\_0009\_.wav
+      - test/
+        - section\_00\_source\_test\_normal\_0000\_.wav
+        - ...
+        - section\_00\_source\_test\_normal\_0049\_.wav
+        - section\_00\_source\_test\_anomaly\_0000\_.wav
+        - ...
+        - section\_00\_source\_test\_anomaly\_0049\_.wav
+        - section\_00\_target\_test\_normal\_0000\_.wav 
+        - ...
+        - section\_00\_target\_test\_normal\_0049\_.wav 
+        - section\_00\_target\_test\_anomaly\_0000\_.wav 
+        - ...
+        - section\_00\_target\_test\_anomaly\_0049\_.wav
+      - attributes\_00.csv (attributes CSV for section 00)
+    - /fan (The other machine types have the same directory structure as fan.)
+    - /gearbox
+    - /slider (`slider` means "slide rail")
+    - /ToyCar
+    - /ToyTrain
+    - /valve
+  - /data/dcase2025t2/eval\_data/raw/
+    - /AutoTrash
+      - supplemental/ (after launch of the additional training dataset)
+        - section\_00\_machine\_0001\_.wav
+        - ...
+        - section\_00\_machine\_0100\_.wav
+      - train/ (after launch of the additional training dataset)
+        - section\_00\_source\_train\_normal\_0000\_.wav
+        - ...
+        - section\_00\_source\_train\_normal\_0989\_.wav
+        - section\_00\_target\_train\_normal\_0000\_.wav
+        - ...
+        - section\_00\_target\_train\_normal\_0009\_.wav
+      - test/ (after launch of the evaluation dataset)
+        - section\_00\_test\_0000.wav
+        - ...
+        - section\_00\_test\_0199.wav
+      - test_rename/ (convert from test directory using `tools/rename.py`)
+        - /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
+        - ...
+        - /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
+        - ...
+        - /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
+        - ...
+        - /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
+        - ...
+      - attributes\_00.csv (attributes CSV for section 00)
+    - /Polisher
+    - /ScrewFeeder
+    - /BandSealer
+    - /CoffeeGrinder
+    - /ToyRCCar
+    - /ToyPet
+    - /HomeCamera
+
 ## Ground truth attribute
 
 ### Public ground truth of evaluation dataset
@@ -684,6 +788,7 @@ The following code was used to calculate the official score. Among these is eval
 - [dcase2022_task2_evaluator](https://github.com/Kota-Dohi/dcase2022_evaluator)
 - [dcase2023_task2_evaluator](https://github.com/nttcslab/dcase2023_task2_evaluator)
 - [dcase2024_task2_evaluator](https://github.com/nttcslab/dcase2024_task2_evaluator)
+- [dcase2025_task2_evaluator](https://github.com/nttcslab/dcase2025_task2_evaluator)
 
 ### Ground truth for evaluation datasets in this repository
 
@@ -695,6 +800,7 @@ You can calculate AUC and other score if add ground truth to evaluation datasets
 - [DCASE2022 task2](datasets/eval_data_list_2022.csv)
 - [DCASE2023 task2](datasets/eval_data_list_2023.csv)
 - [DCASE2024 task2](datasets/eval_data_list_2024.csv)
+- [DCASE2025 task2](datasets/eval_data_list_2025.csv)
 
 ### Ground truth attributes
 
@@ -710,10 +816,21 @@ Attribute information is hidden by default for the following machine types:
     - BrushlessMotor
     - HoveringDrone
     - ToothBrush
+- DCASE2025 Task2
+  - dev data
+    - bearing
+    - slider
+    - ToyTrain
+  - eval data
+    - AutoTrash
+    - Polisher
+    - ScrewFeeder
+    - ToyPet
 
 You can view the hidden attributes in the following directory:
 
-- [DCASE2024 task2 Ground truth Attributes](datasets/ground_truth_attributes)
+- [DCASE2024 task2 Ground truth Attributes](datasets/ground_truth_attributes/dcase2024t2)
+- [DCASE2025 task2 Ground truth Attributes](datasets/ground_truth_attributes/dcase2025t2)
 
 ## Citation
 
@@ -750,3 +867,13 @@ If you use this system, please cite all papers that correspond to the datasets y
 + Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, and Shoichiro Saito. ToyADMOS2: another dataset of miniature-machine operating sounds for anomalous sound detection under domain shift conditions. In Proceedings of the Detection and Classification of Acoustic Scenes and Events Workshop (DCASE), 1–5. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf)
 + Kota Dohi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, Yuki Nikaido, and Yohei Kawaguchi. MIMII DG: sound dataset for malfunctioning industrial machine investigation and inspection for domain generalization task. In Proceedings of the 7th Detection and Classification of Acoustic Scenes and Events 2022 Workshop (DCASE2022). Nancy, France, November 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_62.pdf)
 + Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, and Masahiro Yasuda. First-shot anomaly detection for machine condition monitoring: a domain generalization baseline. Proceedings of 31st European Signal Processing Conference (EUSIPCO), pages 191–195, 2023. [URL](https://eurasip.org/Proceedings/Eusipco/Eusipco2023/pdfs/0000191.pdf)
+
+### [DCASE2025 task2](https://dcase.community/challenge2025/task-first-shot-unsupervised-anomalous-sound-detection-for-machine-condition-monitoring#citation)
+
+If you use this system, please cite all the following four papers:
+
++ Tomoya Nishida, Noboru Harada, Daisuke Niizumi, Davide Albertini, Roberto Sannino, Simone Pradolini, Filippo Augusti, Keisuke Imoto, Kota Dohi, Harsh Purohit, Takashi Endo, and Yohei Kawaguchi. Description and discussion on DCASE 2025 challenge task 2: first-shot unsupervised anomalous sound detection for machine condition monitoring. In arXiv e-prints: 2506.10097, 2025. [URL](https://arxiv.org/pdf/2506.10097.pdf)
++ Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, and Shoichiro Saito. ToyADMOS2: another dataset of miniature-machine operating sounds for anomalous sound detection under domain shift conditions. In Proceedings of the Detection and Classification of Acoustic Scenes and Events Workshop (DCASE), 1–5. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf)
++ Kota Dohi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, Yuki Nikaido, and Yohei Kawaguchi. MIMII DG: sound dataset for malfunctioning industrial machine investigation and inspection for domain generalization task. In Proceedings of the 7th Detection and Classification of Acoustic Scenes and Events 2022 Workshop (DCASE2022). Nancy, France, November 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_62.pdf)
++ Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, and Masahiro Yasuda. First-shot anomaly detection for machine condition monitoring: a domain generalization baseline. Proceedings of 31st European Signal Processing Conference (EUSIPCO), pages 191–195, 2023. [URL](https://eurasip.org/Proceedings/Eusipco/Eusipco2023/pdfs/0000191.pdf)
+

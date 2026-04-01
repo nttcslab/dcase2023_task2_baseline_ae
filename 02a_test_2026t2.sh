@@ -25,32 +25,25 @@ fi
 # main process
 base_job="bash"
 job="test_ae.sh"
+mono=False
 
 if [ "${dev_eval}" = "-d" ] || [ "${dev_eval}" = "--dev" ]
 then
     dataset_list="\
-        DCASE2025T2ToyCar \
-        DCASE2025T2ToyTrain \
-        DCASE2025T2bearing \
-        DCASE2025T2fan \
-        DCASE2025T2gearbox \
-        DCASE2025T2slider \
-        DCASE2025T2valve \
+        DCASE2026T2ToyCar \
+        DCASE2026T2ToyCarEmu \
+        DCASE2026T2bearingEmu \
+        DCASE2026T2fan \
+        DCASE2026T2gearboxEmu \
+        DCASE2026T2sliderEmu \
+        DCASE2026T2valveEmu \
     "
 elif [ "${dev_eval}" = "-e" ] || [ "${dev_eval}" = "--eval" ]
 then
-    dataset_list="\
-        DCASE2025T2ToyRCCar \
-        DCASE2025T2ToyPet \
-        DCASE2025T2HomeCamera \
-        DCASE2025T2AutoTrash \
-        DCASE2025T2Polisher \
-        DCASE2025T2ScrewFeeder \
-        DCASE2025T2BandSealer \
-        DCASE2025T2CoffeeGrinder \
-    "
+    echo dcase2026 task2 eval data are not publish
+    exit
 fi
 
 for dataset in $dataset_list; do
-    ${base_job} ${job} ${dataset} ${dev_eval} "MAHALA" 0
+    ${base_job} ${job} ${dataset} ${dev_eval} ${mono} "MSE" 0
 done

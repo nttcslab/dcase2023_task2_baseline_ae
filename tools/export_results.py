@@ -118,9 +118,13 @@ def main(parent_dir, dataset, machine_type_dict, row_index=["arithmetic mean", "
         auc_dict[target_dir] = {}
         df_target = pd.DataFrame()
         columns_header = set()
+        print(f"{target_dir=}")
         for machine_name in machine_type_dict.keys():
             auc_dict[target_dir][machine_name] = {}
-            files = sorted(glob.glob(f"{args.parent_dir}/{target_dir}/*{dataset}{machine_name}*roc.csv"))
+            files = sorted(glob.glob(f"{args.parent_dir}/{target_dir}/*{dataset}{machine_name}_*roc.csv"))
+            print(f"\t{machine_name=}")
+            for file in files:
+                print(f"\t\t{file=}")
             file_dict = {
                 "eval":[file for file in files if "Eval" in file],
                 "dev":[file for file in files if "Eval" not in file]
@@ -191,6 +195,7 @@ if __name__=="__main__":
                             "DCASE2023T2",
                             "DCASE2024T2",
                             "DCASE2025T2",
+                            "DCASE2026T2",
                         ])
     parser.add_argument('-d', '--dev', action='store_true',
                         help='Use Development dataset')

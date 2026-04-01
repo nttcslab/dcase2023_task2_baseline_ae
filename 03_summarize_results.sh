@@ -16,7 +16,8 @@ if [ "${dataset}" != "DCASE2020T2" ] \
     && [ "${dataset}" != "DCASE2022T2" ] \
     && [ "${dataset}" != "DCASE2023T2" ] \
     && [ "${dataset}" != "DCASE2024T2" ] \
-    && [ "${dataset}" != "DCASE2025T2" ]
+    && [ "${dataset}" != "DCASE2025T2" ] \
+    && [ "${dataset}" != "DCASE2026T2" ]
 then
     args_flag=1
     args_flag_dataset=1
@@ -35,18 +36,19 @@ fi
 if [ $args_flag -eq 1 ]
 then
     echo "$0: argument error"
-    echo -e "usage\t: $0 ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2' | 'DCASE2024T2' | 'DCASE2025T2' ] ['-d' | '--dev' | '-e' | '--eval']"
+    echo -e "usage\t: $0 ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2' | 'DCASE2024T2' | 'DCASE2025T2' | 'DCASE2026T2' ] ['-d' | '--dev' | '-e' | '--eval']"
 
     if [ $args_flag_dataset -eq 1 ]
     then
         echo -e "\tdataset: invalid choice '$dataset'"
-        echo -e "\tchoice from ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2' | 'DCASE2024T2' | 'DCASE2025T2' ]."
+        echo -e "\tchoice from ['DCASE2020T2' | 'DCASE2021T2' | 'DCASE2022T2' | 'DCASE2023T2' | 'DCASE2024T2' | 'DCASE2025T2' | 'DCASE2026T2' ]."
         echo -e "\t\tDCASE2020T2\t: Use DCASE2020 Task2 datasets. "
         echo -e "\t\tDCASE2021T2\t: Use DCASE2021 Task2 datasets. "
         echo -e "\t\tDCASE2022T2\t: Use DCASE2022 Task2 datasets. "
         echo -e "\t\tDCASE2023T2\t: Use DCASE2023 Task2 datasets. "
         echo -e "\t\tDCASE2024T2\t: Use DCASE2024 Task2 datasets. "
         echo -e "\t\tDCASE2025T2\t: Use DCASE2025 Task2 datasets. "
+        echo -e "\t\tDCASE2026T2\t: Use DCASE2025 Task2 datasets. "
         echo 
     fi
 

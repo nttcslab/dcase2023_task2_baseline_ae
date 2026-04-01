@@ -28,6 +28,8 @@ import pickletools
 import time
 import datetime
 from enum import Enum, auto
+import soundfile as sf
+
 from tools.rename_eval_wav import copy_wav as rename_wav
 ########################################################################
 
@@ -62,6 +64,7 @@ __versions__ = "1.0.0"
 # download dataset parameter
 ########################################################################
 DOWNLOAD_PATH_YAML_DICT = {
+    "DCASE2026T2":"datasets/download_path_2026.yaml",
     "DCASE2025T2":"datasets/download_path_2025.yaml",
     "DCASE2024T2":"datasets/download_path_2024.yaml",
     "DCASE2023T2":"datasets/download_path_2023.yaml",
@@ -96,8 +99,19 @@ def file_load(wav_name, mono=False):
 
     return : numpy.array( float )
     """
+    info = sf.info(wav_name)
+    ch = info.channels
+    assert any([
+        mono and ch == 1,
+        not mono and ch > 1,
+    ]), f"Channel mismatch: The file is {ch=}, but {mono=} is specified."
+
     try:
-        return librosa.load(wav_name, sr=None, mono=mono)
+        if mono:
+            return librosa.load(wav_name, sr=None, mono=mono)
+        else:
+            y, sr = librosa.load(wav_name, sr=None, mono=mono)
+            return y[0], sr
     except:
         logger.error("file_broken or not exists!! : {}".format(wav_name))
 
@@ -116,7 +130,8 @@ def file_to_vectors(file_name,
                     power=2.0,
                     fmax=None,
                     fmin=None,
-                    win_length=None):
+                    win_length=None,
+                    mono=True):
     """
     convert file_name to a vector array.
 
@@ -131,7 +146,8 @@ def file_to_vectors(file_name,
     dims = n_mels * n_frames
 
     # generate melspectrogram using librosa
-    y, sr = file_load(file_name, mono=True)
+    y, sr = file_load(file_name, mono=mono)
+
     mel_spectrogram = librosa.feature.melspectrogram(y=y,
                                                         sr=sr,
                                                         n_fft=n_fft,
@@ -146,7 +162,7 @@ def file_to_vectors(file_name,
     log_mel_spectrogram = 20.0 / power * np.log10(np.maximum(mel_spectrogram, sys.float_info.epsilon))
 
     # calculate total vector size
-    n_vectors = len(log_mel_spectrogram[0, :]) - n_frames + 1
+    n_vectors = log_mel_spectrogram.shape[-1] - n_frames + 1
 
     # skip too short clips
     if n_vectors < 1:
@@ -337,7 +353,9 @@ def download_raw_data(
     dataset,
     root
 ):
-    if dataset == "DCASE2025T2":
+    if dataset == "DCASE2026T2":
+        download_path_yaml = DOWNLOAD_PATH_YAML_DICT["DCASE2026T2"]
+    elif dataset == "DCASE2025T2":
         download_path_yaml = DOWNLOAD_PATH_YAML_DICT["DCASE2025T2"]
     elif dataset == "DCASE2024T2":
         download_path_yaml = DOWNLOAD_PATH_YAML_DICT["DCASE2024T2"]
@@ -474,6 +492,7 @@ YAML_PATH = {
     "DCASE2024T2_eval":"datasets/machine_type_2024_eval.yaml",
     "DCASE2025T2_dev":"datasets/machine_type_2025_dev.yaml",
     "DCASE2025T2_eval":"datasets/machine_type_2025_eval.yaml",
+    "DCASE2026T2_dev":"datasets/machine_type_2026_dev.yaml",
 }
 
 def get_machine_type_dict(dataset_name, mode=True):
@@ -491,6 +510,8 @@ def get_machine_type_dict(dataset_name, mode=True):
         yaml_path = YAML_PATH["DCASE2025T2_dev"]
     elif dataset_name == "DCASE2025T2" and not mode:
         yaml_path = YAML_PATH["DCASE2025T2_eval"]
+    elif dataset_name == "DCASE2026T2" and mode:
+        yaml_path = YAML_PATH["DCASE2026T2_dev"]
     else: 
         raise KeyError()
     

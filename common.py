@@ -95,6 +95,8 @@ def get_argparse():
                     help='Machine ID to be treated as nml data')
     parser.add_argument('--is_auto_download', type=str2bool, default=False,
                         help="Download dataset if not exist")
+    parser.add_argument("--mono", type=str2bool, default=True,
+                        help="Load input audio as monaural. DCASE2020T2-2025T2 are monaural, DCASE2026T2 is stereo")
 
     # save data
     parser.add_argument('--result_directory', type=str, default='results/', metavar='N',
