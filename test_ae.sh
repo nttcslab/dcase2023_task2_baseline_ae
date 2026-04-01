@@ -2,11 +2,12 @@ echo $*
 
 dataset=$1
 dev_eval=$2
-score=$3
-id_1=$4
-id_2=$5
-id_3=$6
-id_4=$7
+mono=$3
+score=$4
+id_1=$5
+id_2=$6
+id_3=$7
+id_4=$8
 
 id="$id_1 $id_2 $id_3 $id_4"
 
@@ -28,4 +29,4 @@ python3 train.py \
     --use_ids ${id} \
     --score ${score} \
     --test_only \
-    
+    --mono=${mono} \

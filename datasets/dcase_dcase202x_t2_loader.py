@@ -31,6 +31,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
                 source_domain="mix",
                 use_id = [],
                 is_auto_download=False,
+                mono=True,
     ):
         super().__init__()
 
@@ -119,6 +120,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             fmax=fmax,
             fmin=fmin,
             win_length=win_length,
+            mono=mono,
         )
         if len(self.use_id) > 0:
             idx_list = [i for i, n in enumerate(np.argmax(self.condition, axis=1)) if int(section_ids[n]) in self.use_id]
@@ -154,6 +156,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             fmax,
             fmin,
             win_length,
+            mono=True,
         ):
  
         pickle_lockfile_path = os.path.abspath(f"{self.log_melspectrogram_dir}/{pickle_name}_lockfile")
@@ -224,7 +227,8 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
                                         power=power,
                                         fmax=fmax,
                                         fmin=fmin,
-                                        win_length=win_length)
+                                        win_length=win_length,
+                                        mono=mono)
                 self.data = np.append(self.data, data_ea_section, axis=0)
                 if self.mode or train:
                     self.y_true = np.append(self.y_true, y_true, axis=0)
@@ -326,7 +330,8 @@ def file_list_to_data(file_list,
                         power=2.0,
                         fmax=None,
                         fmin=None,
-                        win_length=None):
+                        win_length=None,
+                        mono=True):
     """
     convert the file_list to a vector array.
     file_to_vector_array() is iterated, and the output vector array is concatenated.
@@ -354,7 +359,8 @@ def file_list_to_data(file_list,
                                                 power=power,
                                                 fmax=fmax,
                                                 fmin=fmin,
-                                                win_length=win_length)
+                                                win_length=win_length,
+                                                mono=mono)
         vectors = vectors[: : n_hop_frames, :]
         if idx == 0:
             data = np.zeros((len(file_list) * vectors.shape[0], dims), float)

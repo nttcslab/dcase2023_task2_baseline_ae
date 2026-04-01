@@ -130,6 +130,7 @@ if __name__ == "__main__":
                             "DCASE2023T2",
                             "DCASE2024T2",
                             "DCASE2025T2",
+                            "DCASE2026T2",
                         ])
     parser.add_argument('-d', '--dev', action='store_true',
                         help='Use Development dataset')
@@ -166,7 +167,7 @@ if __name__ == "__main__":
         dev_figdata_target_list = []
         eval_figdata_list_tmp = []
         dev_figdata_list_tmp = []
-        files = sorted(glob.glob(f"{args.parent_dir}/*{args.dataset}{machine_type}*{args.file_name}"))
+        files = sorted(glob.glob(f"{args.parent_dir}/*{args.dataset}{machine_type}_*{args.file_name}"))
 
         # print(files)
         # print(dev_file_list)

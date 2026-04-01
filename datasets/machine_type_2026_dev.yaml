@@ -1,0 +1,24 @@
+DCASE2026T2:
+  machine_type:
+    ToyCarEmu:
+      dev:
+        - "00"
+    ToyCar:
+      dev:
+        - "00"
+    bearingEmu:
+      dev:
+        - "00"
+    fan:
+      dev:
+        - "00"
+    gearboxEmu:
+      dev:
+        - "00"
+    sliderEmu:
+      dev:
+        - "00"
+    valveEmu:
+      dev:
+        - "00"
+  section_keyword: section

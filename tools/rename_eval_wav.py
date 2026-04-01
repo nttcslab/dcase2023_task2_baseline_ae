@@ -16,6 +16,7 @@ EVAL_DATA_LIST_PATH = {
     "DCASE2023T2":f"{ROOT_DIR}/datasets/eval_data_list_2023.csv",
     "DCASE2024T2":f"{ROOT_DIR}/datasets/eval_data_list_2024.csv",
     "DCASE2025T2":f"{ROOT_DIR}/datasets/eval_data_list_2025.csv",
+    "DCASE2026T2":f"{ROOT_DIR}/datasets/eval_data_list_2026.csv",
 }
 
 FILENAME_COL = 0
@@ -72,6 +73,7 @@ if __name__ == "__main__":
                             "DCASE2023T2",
                             "DCASE2024T2",
                             "DCASE2025T2",
+                            "DCASE2026T2",
                         ],
                         help="what Dataset name to renamed.")
     args = parser.parse_args()

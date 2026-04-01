@@ -1,0 +1,22 @@
+DCASE2026T2:
+  ToyCar:
+    dev:
+      - https://zenodo.org/records/19336329/files/dev_ToyCar.zip
+  ToyCarEmu:
+    dev:
+      - https://zenodo.org/records/19336329/files/dev_ToyCarEmu.zip
+  bearingEmu:
+    dev:
+      - https://zenodo.org/records/19336329/files/dev_bearingEmu.zip
+  fan:
+    dev:
+      - https://zenodo.org/records/19336329/files/dev_fan.zip
+  gearboxEmu:
+    dev:
+      - https://zenodo.org/records/19336329/files/dev_gearboxEmu.zip
+  sliderEmu:
+    dev:
+      - https://zenodo.org/records/19336329/files/dev_sliderEmu.zip
+  valveEmu:
+    dev:
+      - https://zenodo.org/records/19336329/files/dev_valveEmu.zip

@@ -1,61 +1,75 @@
 # Anomalous Sound Detection
-## DCASE 2025 Challenge Task 2 and DCASE 2023 Challenge Task 2 Baseline Auto Encoder: dcase2023\_task2\_baseline\_ae
+## DCASE 2026 Challenge Task 2 and DCASE {2025, 2024, 2023} Challenge Task 2 Baseline Auto Encoder: dcase2023\_task2\_baseline\_ae
 
-This is an autoencoder-based baseline for the [DCASE2025 Challenge Task 2 (DCASE2025T2)](https://dcase.community/challenge2025/), the [DCASE2024 Challenge Task 2 (DCASE2024T2)](https://dcase.community/challenge2024/) and the [DCASE2023 Challenge Task 2 (DCASE2023T2)](https://dcase.community/challenge2023/).
+This is an autoencoder-based baseline for the [DCASE2026 Challenge Task 2 (DCASE2026T2)](https://dcase.community/challenge2026/), the [DCASE2025 Challenge Task 2 (DCASE2025T2)](https://dcase.community/challenge2025/), the [DCASE2024 Challenge Task 2 (DCASE2024T2)](https://dcase.community/challenge2024/) and the [DCASE2023 Challenge Task 2 (DCASE2023T2)](https://dcase.community/challenge2023/).
 
-This source code is an example implementation of the baseline Auto Encoder of DCASE2025T2, DCASE2024T2 and DCASE2023T2: First-Shot Unsupervised Anomalous Sound Detection for Machine Condition Monitoring.
+This source code is an example implementation of the baseline Auto Encoder of DCASE2026T2: Noise-aware Unsupervised Anomalous Sound Detection for Machine Condition Monitoring, and 
+DCASE{2025, 2024, 2023}T2: First-Shot Unsupervised Anomalous Sound Detection for Machine Condition Monitoring.
 This baseline implementation is based on the previous baseline, dcase2022\_baseline\_ae. The model parameter settings of this baseline AE are almost equivalent to those of the dcase2022\_task2\_baseline\_ae.
 
 Differences between the previous dcase2022\_baseline\_ae and this version are as follows:
 
 - The dcase2022\_baseline\_ae was implemented with Keras; however, this version is written in PyTorch.
-- Data folder structure is updated to support DCASE2025T2, DCASE2024T2 and DCASE2023T2 data sets.
+- Data folder structure is updated to support DCASE2026T2, DCASE2025T2, DCASE2024T2 and DCASE2023T2 data sets.
 - The system uses the MSE loss as a loss function for training, but for testing, two score functions depend on the testing modes (i.e., MSE for the Simple Autoencoder mode and Mahalanobis distance for the Selective Mahalanobis mode).
-  
+
+The difference between the 2026T2 baseline and {2025, 2024, 2023}T2 baselines is that 2026T2 takes a two-channel input containing near-mic (in the left channel) and far-mic (in the right channel). The signal in the left channel is equivalent to the previous mono.
+
+
 ## Description
 
-This system consists of three main scripts (01_train.sh, 02a_test.sh, and 02b_test.sh) with some helper scripts for DCASE2025T2 (For DCASE2024T2 and DCASE2023T2, see [README_legacy](README_legacy.md)):
+### Main scripts
 
-- Helper scripts for DCASE2025T2
-  - data\_download\_2025dev.sh **Updated on (2025/04/01)**
+This system consists of three main scripts (01\_train.sh, 02a\_test.sh, and 02b\_test.sh) with some helper scripts for DCASE2026T2 (For DCASE2025T2, DCASE2024T2 and DCASE2023T2, see [README\_legacy](README_legacy.md)):
+
+- Helper scripts for DCASE2026T2
+  - data\_download\_2026dev.sh **Newly added!! (2026/04/01)**
     - "Development dataset":
-      - This script downloads development data files and puts them into `data/dcase2025t2/dev\_data/raw/train/` and `data/dcase2025t2/dev\_data/raw/test/`.
-  - data\_download\_2025add.sh **Updated on (2025/05/15)**
+      - This script downloads development data files and puts them into `data/dcase2026t2/dev\_data/raw/train/` and `data/dcase2026t2/dev\_data/raw/test/`.
+  <!-- - data\_download\_2026add.sh
     - "Additional train dataset for Evaluation":
-      - This script downloads Addition data files and puts them into `data/dcase2025t2/eval\_data/raw/train/`.
-  - data\_download\_2025eval.sh **Updated on (2025/06/01)**
+      - This script downloads Addition data files and puts them into `data/dcase2026t2/eval\_data/raw/train/`.
+  - data\_download\_2026eval.sh
     - "Additional test dataset for Evaluation"
-      - This script downloads evaluation data files and puts them into `data/dcase2025t2/eval\_data/raw/test`. 
+      - This script downloads evaluation data files and puts them into `data/dcase2026t2/eval\_data/raw/test`.  -->
 
-- 01_train_2025t2.sh
-  - "Development" mode: **Updated on (2025/04/01)**
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/dev_data/raw/<machine_type>/train/<section_id>`.
-  - "Evaluation" mode: **Updated on (2025/05/15)**
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2025t2/eval_data/raw/<machine_type>/train/<section_id>`.
+- 01\_train\_2026t2.sh
+  - "Development" mode: **Newly added!! (2026/04/01)**
+    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2026t2/dev_data/raw/<machine_type>/train/<section_id>`.
+  <!-- - "Evaluation" mode:
+    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2026t2/eval_data/raw/<machine_type>/train/<section_id>`. -->
 
-- 02a_test_2025t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
-  - "Development" mode: **Updated on (2025/04/01)**
-    - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
+- 02a\_test\_2026t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
+  - "Development" mode: **Newly added!! (2026/04/01)**
+    - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2026t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  - "Evaluation" mode: **Updated on (2025/06/01)**
-    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
-    - The CSV files are stored in the directory `results/`.
+  <!-- - "Evaluation" mode:
+    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+    - The CSV files are stored in the directory `results/`. -->
 
-- 02b_test_2025t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
-  - "Development" mode: **Updated on (2025/04/01)**
-    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/`.
+- 02b\_test\_2026t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
+  - "Development" mode: **Newly added!! (2026/04/01)**
+    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2026t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
-  - "Evaluation" mode: **Updated on (2025/06/01)**
-    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
-    - The CSV files are stored in the directory `results/`.
+  <!-- - "Evaluation" mode:
+    - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. (These directories will be made available with the "evaluation dataset".)
+    - The CSV files are stored in the directory `results/`. -->
       
-- 03_summarize_results.sh
+- 03\_summarize\_results.sh
   - This script summarizes results into a CSV file.
 
-C.f., for DCASE2023T2 and DCASE2024T2, see [README_legacy](README_legacy.md).
+C.f., for DCASE2025T2, DCASE2024T2 and DCASE2023T2  see [README\_legacy](README_legacy.md).
 
+### Dataset audio format
+
+Please note that the audio format differs depending on the challenge year:
+
+- DCASE2026 Task 2 datasets are provided in stereo (2-channel) format.
+- DCASE2020 Task 2 ~ DCASE2025 Task 2 datasets are provided in monaural (single-channel) format.
+
+In the baseline, only channel 0 (the left channel) of the stereo audio data is used.
 
 ## Usage
 
@@ -67,12 +81,20 @@ Clone this repository from GitHub.
 
 We will launch the datasets in three stages. Therefore, please download the datasets in each stage:
 
+  + DCASE 2026 Challenge Task 2
+    + "Development Dataset" **Newly added!! (2026/04/01)**
+      + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/19336329](https://zenodo.org/records/19336329).
+    <!-- + "Additional Training Dataset", i.e., the evaluation dataset for training
+      + Download "eval\_data_<machine_type>_train.zip" from []().
+    + "Evaluation Dataset", i.e., the evaluation dataset for test
+      + Download "eval\_data_<machine_type>_test.zip" from [](). -->
+
   + DCASE 2025 Challenge Task 2
-    + "Development Dataset" **Updated on (2025/04/01)**
+    + "Development Dataset"
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/15097779](https://zenodo.org/records/15097779).
-    + "Additional Training Dataset", i.e., the evaluation dataset for training  **Updated on (2025/05/15)**
+    + "Additional Training Dataset", i.e., the evaluation dataset for training
       + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/15392814](https://zenodo.org/records/15392814).
-    + "Evaluation Dataset", i.e., the evaluation dataset for test **Updated on (2025/06/01)**
+    + "Evaluation Dataset", i.e., the evaluation dataset for test
       + Download "eval\_data_<machine_type>_test.zip" from [https://zenodo.org/records/15519362](https://zenodo.org/records/15519362).
 
   + DCASE 2024 Challenge Task 2 (C.f., for DCASE2024T2, see [README_legacy](README_legacy.md))
@@ -86,7 +108,7 @@ We will launch the datasets in three stages. Therefore, please download the data
 
 
   + For DCASE 2023 Challenge Task 2
-	(C.f., for DCASE2023T2, see [README_legacy](README_legacy.md))
+	(C.f., for DCASE2023T2, see [README\_legacy](README_legacy.md))
     + "Development Dataset"
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/record/7882613](https://zenodo.org/record/7882613).
     + "Additional Training Dataset", i.e., the evaluation dataset for training 
@@ -98,8 +120,8 @@ We will launch the datasets in three stages. Therefore, please download the data
 ### 3. Unzip the downloaded files and make the directory structure as follows:
    
   + dcase2023\_task2\_baseline\_ae
-    + data/dcase2024t2/dev\_data/raw/
-      + \<machine\_type0\_of\_additional\_dataset\>/
+    + data/dcase2026t2/dev\_data/raw/
+      + \<machine\_type0\_of\_development\_dataset\>/
         + train (only normal clips)
           + section\_00\_source\_train\_normal\_0000\_.wav
           + ...
@@ -121,9 +143,9 @@ We will launch the datasets in three stages. Therefore, please download the data
           + ...
           + section\_00\_target\_test\_anomaly\_0049\_.wav
         + attributes\_00.csv (attributes CSV for section 00)
-      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
-   + data/dcase2025t2/eval\_data/raw/
-     + \<machine\_type0\_of\_additional\_dataset\>/
+      + \<machine\_type1\_of\_development\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_development\_dataset\>/.)
+    <!-- + data/dcase2025t2/eval\_data/raw/
+      + \<machine\_type0\_of\_additional\_dataset\>/
         + supplemental/ (after launch of the additional training dataset)
           + section\_00\_machine\_0001\_.wav
           + ...
@@ -149,59 +171,59 @@ We will launch the datasets in three stages. Therefore, please download the data
           + /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
           + ...
         + attributes\_00.csv (attributes CSV for section 00)
-     + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
+      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.) -->
 
 ### 4. Change parameters
 
 You can change parameters for feature extraction and model definition by editing `baseline.yaml`.
-Note that if values are specified in the command line option, it will overwrite the parameter settings in `baseline.yaml`.
+Note that if values are specified in the command line option, they will overwrite the parameter settings in `baseline.yaml`.
 
 ### 4.1. Enable Auto-download dataset
 
-If you haven't yet downloaded the dataset yourself nor you have not run the download script (example, `data_download_2025dev.sh`) then you may want to use the auto download.
-To enable the auto-downloading, set the parameter `--is_auto_download` (default: `False`) `True` in `baseline.yaml`. If `--is_auto_download` is `True`, then auto-download is executed.
+If you haven't yet downloaded the dataset yourself or run the download script (e.g., `data_download_2026dev.sh`), you may want to use the auto-download.
+To enable the auto-downloading, set the parameter `--is_auto_download` (default: `False`) to `True` in `baseline.yaml`. If `--is_auto_download` is `True`, then auto-download is executed.
 
 ### 5. Run the training script (for the development dataset)
 
-Run the training script `01_train_2025t2.sh`. Use the option -d for the development dataset `data/dcase2025t2/dev_data/<machine_type>/raw/train/`.
+Run the training script `01_train_2026t2.sh`. Use the option -d for the development dataset `data/dcase2026t2/dev_data/<machine_type>/raw/train/`.
 
 ```dotnetcli
-# using DCASE2025 Task 2 Datasets
-$ 01_train_2025t2.sh -d
+# Train the system using the DCASE2026 Task 2 Datasets
+$ 01_train_2026t2.sh -d
 ```
-The two operating modes of this baseline implementation, the simple Autoencoder, and the Selective Mahalanobis AE modes, share the common training process. By running the script `01_train_2025t2.sh`, all the model parameters for the simple Autoencoder and the selective Mahalanobis AE will be trained at the same time.
-After the parameter update of the Autoencoder at the last epoch specified by either the yaml file or the command line option, the covariance matrixes for the Mahalanobis distance calculation will be set.
+The two operating modes of this baseline implementation, the simple Autoencoder and the Selective Mahalanobis AE modes, share the common training process. By running the script `01_train_2026t2.sh`, all model parameters for the simple Autoencoder and the selective Mahalanobis AE will be trained simultaneously.
+After the parameter update of the Autoencoder at the last epoch specified by either the yaml file or the command line option, the covariance matrices for the Mahalanobis distance calculation will be set.
 
 ### 6. Run the test script (for the development dataset)
 
 ### 6.1. Testing with the Simple Autoencoder mode
-Run the test script `02a_test_2025t2.sh`. Use the option `-d` for the development dataset `data/dcase2025t2/dev_data/<machine_type>/raw/test/`.
+Run the test script `02a_test_2026t2.sh`. Use the option `-d` for the development dataset `data/dcase2026t2/dev_data/<machine_type>/raw/test/`.
 
 ```dotnetcli
-# using DCASE2025 Task 2 Datasets
-$ 02a_test_2025t2.sh -d
+# Test the Simple Autoencoder mode using the DCASE2026 Task 2 Datasets
+$ 02a_test_2026t2.sh -d
 ```
 
-The `02a_test_2025t2.sh` options are the same as those for `01_train_2025t2.sh`. `02a_test_2025t2.sh` calculates an anomaly score for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/` or `data/dcase2025t2/dev_data/raw/<machine_type>/source_test/` and `data/dcase2025t2/dev_data/raw/<machine_type>/target_test/`.
+The `02a_test_2026t2.sh` options are the same as those for `01_train_2026t2.sh`. `02a_test_2026t2.sh` calculates an anomaly score for each wav file in the directories `data/dcase2026t2/dev_data/raw/<machine_type>/test/` or `data/dcase2026t2/dev_data/raw/<machine_type>/source_test/` and `data/dcase2026t2/dev_data/raw/<machine_type>/target_test/`.
 A CSV file for each section, including the anomaly scores, will be stored in the directory `results/`. If the mode is "development", the script also outputs another CSV file, including AUC, pAUC, precision, recall, and F1-score for each section.
 
 
 ### 6.2. Testing with the Selective Mahalanobis mode
-Run the test script `02b_test_2025t2.sh`. Use the option `-d` for the development dataset `data/dcase2025t2/dev_data/<machine_type>/raw/test/`.
+Run the test script `02b_test_2026t2.sh`. Use the option `-d` for the development dataset `data/dcase2026t2/dev_data/<machine_type>/raw/test/`.
 
 ```dotnetcli
-# using DCASE2025 Task 2 Datasets
-$ 02b_test_2025t2.sh -d
+# Test the Selective Mahalanobis mode using DCASE2026 Task 2 Datasets
+$ 02b_test_2026t2.sh -d
 ```
 
-The `02b_test_2025t2.sh` options are the same as those for `01_train_2025t2.sh`. `02b_test_2025t2.sh` calculates an anomaly score for each wav file in the directories `data/dcase2025t2/dev_data/raw/<machine_type>/test/` or `data/dcase2025t2/dev_data/raw/<machine_type>/source_test/` and `data/dcase2025t2/dev_data/raw/<machine_type>/target_test/`.
+The `02b_test_2026t2.sh` options are the same as those for `01_train_2026t2.sh`. `02b_test_2026t2.sh` calculates an anomaly score for each wav file in the directories `data/dcase2026t2/dev_data/raw/<machine_type>/test/` or `data/dcase2026t2/dev_data/raw/<machine_type>/source_test/` and `data/dcase2026t2/dev_data/raw/<machine_type>/target_test/`.
 A CSV file for each section, including the anomaly scores, will be stored in the directory `results/`. If the mode is "development", the script also outputs another CSV file, including AUC, pAUC, precision, recall, and F1-score for each section.
 
 
 ### 7. Check results
 
 You can check the anomaly scores in the CSV files `anomaly_score_<machine_type>_section_<section_index>_test.csv` in the directory `results/`.
-Each anomaly score corresponds to a wav file in the directories `data/dcase2025t2/dev_data/<machine_type>/test/`.
+Each anomaly score corresponds to a wav file in the directories `data/dcase2026t2/dev_data/<machine_type>/test/`.
 
 `anomaly_score_<machine_type>_section_00_test.csv`
 
@@ -236,69 +258,69 @@ arithmetic mean,00,0.88,0.5078,0.5063157894736842,0.5536842105263158,0.492631578
 harmonic mean,00,0.88,0.5078,0.5063157894736842,0.5536842105263158,0.4926315789473684,0.0,0.0,0.0,0.0,0.0,0.
 ```
 
-### 8. Run training script for the additional training dataset **Updated (2025/05/15)**
+### 8. Run the training script for the additional training dataset
 
-After the additional training dataset is launched, download and unzip it. Move it to `data/dcase2025t2/eval_data/raw/<machine_type>/train/`. Run the training script `01_train_2025t2.sh` with the option `-e`.
-
-```dotnetcli
-$ 01_train_2025t2.sh -e
-```
-
-Models are trained by using the additional training dataset `data/dcase2025t2/raw/eval_data/<machine_type>/train/`.
-
-### 9. Run the test script for the evaluation dataset **Updated on (2025/06/01)**
-
-### 9.1. Testing with the Simple Autoencoder mode
-
-After the evaluation dataset for the test is launched, download and unzip it. Move it to `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. Run the test script `02a_test_2025t2.sh` with the option `-e`.
+<!-- After the additional training dataset is launched, download and unzip it. Move it to `data/dcase2026t2/eval_data/raw/<machine_type>/train/`. Run the training script `01_train_2026t2.sh` with the option `-e`.
 
 ```dotnetcli
-$ 02a_test_2025t2.sh -e
+$ 01_train_2026t2.sh -e
 ```
 
-Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
+Models are trained by using the additional training dataset `data/dcase2026t2/raw/eval_data/<machine_type>/train/`. -->
+
+### 9. Run the test script for the evaluation dataset
+
+<!-- ### 9.1. Testing with the Simple Autoencoder mode
+
+After the evaluation dataset for the test is launched, download and unzip it. Move it to `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. Run the test script `02a_test_2026t2.sh` with the option `-e`.
+
+```dotnetcli
+$ 02a_test_2026t2.sh -e
+```
+
+Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored in CSV files in the `results/` directory. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
 If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
 
 ### 9.2. Testing with the Selective Mahalanobis mode
 
-After the evaluation dataset for the test is launched, download and unzip it. Move it to `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. Run the `02b_test_2025t2.sh` test script with the option `-e`.
+After launching the evaluation dataset for testing, download and unzip it. Move it to `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. Run the `02b_test_2026t2.sh` test script with the option `-e`.
 
 ```dotnetcli
-$ 02b_test_2025t2.sh -e
+$ 02b_test_2026t2.sh -e
 ```
 
-Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2025t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored as CSV files in the directory `results/`. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
+Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored in CSV files in the `results/` directory. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
-If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
+If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
 
 ### 10. Summarize results
 
-After the executed `02a_test_2025t2.sh`, `02b_test_2025t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2025T2 -d`.
+After executing `02a_test_2026t2.sh`, `02b_test_2026t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2026T2 -d`.
 
 ```dotnetcli
-# Summarize development dataset 2025
-$ 03_summarize_results.sh DCASE2025T2 -d
+# Summarize development dataset 2026
+$ 03_summarize_results.sh DCASE2026T2 -d
 ```
 
-After the summary, the results are exported in CSV format to `results/dev_data/baseline/summarize/DCASE2025T2`.
+After the summary, the results are exported to `results/dev_data/baseline/summarize/DCASE2026T2` in CSV format.
 
-If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`.
+If you want to change the summarize results directory or the export directory, edit `03_summarize_results.sh`.
 
-After the executed `02a_test_2025t2.sh`, `02b_test_2025t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2025T2 -d` or `DCASE2025T2 -e`.
+After executing `02a_test_2026t2.sh`, `02b_test_2026t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2026T2 -d` or `DCASE2026T2 -e`.
 
 ```dotnetcli
-# Summarize development dataset 2025
-$ 03_summarize_results.sh DCASE2025T2 -d
+# Summarize development dataset 2026
+$ 03_summarize_results.sh DCASE2026T2 -d
 ```
 
-After the summary, the results are exported in CSV format to `results/dev_data/baseline/summarize/DCASE2025T2` or `results/eval_data/baseline/summarize/DCASE2025T2`.
+After the summary, the results are exported in CSV format to `results/dev_data/baseline/summarize/DCASE2026T2` or `results/eval_data/baseline/summarize/DCASE2026T2`.
 
-If you want to change, summarize results directory or export directory, edit `03_summarize_results.sh`.
+If you want to change the summarize results directory or the export directory, edit `03_summarize_results.sh`.
 
 ## Legacy support
 
-This version takes the legacy datasets provided in DCASE2020 task2, DCASE2021 task2, DCASE2022 task2, DCASE2023 task2, and DCASE2024 task2 dataset for inputs.
+This version takes the legacy datasets provided in DCASE2020 task2, DCASE2021 task2, DCASE2022 task2, DCASE2023 task2, DCASE2024 task2 and DCASE2025 Task2 dataset for inputs.
 The Legacy support scripts are similar to the main scripts. These are in `tools` directory.
 
 [learn more](README_legacy.md)
@@ -327,6 +349,11 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - fasteners >= 0.19
 
 ## Change Log
+### [5.0.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.0.0)
+
+#### Added
+
+- Provides support for the development datasets used in DCASE2026T2.
 
 ### [4.3.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v4.3.0)
 
@@ -460,18 +487,18 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - Provides support for the legacy datasets used in DCASE2020, 2021, 2022, and 2023.
 
 
-## Ground truth attribute
+<!-- ## Ground truth attribute
 
 ### Public ground truth of evaluation dataset
 
-The following code was used to calculate the official score. Among these is evaluation datasets ground truth.
+The following code was used to calculate the official score. Among these is the evaluation dataset ground truth.
 
 - [dcase2025_task2_evaluator](https://github.com/nttcslab/dcase2025_task2_evaluator)
 
 ### Ground truth for evaluation datasets in this repository
 
-This repository have evaluation data's ground truth csv. this csv is using to rename evaluation datasets.
-You can calculate AUC and other score if add ground truth to evaluation datasets file name. *Usually, rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
+This repository contains the ground truth CSV for the evaluation data. This CSV is used to rename evaluation datasets.
+You can calculate AUC and other scores if you add ground truth to the evaluation dataset's file name. *Usually, the rename function is executed along with [download script](#description) and [auto download function](#41-enable-auto-download-dataset).
 
 - [DCASE2025 task2 ground truth](datasets/eval_data_list_2025.csv)
 
@@ -491,13 +518,13 @@ Attribute information is hidden by default for the following machine types:
 
 You can view the hidden attributes in the following directory:
 
-- [DCASE2025 task2 Ground truth Attributes](datasets/ground_truth_attributes)
+- [DCASE2025 task2 Ground truth Attributes](datasets/ground_truth_attributes) -->
 
 ## Citation
 
 If you use this system, please cite all the following four papers:
 
-+ Tomoya Nishida, Noboru Harada, Daisuke Niizumi, Davide Albertini, Roberto Sannino, Simone Pradolini, Filippo Augusti, Keisuke Imoto, Kota Dohi, Harsh Purohit, Takashi Endo, and Yohei Kawaguchi. Description and discussion on DCASE 2025 challenge task 2: first-shot unsupervised anomalous sound detection for machine condition monitoring. In arXiv e-prints: 2506.10097, 2025. [URL](https://arxiv.org/pdf/2506.10097.pdf)
++ Tomoya Nishida, Noboru Harada, Daisuke Niizumi, Keisuke Imoto, Kota Dohi, Harsh Purohit, Takashi Endo, and Yohei Kawaguchi. Description and discussion on DCASE 2026 challenge task 2: Noise-aware Unsupervised Anomalous Sound Detection for Machine Condition Monitoring. In arXiv e-prints: xxxx.xxxx, 2026. [URL](https://arxiv.org/pdf/)
 + Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, Masahiro Yasuda, and Shoichiro Saito. ToyADMOS2: another dataset of miniature-machine operating sounds for anomalous sound detection under domain shift conditions. In Proceedings of the Detection and Classification of Acoustic Scenes and Events Workshop (DCASE), 1–5. Barcelona, Spain, November 2021. [URL](https://dcase.community/documents/workshop2021/proceedings/DCASE2021Workshop_Harada_6.pdf)
 + Kota Dohi, Tomoya Nishida, Harsh Purohit, Ryo Tanabe, Takashi Endo, Masaaki Yamamoto, Yuki Nikaido, and Yohei Kawaguchi. MIMII DG: sound dataset for malfunctioning industrial machine investigation and inspection for domain generalization task. In Proceedings of the 7th Detection and Classification of Acoustic Scenes and Events 2022 Workshop (DCASE2022). Nancy, France, November 2022. [URL](https://dcase.community/documents/workshop2022/proceedings/DCASE2022Workshop_Dohi_62.pdf)
 + Noboru Harada, Daisuke Niizumi, Daiki Takeuchi, Yasunori Ohishi, and Masahiro Yasuda. First-shot anomaly detection for machine condition monitoring: a domain generalization baseline. Proceedings of 31st European Signal Processing Conference (EUSIPCO), pages 191–195, 2023. [URL](https://eurasip.org/Proceedings/Eusipco/Eusipco2023/pdfs/0000191.pdf)

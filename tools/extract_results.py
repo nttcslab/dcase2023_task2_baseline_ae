@@ -26,6 +26,7 @@ if __name__ == "__main__":
                             "DCASE2023T2",
                             "DCASE2024T2",
                             "DCASE2025T2",
+                            "DCASE2026T2",
                         ])
     parser.add_argument("--float_format", type=str, default="%.4f")
     parser.add_argument('-d', '--dev', action='store_true',

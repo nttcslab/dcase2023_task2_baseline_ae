@@ -55,6 +55,7 @@ class DCASE202XT2(object):
                 data_type=data_type,
                 use_id=args.use_ids,
                 is_auto_download=args.is_auto_download,
+                mono=args.mono,
                 )
 
         train_index, valid_index = train_test_split(range(len(train_data)), test_size=args.validation_split)
@@ -91,6 +92,7 @@ class DCASE202XT2(object):
                 win_length=args.win_length,
                 data_type=data_type,
                 is_auto_download=args.is_auto_download,
+                mono=args.mono,
            )
 
            self.test_loader.append(
@@ -104,6 +106,13 @@ class DCASE202XT2(object):
 
 class Datasets:
     DatasetsDic = {
+        'DCASE2026T2valveEmu':DCASE202XT2,
+        'DCASE2026T2sliderEmu':DCASE202XT2,
+        'DCASE2026T2gearboxEmu':DCASE202XT2,
+        'DCASE2026T2fan':DCASE202XT2,
+        'DCASE2026T2bearingEmu':DCASE202XT2,
+        'DCASE2026T2ToyCarEmu':DCASE202XT2,
+        'DCASE2026T2ToyCar':DCASE202XT2,
         'DCASE2025T2ToyRCCar':DCASE202XT2,
         'DCASE2025T2ToyPet':DCASE202XT2,
         'DCASE2025T2HomeCamera':DCASE202XT2,
