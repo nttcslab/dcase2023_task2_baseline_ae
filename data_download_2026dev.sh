@@ -3,7 +3,7 @@ mkdir -p "data/dcase2026t2/dev_data/raw"
 # download dev data
 cd "data/dcase2026t2/dev_data/raw"
 for machine_type in \
-    "ToyCar" \
+    "ToyCar_r2" \
     "ToyCarEmu" \
     "bearingEmu" \
     "fan" \

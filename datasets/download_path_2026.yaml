@@ -1,7 +1,7 @@
 DCASE2026T2:
   ToyCar:
     dev:
-      - https://zenodo.org/records/19336329/files/dev_ToyCar.zip
+      - https://zenodo.org/records/19336329/files/dev_ToyCar_r2.zip
   ToyCarEmu:
     dev:
       - https://zenodo.org/records/19336329/files/dev_ToyCarEmu.zip

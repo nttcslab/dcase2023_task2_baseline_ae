@@ -83,6 +83,7 @@ We will launch the datasets in three stages. Therefore, please download the data
 
   + DCASE 2026 Challenge Task 2
     + "Development Dataset" **Newly added!! (2026/04/01)**
+      + dev_ToyCar.zip has been replaced by dev_ToyCar_r2.zip. **Updated!! (2026/04/09)**
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/19336329](https://zenodo.org/records/19336329).
     <!-- + "Additional Training Dataset", i.e., the evaluation dataset for training
       + Download "eval\_data_<machine_type>_train.zip" from []().
@@ -349,6 +350,12 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - fasteners >= 0.19
 
 ## Change Log
+### [5.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.0.1)
+#### Updated development dataset
+
+- dev_ToyCar.zip has been replaced by dev_ToyCar_r2.zip.
+- Updated download script `data_download_2026dev.sh` and `datasets/download_path_2026.yaml` accordingly.
+
 ### [5.0.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.0.0)
 
 #### Added
