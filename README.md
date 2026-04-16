@@ -349,6 +349,9 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - seaborn >= 0.13.2
 - fasteners >= 0.19
 
+## License
+This project is licensed under the terms described in [LICENSEv2.1.pdf](LICENSEv2.1.pdf).
+
 ## Change Log
 ### [5.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.0.1)
 #### Updated development dataset
