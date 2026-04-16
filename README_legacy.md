@@ -832,6 +832,11 @@ You can view the hidden attributes in the following directory:
 - [DCASE2024 task2 Ground truth Attributes](datasets/ground_truth_attributes/dcase2024t2)
 - [DCASE2025 task2 Ground truth Attributes](datasets/ground_truth_attributes/dcase2025t2)
 
+## License 
+
+This project is licensed under the terms described in [LICENSEv2.1.pdf](LICENSEv2.1.pdf).
+
+
 ## Citation
 
 If you use this system, please cite all papers that correspond to the datasets you use.
