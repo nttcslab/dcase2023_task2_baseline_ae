@@ -349,7 +349,7 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 - seaborn >= 0.13.2
 - fasteners >= 0.19
 
-## License
+## License 
 This project is licensed under the terms described in [LICENSEv2.1.pdf](LICENSEv2.1.pdf).
 
 ## Change Log
