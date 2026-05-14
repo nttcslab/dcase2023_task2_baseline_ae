@@ -20,3 +20,19 @@ DCASE2026T2:
   valveEmu:
     dev:
       - https://zenodo.org/records/19336329/files/dev_valveEmu.zip
+  ToyDrone:
+    eval:
+    - https://zenodo.org/records/20151556/files/eval_data_ToyDrone_train.zip
+  ToothBrush:
+    eval:
+    - https://zenodo.org/records/20151556/files/eval_data_ToothBrush_train.zip
+  SewingMachine:
+    eval:
+    - https://zenodo.org/records/20151556/files/eval_data_SewingMachine_train.zip
+  BlowerDustCollector:
+    eval:
+    - https://zenodo.org/records/20151556/files/eval_data_BlowerDustCollector_train.zip
+  Sander:
+    eval:
+    - https://zenodo.org/records/20151556/files/eval_data_Sander_train.zip
+  
