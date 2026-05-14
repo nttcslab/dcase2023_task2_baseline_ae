@@ -493,6 +493,7 @@ YAML_PATH = {
     "DCASE2025T2_dev":"datasets/machine_type_2025_dev.yaml",
     "DCASE2025T2_eval":"datasets/machine_type_2025_eval.yaml",
     "DCASE2026T2_dev":"datasets/machine_type_2026_dev.yaml",
+    "DCASE2026T2_eval":"datasets/machine_type_2026_eval.yaml",
 }
 
 def get_machine_type_dict(dataset_name, mode=True):
@@ -512,6 +513,8 @@ def get_machine_type_dict(dataset_name, mode=True):
         yaml_path = YAML_PATH["DCASE2025T2_eval"]
     elif dataset_name == "DCASE2026T2" and mode:
         yaml_path = YAML_PATH["DCASE2026T2_dev"]
+    elif dataset_name == "DCASE2026T2" and not mode:
+        yaml_path = YAML_PATH["DCASE2026T2_eval"]
     else: 
         raise KeyError()
     

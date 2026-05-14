@@ -23,24 +23,24 @@ The difference between the 2026T2 baseline and {2025, 2024, 2023}T2 baselines is
 This system consists of three main scripts (01\_train.sh, 02a\_test.sh, and 02b\_test.sh) with some helper scripts for DCASE2026T2 (For DCASE2025T2, DCASE2024T2 and DCASE2023T2, see [README\_legacy](README_legacy.md)):
 
 - Helper scripts for DCASE2026T2
-  - data\_download\_2026dev.sh **Newly added!! (2026/04/01)**
+  - data\_download\_2026dev.sh **Updated!! (2026/04/01)**
     - "Development dataset":
       - This script downloads development data files and puts them into `data/dcase2026t2/dev\_data/raw/train/` and `data/dcase2026t2/dev\_data/raw/test/`.
-  <!-- - data\_download\_2026add.sh
+  - data\_download\_2026add.sh **Newly added!! (2026/05/15)**
     - "Additional train dataset for Evaluation":
       - This script downloads Addition data files and puts them into `data/dcase2026t2/eval\_data/raw/train/`.
-  - data\_download\_2026eval.sh
+  <!-- - data\_download\_2026eval.sh
     - "Additional test dataset for Evaluation"
       - This script downloads evaluation data files and puts them into `data/dcase2026t2/eval\_data/raw/test`.  -->
 
 - 01\_train\_2026t2.sh
-  - "Development" mode: **Newly added!! (2026/04/01)**
+  - "Development" mode: **Updated!! (2026/04/01)**
     - This script trains a model for each machine type for each section ID by using the directory `data/dcase2026t2/dev_data/raw/<machine_type>/train/<section_id>`.
-  <!-- - "Evaluation" mode:
-    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2026t2/eval_data/raw/<machine_type>/train/<section_id>`. -->
+  - "Evaluation" mode: **Newly added!! (2026/05/15)**
+    - This script trains a model for each machine type for each section ID by using the directory `data/dcase2026t2/eval_data/raw/<machine_type>/train/<section_id>`.
 
 - 02a\_test\_2026t2.sh (Use MSE as a score function for the Simple Autoencoder mode)
-  - "Development" mode: **Newly added!! (2026/04/01)**
+  - "Development" mode: **Updated!! (2026/04/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each WAV file in the directories `data/dcase2026t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
@@ -49,7 +49,7 @@ This system consists of three main scripts (01\_train.sh, 02a\_test.sh, and 02b\
     - The CSV files are stored in the directory `results/`. -->
 
 - 02b\_test\_2026t2.sh (Use Mahalanobis distance as a score function for the Selective Mahalanobis mode)
-  - "Development" mode: **Newly added!! (2026/04/01)**
+  - "Development" mode: **Updated!! (2026/04/01)**
     - This script makes a CSV file for each section, including the anomaly scores for each wav file in the directories `data/dcase2026t2/dev_data/raw/<machine_type>/test/`.
     - The CSV files will be stored in the directory `results/`.
     - It also makes a csv file including AUC, pAUC, precision, recall, and F1-score for each section.
@@ -82,12 +82,12 @@ Clone this repository from GitHub.
 We will launch the datasets in three stages. Therefore, please download the datasets in each stage:
 
   + DCASE 2026 Challenge Task 2
-    + "Development Dataset" **Newly added!! (2026/04/01)**
+    + "Development Dataset" **Updated!! (2026/04/01)**
       + dev_ToyCar.zip has been replaced by dev_ToyCar_r2.zip. **Updated!! (2026/04/09)**
       + Download "dev\_data_<machine_type>.zip" from [https://zenodo.org/records/19336329](https://zenodo.org/records/19336329).
-    <!-- + "Additional Training Dataset", i.e., the evaluation dataset for training
-      + Download "eval\_data_<machine_type>_train.zip" from []().
-    + "Evaluation Dataset", i.e., the evaluation dataset for test
+    + "Additional Training Dataset", i.e., the evaluation dataset for training. **Newly added!! (2026/05/15)**
+      + Download "eval\_data_<machine_type>_train.zip" from [https://zenodo.org/records/20151556](https://zenodo.org/records/20151556).
+    <!-- + "Evaluation Dataset", i.e., the evaluation dataset for test
       + Download "eval\_data_<machine_type>_test.zip" from [](). -->
 
   + DCASE 2025 Challenge Task 2
@@ -145,12 +145,8 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section\_00\_target\_test\_anomaly\_0049\_.wav
         + attributes\_00.csv (attributes CSV for section 00)
       + \<machine\_type1\_of\_development\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_development\_dataset\>/.)
-    <!-- + data/dcase2025t2/eval\_data/raw/
+    + data/dcase2026t2/eval\_data/raw/
       + \<machine\_type0\_of\_additional\_dataset\>/
-        + supplemental/ (after launch of the additional training dataset)
-          + section\_00\_machine\_0001\_.wav
-          + ...
-          + section\_00\_machine\_0100\_.wav
         + train/ (after launch of the additional training dataset)
           + section\_00\_source\_train\_normal\_0000\_.wav
           + ...
@@ -158,7 +154,7 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section\_00\_target\_train\_normal\_0000\_.wav
           + ...
           + section\_00\_target\_train\_normal\_0009\_.wav
-        + test/ (after launch of the evaluation dataset)
+        <!-- + test/ (after launch of the evaluation dataset)
           + section\_00\_test\_0000.wav
           + ...
           + section\_00\_test\_0199.wav
@@ -170,9 +166,9 @@ We will launch the datasets in three stages. Therefore, please download the data
           + /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
           + ...
           + /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
-          + ...
+          + ... -->
         + attributes\_00.csv (attributes CSV for section 00)
-      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.) -->
+      + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
 
 ### 4. Change parameters
 
@@ -261,13 +257,13 @@ harmonic mean,00,0.88,0.5078,0.5063157894736842,0.5536842105263158,0.49263157894
 
 ### 8. Run the training script for the additional training dataset
 
-<!-- After the additional training dataset is launched, download and unzip it. Move it to `data/dcase2026t2/eval_data/raw/<machine_type>/train/`. Run the training script `01_train_2026t2.sh` with the option `-e`.
+After the additional training dataset is launched, download and unzip it. Move it to `data/dcase2026t2/eval_data/raw/<machine_type>/train/`. Run the training script `01_train_2026t2.sh` with the option `-e`.
 
 ```dotnetcli
 $ 01_train_2026t2.sh -e
 ```
 
-Models are trained by using the additional training dataset `data/dcase2026t2/raw/eval_data/<machine_type>/train/`. -->
+Models are trained by using the additional training dataset `data/dcase2026t2/raw/eval_data/<machine_type>/train/`.
 
 ### 9. Run the test script for the evaluation dataset
 
@@ -353,6 +349,12 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 This project is licensed under the terms described in [LICENSEv2.1.pdf](LICENSEv2.1.pdf).
 
 ## Change Log
+### [5.1.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.1.0)
+
+#### Added
+
+- Provides support for the additional training datasets to be used in DCASE2026T2.
+
 ### [5.0.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.0.1)
 #### Updated development dataset
 

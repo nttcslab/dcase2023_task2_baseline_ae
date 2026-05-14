@@ -1,0 +1,18 @@
+DCASE2026T2:
+  machine_type:
+    ToyDrone:
+      eval:
+        - "00"
+    ToothBrush:
+      eval:
+        - "00"
+    SewingMachine:
+      eval:
+        - "00"
+    BlowerDustCollector:
+      eval:
+        - "00"
+    Sander:
+      eval:
+        - "00"
+  section_keyword: section
