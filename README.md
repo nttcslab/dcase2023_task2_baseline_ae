@@ -349,6 +349,13 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 This project is licensed under the terms described in [LICENSEv2.1.pdf](LICENSEv2.1.pdf).
 
 ## Change Log
+### [5.1.1](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.1.1)
+
+#### Fixed the function to download datasets
+
+- Fixed an error that occurred when using the automatic download function.
+- The download path the DCASE2026T2 Additional training dataset was incorrect. Fixed the issue in data_download_2026add.sh.
+
 ### [5.1.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.1.0)
 
 #### Added
