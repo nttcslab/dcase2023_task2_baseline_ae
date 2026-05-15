@@ -1,0 +1,11 @@
+Baseline AE (MSE)
+AUC_source: 0.6444
+AUC_target: 0.2684
+AUC_total: 0.4564
+pAUC: 0.5163
+Precision_source: 0.0000
+Recall_source: 0.0000
+F1_source: 0.0000
+Precision_target: 0.0000
+Recall_target: 0.0000
+F1_target: 0.0000

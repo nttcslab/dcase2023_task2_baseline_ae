@@ -1,0 +1,16 @@
+Baseline + Global Norm
+AUC_source: 0.7550
+AUC_target: 0.3982
+AUC_total: 0.5766
+pAUC: 0.5153
+Precision_source: 0.5854
+Recall_source: 0.4800
+F1_source: 0.5275
+Precision_target: 0.5000
+Recall_target: 0.9200
+F1_target: 0.6479
+Epochs_ran: 50
+Best_epoch: 44
+Best_val_loss: 0.373828
+Final_train_loss: 0.377621
+Final_val_loss: 0.374007

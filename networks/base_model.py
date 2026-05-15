@@ -88,8 +88,10 @@ class BaseModel(object):
         self.model_dir = Path(f"models/saved_model/{self.export_dir}/")
         self.model_dir.mkdir(parents=True, exist_ok=True)
         self.model_path = self.model_dir/f"{self.args.model}_{self.args.dataset}{self.model_name_suffix}{self.eval_suffix}_seed{self.args.seed}.pth"
+        self.best_model_path = self.model_dir/f"{self.args.model}_{self.args.dataset}{self.model_name_suffix}{self.eval_suffix}_seed{self.args.seed}_best.pth"
         self.score_distr_file_path = self.model_dir/f"score_distr_{self.args.model}_{self.args.dataset}{self.model_name_suffix}{self.eval_suffix}_seed{self.args.seed}.pickle"
         self.history_img = self.model_dir/f"history_{self.args.model}_{self.args.dataset}{self.model_name_suffix}{self.eval_suffix}_seed{self.args.seed}.png"
+        self.loss_curve_path = self.logs_dir / "log.png"
 
         self.tf_figdata = TimeFrequencyFigData(
             max_imgs=4,

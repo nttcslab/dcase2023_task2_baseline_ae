@@ -32,12 +32,14 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
                 use_id = [],
                 is_auto_download=False,
                 mono=True,
+                use_global_norm=False,
     ):
         super().__init__()
 
         self.use_id = use_id
         self.section_ids = section_ids
         self.machine_type = machine_type
+        self.use_global_norm = use_global_norm
 
         target_dir = os.getcwd()+"/"+root+"raw/"+machine_type
         dir_name = "train" if train else "test"
@@ -100,7 +102,8 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
         pickle_name = section_keyword
         for section_id in section_ids:
             pickle_name = f"{pickle_name}_{section_id}"
-        pickle_name = f"{pickle_name}_{source_domain}_TF{frames}-{frame_hop_length}_mel{n_fft}-{hop_length}"
+        norm_tag = "gn1" if use_global_norm else "gn0"
+        pickle_name = f"{pickle_name}_{source_domain}_TF{frames}-{frame_hop_length}_mel{n_fft}-{hop_length}_{norm_tag}"
         pickle_path = os.path.abspath(f"{self.log_melspectrogram_dir}/{pickle_name}.pickle")
 
         self.load_pre_process(
@@ -121,6 +124,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             fmin=fmin,
             win_length=win_length,
             mono=mono,
+            use_global_norm=use_global_norm,
         )
         if len(self.use_id) > 0:
             idx_list = [i for i, n in enumerate(np.argmax(self.condition, axis=1)) if int(section_ids[n]) in self.use_id]
@@ -157,6 +161,7 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             fmin,
             win_length,
             mono=True,
+            use_global_norm=False,
         ):
  
         pickle_lockfile_path = os.path.abspath(f"{self.log_melspectrogram_dir}/{pickle_name}_lockfile")
@@ -199,9 +204,9 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             # required for calculating y_pred for each wave file
             n_files_ea_section = []
 
-            self.data = np.empty((0, frames * n_mels), float)
-            self.y_true = np.empty(0, float)
-            self.condition = np.empty((0, n_sections), float)
+            self.data = np.empty((0, frames * n_mels), dtype=np.float32)
+            self.y_true = np.empty(0, dtype=np.float32)
+            self.condition = np.empty((0, n_sections), dtype=np.float32)
             self.basenames = []
             for section_idx, section_name in enumerate(unique_section_names):
 
@@ -246,7 +251,26 @@ class DCASE202XT2Loader(torch.utils.data.Dataset):
             # number of vectors for each wave file
             self.n_vectors_ea_file = int(self.data.shape[0] / n_all_files)
 
+            # global training-set normalization (optional)
+            if use_global_norm:
+                stats_path = os.path.abspath(
+                    f"{self.pickle_dir}/../normalization_stats_mels{n_mels}_frames{frames}.npz"
+                )
+                if train:
+                    global_mean = np.mean(self.data, axis=0)
+                    global_std = np.std(self.data, axis=0)
+                    np.savez(stats_path, global_mean=global_mean, global_std=global_std)
+                else:
+                    if not os.path.exists(stats_path):
+                        raise FileNotFoundError(f"Global normalization stats not found: {stats_path}")
+                    stats = np.load(stats_path)
+                    global_mean = stats["global_mean"]
+                    global_std = stats["global_std"]
+
+                self.data = (self.data - global_mean) / (global_std + 1e-8)
+
             # save dataset to pickle
+            self.data = self.data.astype(np.float32, copy=False)
             with open(pickle_path, 'wb') as f:
                 pickle.dump((
                     self.data,
@@ -361,11 +385,11 @@ def file_list_to_data(file_list,
                                                 fmin=fmin,
                                                 win_length=win_length,
                                                 mono=mono)
-        vectors = vectors[: : n_hop_frames, :]
+        vectors = vectors[: : n_hop_frames, :].astype(np.float32, copy=False)
         if idx == 0:
-            data = np.zeros((len(file_list) * vectors.shape[0], dims), float)
+            data = np.zeros((len(file_list) * vectors.shape[0], dims), dtype=np.float32)
         if len(file_list) * vectors.shape[0] > data.shape[0]:
-            tmp_data = np.zeros((len(file_list) * vectors.shape[0], dims), float)
+            tmp_data = np.zeros((len(file_list) * vectors.shape[0], dims), dtype=np.float32)
             tmp_data[:data.shape[0], :] = data
             data = tmp_data
         data[vectors.shape[0] * idx : vectors.shape[0] * (idx + 1), :] = vectors

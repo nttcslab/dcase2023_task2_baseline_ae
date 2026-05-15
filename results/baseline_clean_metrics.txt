@@ -1,0 +1,16 @@
+Baseline AE (MSE)
+AUC_source: 0.7292
+AUC_target: 0.3694
+AUC_total: 0.5493
+pAUC: 0.5358
+Precision_source: 0.4833
+Recall_source: 0.5800
+F1_source: 0.5273
+Precision_target: 0.5000
+Recall_target: 0.9800
+F1_target: 0.6622
+Epochs_ran: 27
+Best_epoch: 17
+Best_val_loss: 8.993212
+Final_train_loss: 8.700444
+Final_val_loss: 9.318586

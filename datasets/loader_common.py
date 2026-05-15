@@ -161,17 +161,21 @@ def file_to_vectors(file_name,
     # convert melspectrogram to log mel energies
     log_mel_spectrogram = 20.0 / power * np.log10(np.maximum(mel_spectrogram, sys.float_info.epsilon))
 
-    # calculate total vector size
-    n_vectors = log_mel_spectrogram.shape[-1] - n_frames + 1
+    total_frames = log_mel_spectrogram.shape[-1]
 
     # skip too short clips
-    if n_vectors < 1:
-        return np.empty((0, dims))
+    if total_frames < 1:
+        return np.empty((0, dims), dtype=np.float32)
 
-    # generate feature vectors by concatenating multi frames
-    vectors = np.zeros((n_vectors, dims))
+    # generate feature vectors by concatenating neighboring frames around each center
+    # edge handling uses border replication
+    pad_left = n_frames // 2
+    pad_right = n_frames - 1 - pad_left
+    padded = np.pad(log_mel_spectrogram, ((0, 0), (pad_left, pad_right)), mode="edge")
+
+    vectors = np.zeros((total_frames, dims), dtype=np.float32)
     for t in range(n_frames):
-        vectors[:, n_mels * t : n_mels * (t + 1)] = log_mel_spectrogram[:, t : t + n_vectors].T
+        vectors[:, n_mels * t : n_mels * (t + 1)] = padded[:, t : t + total_frames].T
 
     return vectors
 

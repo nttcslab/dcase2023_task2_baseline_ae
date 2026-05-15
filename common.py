@@ -41,7 +41,7 @@ def get_argparse():
             description='Main function to call training for different AutoEncoders')
     parser.add_argument('--model', type=str, default='DCASE2023T2-AE', metavar='N',
                         help='train model name')
-    parser.add_argument('--score', type=str, default="MSE", choices=["MSE", "MAHALA"])
+    parser.add_argument('--score', type=str, default="MSE", choices=["MSE"])
     parser.add_argument('--seed', type=int, default=39876401, metavar='S',
                         help='random seed (default: 39876401)')
     
@@ -62,6 +62,12 @@ def get_argparse():
                         help='Number of frames in a feature vector')
     parser.add_argument('--frame_hop_length',type=int, default=1, 
                         help='number of frames between successive feature')
+    parser.add_argument('--use_global_norm', type=str2bool, default=False,
+                        help='Use global training-set normalization')
+    parser.add_argument('--use_temporal_stack', type=str2bool, default=False,
+                        help='Use temporal context frame stacking')
+    parser.add_argument('--temporal_context', type=int, default=5,
+                        help='Temporal context size when stacking is enabled')
     parser.add_argument('--n_fft',type=int, default=1024, 
                         help='length of the FFT window')
     parser.add_argument('--hop_length',type=int, default=512, 
@@ -78,6 +84,10 @@ def get_argparse():
                         help='number of epochs to train (default: 10)')
     parser.add_argument('-lr', '--learning_rate', default=0.03, type=float,
                         help='learning rate (default: 0.03)')
+    parser.add_argument('--patience', type=int, default=10,
+                        help='early stopping patience (default: 10)')
+    parser.add_argument('--min_delta', type=float, default=0.0,
+                        help='minimum validation loss improvement for early stopping')
     parser.add_argument('--shuffle', type=str, default="full",
                         help='shuffle type (full , simple)')
     parser.add_argument('--validation_split', type=float, default=0.1)

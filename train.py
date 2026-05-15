@@ -56,8 +56,20 @@ def main():
 
     print("============== BEGIN TRAIN ==============")
     if train:
-        for epoch in range(1, args.epochs + 2):
-            net.train(epoch)
+        patience_count = 0
+        for epoch in range(1, args.epochs + 1):
+            train_info = net.train(epoch)
+            if not train_info:
+                continue
+            if train_info["is_best"]:
+                patience_count = 0
+            else:
+                patience_count += 1
+            if args.patience > 0 and patience_count >= args.patience:
+                print(
+                    f"Early stopping at epoch {epoch}: no validation improvement for {args.patience} epochs. Best epoch = {train_info['best_epoch']}"
+                )
+                break
     print("============ END OF TRAIN ============")
     
     if test:

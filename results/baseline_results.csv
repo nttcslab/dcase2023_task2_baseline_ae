@@ -1,0 +1,2 @@
+system,AUC_source,AUC_target,AUC_total,pAUC,Precision_source,Recall_source,F1_source,Precision_target,Recall_target,F1_target
+Baseline AE (MSE),0.6444,0.2684,0.4564,0.5163,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000

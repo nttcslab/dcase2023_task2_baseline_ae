@@ -8,7 +8,7 @@ from datasets.dcase_dcase202x_t2_loader import DCASE202XT2Loader
 
 class DCASE202XT2(object):
     def __init__(self, args):
-        self.width   = args.frames
+        self.width = args.temporal_context if args.use_temporal_stack else 1
         self.height  = args.n_mels
         self.channel = 1
         self.input_dim = self.width*self.height*self.channel
@@ -36,6 +36,7 @@ class DCASE202XT2(object):
         print("num classes: %d" % (self.num_classes))
         self.id_list = [int(machine_id) for machine_id in self.section_id_list]
         section_keyword = get_machine_type_dict(dataset_name, mode=args.dev)["section_keyword"]
+        feature_frames = self.width
         train_data = DCASE202XT2Loader(
                 data_path,
                 dataset_name=dataset_name,
@@ -43,7 +44,7 @@ class DCASE202XT2(object):
                 machine_type=machine_type,
                 train=True,
                 section_ids=self.section_id_list,
-                frames=args.frames,
+            frames=feature_frames,
                 n_mels=args.n_mels,
                 frame_hop_length=args.frame_hop_length,
                 n_fft=args.n_fft,
@@ -56,6 +57,7 @@ class DCASE202XT2(object):
                 use_id=args.use_ids,
                 is_auto_download=args.is_auto_download,
                 mono=args.mono,
+                use_global_norm=args.use_global_norm,
                 )
 
         train_index, valid_index = train_test_split(range(len(train_data)), test_size=args.validation_split)
@@ -81,7 +83,7 @@ class DCASE202XT2(object):
                 machine_type=machine_type,
                 train=False,
                 section_ids=[id],
-                frames=args.frames,
+                frames=feature_frames,
                 n_mels=args.n_mels,
                 frame_hop_length=args.frame_hop_length,
                 n_fft=args.n_fft,
@@ -93,6 +95,7 @@ class DCASE202XT2(object):
                 data_type=data_type,
                 is_auto_download=args.is_auto_download,
                 mono=args.mono,
+                 use_global_norm=args.use_global_norm,
            )
 
            self.test_loader.append(
