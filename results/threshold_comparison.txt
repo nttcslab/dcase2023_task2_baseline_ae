@@ -1,0 +1,6 @@
+ System                                   | AUC_src | AUC_tgt | AUC_tot | pAUC  | F1_src | F1_tgt
+------------------------------------------+---------+---------+---------+-------+--------+-------
+ Baseline AE (MSE)                        |  0.7292 |  0.3694 |  0.5493 | 0.5358 | 0.5273 | 0.6622
+ Baseline + Global Normalization          |  0.7550 |  0.3982 |  0.5766 | 0.5153 | 0.5275 | 0.6479
+ GlobalNorm + Temporal (original)         |  0.5198 |  0.5376 |  0.5287 | 0.5537 | 0.0000 | 0.0000
+ GlobalNorm + Temporal + Dynamic Threshold |  0.5125 |  0.5161 |  0.5143 | 0.5073 | 0.2997 | 0.3392

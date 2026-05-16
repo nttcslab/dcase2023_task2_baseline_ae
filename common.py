@@ -36,6 +36,13 @@ def float_or_None(v):
         return None
     return float(v)
 
+def str_or_None(v):
+    if v is None:
+        return None
+    if isinstance(v, str) and v.lower() in ["none", "null", ""]:
+        return None
+    return v
+
 def get_argparse():
     parser = argparse.ArgumentParser(
             description='Main function to call training for different AutoEncoders')
@@ -53,6 +60,52 @@ def get_argparse():
                         help='how many batches to wait before logging training status')
 
     parser.add_argument('--decision_threshold', type=float, default=0.9)
+    parser.add_argument(
+        '--threshold_mode',
+        type=str,
+        default='gamma',
+        choices=['gamma', 'validation_percentile', 'mean_std', 'auto_sweep'],
+        help='Threshold calibration mode: gamma (legacy), validation_percentile, mean_std, or auto_sweep.',
+    )
+    parser.add_argument(
+        '--percentile_value',
+        type=float,
+        default=95.0,
+        help='Percentile value for validation_percentile mode.',
+    )
+    parser.add_argument(
+        '--std_multiplier',
+        type=float,
+        default=2.0,
+        help='k multiplier for mean+std threshold mode: threshold = mean + k*std.',
+    )
+    parser.add_argument(
+        '--threshold_percentile_candidates',
+        type=float,
+        nargs='*',
+        default=[90.0, 95.0, 97.0, 99.0],
+        help='Percentile candidates used in auto_sweep mode.',
+    )
+    parser.add_argument(
+        '--threshold_std_candidates',
+        type=float,
+        nargs='*',
+        default=[1.5, 2.0, 2.5, 3.0],
+        help='Mean+std k candidates used in auto_sweep mode.',
+    )
+    parser.add_argument(
+        '--threshold_selection_metric',
+        type=str,
+        default='f1_mean',
+        choices=['f1_mean', 'f1_source', 'f1_target'],
+        help='Metric used to select the best candidate in auto_sweep mode.',
+    )
+    parser.add_argument(
+        '--source_model_export_dir',
+        type=str_or_None,
+        default=None,
+        help='Optional export_dir to load an existing trained model from while writing outputs to a new export_dir.',
+    )
     parser.add_argument('--max_fpr', type=float, default=0.1)
 
     # feature

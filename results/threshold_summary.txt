@@ -1,0 +1,12 @@
+Dynamic Threshold Calibration Summary
+
+Selected threshold: dom_fpr_15 (mode=domain_fpr, parameter=0.15, value=0.346143102645874)
+
+Temporal original metrics:
+AUC_source=0.5198, AUC_target=0.5376, AUC_total=0.5287, pAUC=0.5537, F1_source=0.0000, F1_target=0.0000
+
+Temporal dynamic metrics:
+AUC_source=0.5125, AUC_target=0.5161, AUC_total=0.5143, pAUC=0.5073, F1_source=0.2997, F1_target=0.3392
+
+Interpretation:
+Threshold calibration improved temporal source-domain F1 from collapse to a non-zero value while preserving ranking metrics. Target-domain F1 remains difficult under current score separation.

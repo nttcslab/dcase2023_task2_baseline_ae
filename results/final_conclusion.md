@@ -1,0 +1,3 @@
+## Conclusion
+
+The results show that global normalization improves overall detection performance...
