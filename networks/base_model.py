@@ -16,7 +16,12 @@ class BaseModel(object):
     def __init__(self, args, train, test):
         self.args = args
         print("selected gpu id:{}".format(args.gpu_id))
-        self.device = torch.device("cuda" if args.cuda else "cpu",args.gpu_id[0])
+        if torch.backends.mps.is_available():
+            self.device = torch.device("mps")
+        elif hasattr(args, 'cuda') and args.cuda:
+            self.device = torch.device("cuda", args.gpu_id[0])
+        else:
+            self.device = torch.device("cpu")
         print(self.device)
         try: 
             self.data = Datasets(self.args.dataset).data(self.args)
@@ -107,9 +112,17 @@ class BaseModel(object):
         }
 
         # output parameter to json
+        # output parameter to json
         self.args_path = f"{self.checkpoint_dir}/args.json"
         tf = open(self.args_path, "w")
-        json.dump(vars(self.args), tf, indent=2, ensure_ascii=False)
+
+        # Create a copy of the args dictionary to avoid mutating the live object
+        args_dict = vars(self.args).copy()
+        # Convert the PyTorch device object to a string for JSON serialization
+        if 'device' in args_dict:
+            args_dict['device'] = str(args_dict['device'])
+
+        json.dump(args_dict, tf, indent=2, ensure_ascii=False)
         print(f"save args -> {self.args_path}")
         tf.close()
 

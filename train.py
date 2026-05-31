@@ -32,8 +32,14 @@ def main():
     else:
         train = True
         test = True
-    
-    args.cuda = args.use_cuda and torch.cuda.is_available()
+
+    # Check for CUDA, then fallback to MPS for Apple Silicon, then CPU
+    if args.use_cuda and torch.cuda.is_available():
+        args.device = torch.device("cuda")
+    elif torch.backends.mps.is_available():
+        args.device = torch.device("mps")
+    else:
+        args.device = torch.device("cpu")
 
     # Python random
     random.seed(args.seed)
