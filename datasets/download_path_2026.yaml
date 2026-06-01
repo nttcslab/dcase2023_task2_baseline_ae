@@ -23,16 +23,21 @@ DCASE2026T2:
   ToyDrone:
     eval:
     - https://zenodo.org/records/20151556/files/eval_data_ToyDrone_train.zip
+    - https://zenodo.org/records/20437238/files/eval_data_ToyDrone_test.zip
   ToothBrush:
     eval:
     - https://zenodo.org/records/20151556/files/eval_data_ToothBrush_train.zip
+    - https://zenodo.org/records/20437238/files/eval_data_ToothBrush_test.zip
   SewingMachine:
     eval:
     - https://zenodo.org/records/20151556/files/eval_data_SewingMachine_train.zip
+    - https://zenodo.org/records/20437238/files/eval_data_SewingMachine_test.zip
   BlowerDustCollector:
     eval:
     - https://zenodo.org/records/20151556/files/eval_data_BlowerDustCollector_train.zip
+    - https://zenodo.org/records/20437238/files/eval_data_BlowerDustCollector_test.zip
   Sander:
     eval:
     - https://zenodo.org/records/20151556/files/eval_data_Sander_train.zip
+    - https://zenodo.org/records/20437238/files/eval_data_Sander_test.zip
   

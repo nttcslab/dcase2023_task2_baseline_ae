@@ -1,7 +1,7 @@
-mkdir -p "data/dcase2026t2/eval_data/raw"
+mkdir -p "data/dcase2026t2/dev_data/raw"
 
-# download eval data
-cd "data/dcase2026t2/eval_data/raw"
+# download dev data
+cd "data/dcase2026t2/dev_data/raw"
 for machine_type in \
     "ToyDrone" \
     "ToothBrush" \
