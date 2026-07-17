@@ -158,7 +158,7 @@ We will launch the datasets in three stages. Therefore, please download the data
           + section\_00\_test\_0000.wav
           + ...
           + section\_00\_test\_0199.wav
-        <!-- + test_rename/ (convert from test directory using `tools/rename.py`)
+        + test_rename/ (convert from test directory using `tools/rename.py`)
           + /section\_00\_source\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav
           + ...
           + /section\_00\_source\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav
@@ -166,7 +166,7 @@ We will launch the datasets in three stages. Therefore, please download the data
           + /section\_00\_target\_test\_normal\_\<0000\~0200\>\_\<attribute\>.wav 
           + ...
           + /section\_00\_target\_test\_anomaly\_\<0000\~0200\>\_\<attribute\>.wav 
-          + ... -->
+          + ...
         + attributes\_00.csv (attributes CSV for section 00)
       + \<machine\_type1\_of\_additional\_dataset\> (The other machine types have the same directory structure as \<machine\_type0\_of\_additional\_dataset\>/.)
 
@@ -277,7 +277,7 @@ $ 02a_test_2026t2.sh -e
 
 Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored in CSV files in the `results/` directory. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
-<!-- If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
+If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
 
 ### 9.2. Testing with the Selective Mahalanobis mode
 
@@ -289,22 +289,11 @@ $ 02b_test_2026t2.sh -e
 
 Anomaly scores are calculated using the evaluation dataset, i.e., `data/dcase2026t2/eval_data/raw/<machine_type>/test/`. The anomaly scores are stored in CSV files in the `results/` directory. You can submit the CSV files for the challenge. From the submitted CSV files, we will calculate AUC, pAUC, and your ranking.
 
-<!-- If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated. -->
+If you use [rename script](./tools/rename_eval_wav.py) to generate `test_rename` directory, AUC and pAUC are also calculated.
 
 ### 10. Summarize results
 
-After executing `02a_test_2026t2.sh`, `02b_test_2026t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2026T2 -d`.
-
-```dotnetcli
-# Summarize development dataset 2026
-$ 03_summarize_results.sh DCASE2026T2 -d
-```
-
-After the summary, the results are exported to `results/dev_data/baseline/summarize/DCASE2026T2` in CSV format.
-
-If you want to change the summarize results directory or the export directory, edit `03_summarize_results.sh`.
-
-<!-- After executing `02a_test_2026t2.sh`, `02b_test_2026t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2026T2 -d` or `DCASE2026T2 -e`.
+After executing `02a_test_2026t2.sh`, `02b_test_2026t2.sh`, or both. Run the summarize script `03_summarize_results.sh` with the option `DCASE2026T2 -d` or `DCASE2026T2 -e`.
 
 ```dotnetcli
 # Summarize development dataset 2026
@@ -313,7 +302,7 @@ $ 03_summarize_results.sh DCASE2026T2 -d
 
 After the summary, the results are exported in CSV format to `results/dev_data/baseline/summarize/DCASE2026T2` or `results/eval_data/baseline/summarize/DCASE2026T2`.
 
-If you want to change the summarize results directory or the export directory, edit `03_summarize_results.sh`. -->
+If you want to change the summarize results directory or the export directory, edit `03_summarize_results.sh`.
 
 ## Legacy support
 
@@ -349,6 +338,19 @@ We developed and tested the source code on Ubuntu 22.04.5 LTS.
 This project is licensed under the terms described in [LICENSEv2.1.pdf](LICENSEv2.1.pdf).
 
 ## Change Log
+
+### [5.3.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.3.0)
+
+#### Added Ground truth
+
+- Added a link to the DCASE2026 task2 evaluator that calculates the official score.
+  - [dcase2026_task2_evaluator](https://github.com/nttcslab/dcase2026_task2_evaluator)
+- Added DCASE2026 Task2 Ground Truth data.
+  - [DCASE2026 task2 Ground truth data](datasets/eval_data_list_2026.csv)
+- Added DCASE2026 Task2 Ground truth attributes.
+  - [DCASE2026 task2 Ground truth Attributes](datasets/ground_truth_attributes/dcase2026t2)
+- The legacy script has been updated to be compatible with DCASE2026 Task2.
+
 ### [5.2.0](https://github.com/nttcslab/dcase2023_task2_baseline_ae/releases/tag/v5.2.0)
 
 #### Added
